@@ -22,7 +22,7 @@ public class Config : MonoBehaviour
     public static float anxietyBarTokensEarned = 0f;
     public static int trepidationBarStunPoints = 1;
     public static int playerSpeedStun = 0;
-    public static int MenuScene = 0;
+    public static int GameMenu = 0;
     public static int GameScene = 1;
     public static int DeadMenuScene = 2;
     public static int WinMenuScene = 3;

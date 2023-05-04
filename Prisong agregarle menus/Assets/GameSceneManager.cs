@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
-    public int MenuScene;
+    public int GameMenu;
     public int GameScene;
     public int WinMenuScene;
     public int DeadMenuScene;
@@ -15,7 +15,7 @@ public class GameSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MenuScene = Config.MenuScene;
+        GameMenu = Config.GameMenu;
         GameScene = Config.GameScene;
         DeadMenuScene = Config.DeadMenuScene;
         WinMenuScene = Config.WinMenuScene;
@@ -35,8 +35,7 @@ public class GameSceneManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(MenuScene);
-
+        SceneManager.LoadScene(GameMenu);
     }
 
     public void LoadWinMenu()
