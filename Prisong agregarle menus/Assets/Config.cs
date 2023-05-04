@@ -22,11 +22,11 @@ public class Config : MonoBehaviour
     public static float anxietyBarTokensEarned = 0f;
     public static int trepidationBarStunPoints = 1;
     public static int playerSpeedStun = 0;
-    public static int MenuScene = 4;
-    public static int GameScene = 0;
-    public static int DeadMenuScene = 3;
-    public static int WinMenuScene = 5;
-    public static int CreditsMenuScene = 2;
+    public static int MenuScene = 0;
+    public static int GameScene = 1;
+    public static int DeadMenuScene = 2;
+    public static int WinMenuScene = 3;
+    public static int CreditsMenuScene = 4;
 
     // Start is called before the first frame update
     void Start()

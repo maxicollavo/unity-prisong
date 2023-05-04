@@ -12,7 +12,6 @@ public class EnemyMovement : MonoBehaviour
     public GameObject enemyLastObject;
     public LayerMask mask;
     float radious = 2f;
-    public float speed = 1f;
     public Animator WalkingEnemy;
     public bool stayAlert = false;
     public bool enemyStun = false;
@@ -35,7 +34,6 @@ public class EnemyMovement : MonoBehaviour
     void enemyMove()
     {
         Collider[] collidersPick = Physics.OverlapSphere(player.transform.position, radious, mask);
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         stayAlert = true;
         dir = player.transform.position - transform.position;
         transform.forward = dir;
@@ -53,7 +51,6 @@ public class EnemyMovement : MonoBehaviour
     {
         if (Config.partiturePickCount == 1)
         {
-            speed = 0f;
             stayAlert = false;
             enemyStun = true;
         }
