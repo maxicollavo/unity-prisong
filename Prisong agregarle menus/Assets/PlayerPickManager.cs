@@ -7,6 +7,7 @@ public class PlayerPickManager : MonoBehaviour
     public PlayerInputManager playerInputManager;
     public EnemyMovement enemyMovement;
     public GameSceneManager gameSceneManager;
+    public LifeController lifeController;
     public ECollision eCollision;
     public FCollision fCollision;
     public NeedObjectCollision needObjectCollision;
@@ -14,10 +15,30 @@ public class PlayerPickManager : MonoBehaviour
     public LayerMask pickMask;
     public LayerMask partitureMask;
     public LayerMask doorEscapeMask;
+    public LayerMask dispenserMask;
     float radious = 1.33f;
     public GameObject enemy;
+    public GameObject runSign;
     public bool enemyKill = false;
+    public float timeCount;
 
+    void Start()
+    {
+        timeCount = 0f;
+    }
+
+    void Update()
+    {
+        if (Config.picksCount == 1)
+        {
+            runSign.SetActive(true);
+            timeCount += Time.deltaTime;
+        }
+        if (timeCount >= 3f)
+        {
+            runSign.SetActive(false);
+        }
+    }
 
     public void Picks()
     {
@@ -31,6 +52,22 @@ public class PlayerPickManager : MonoBehaviour
             eCollision.pressEInstruction.SetActive(false);
             //PowerUp powerUp = collidersPick[i].gameObject.GetComponent<PowerUp>();
             //powerUp.Active(playerInputManager);
+        }
+    }
+
+    public void DispenserMachineInteract()
+    {
+        for (int i = 1; i >= Config.anxietyBarTokensEarned; i++)
+        {
+            Collider[] collidersDispenser = Physics.OverlapSphere(transform.position, radious, dispenserMask);
+            if (collidersDispenser.Length > 0)
+            {
+                Collider dispenser = collidersDispenser[0];
+                if (Config.anxietyBarTokensEarned <= Config.anxietyBarMaxToken)
+                {
+                    lifeController.lives = Config.maxLives;
+                }
+            }
         }
     }
 
@@ -83,6 +120,4 @@ public class PlayerPickManager : MonoBehaviour
             }
         }
     }
-
-
 }

@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class AnxietyBarBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
 
     // Update is called once per frame
     void Update()
     {
+        PointAnxBar();
+    }
 
+    public void PointAnxBar()
+    {
+        for (int i = 1; i == Config.picksCount; i++)
+        {
+            TokenEarned();
+        }
     }
 
     public void TokenEarned()

@@ -37,6 +37,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             playerPickManager.Picks();
             playerPickManager.EscapeDoor();
+            playerPickManager.DispenserMachineInteract();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {

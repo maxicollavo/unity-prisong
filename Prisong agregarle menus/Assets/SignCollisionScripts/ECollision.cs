@@ -5,6 +5,7 @@ using UnityEngine;
 public class ECollision : MonoBehaviour
 {
     public GameObject pressEInstruction;
+    public GameObject pressEMachineInstruction;
 
     void OnTriggerEnter(Collider collision)
     {
@@ -12,11 +13,17 @@ public class ECollision : MonoBehaviour
         {
             pressEInstruction.SetActive(true);
         }
+
+        if (collision.transform.tag == "DispenserMask")
+        {
+            pressEMachineInstruction.SetActive(true);
+        }
     }
 
     void OnTriggerExit(Collider collision)
     {
         pressEInstruction.SetActive(false);
+        pressEMachineInstruction.SetActive(false);
     }
 
 
