@@ -6,6 +6,9 @@ public class LifeController : MonoBehaviour
 {
     public GameSceneManager gameSceneManager;
     [HideInInspector] public float lives;
+    public GameObject heart1;
+    public GameObject heart2;
+    public GameObject heart3;
 
     public void Start()
     {

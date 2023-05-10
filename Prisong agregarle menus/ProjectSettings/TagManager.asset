@@ -8,6 +8,7 @@ TagManager:
   - Partitures
   - DoorEscape
   - DispenserMask
+  - PlayerTrigger
   layers:
   - Default
   - TransparentFX

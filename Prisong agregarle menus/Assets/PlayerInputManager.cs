@@ -12,11 +12,14 @@ public class PlayerInputManager : MonoBehaviour
     public int speedRun = 100;
     public Animator anim;
     public GameObject partiture;
+    public GameObject gameBeginningSign;
+    public float timeCount;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        timeCount = 0f;
     }
 
     public void Move()
@@ -27,6 +30,15 @@ public class PlayerInputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeCount += Time.deltaTime;
+        if (timeCount >= 1f)
+        {
+            gameBeginningSign.SetActive(true);
+        }
+        if (timeCount >= 4f)
+        {
+            gameBeginningSign.SetActive(false);
+        }
         var x = Input.GetAxisRaw("Horizontal");
         var z = Input.GetAxisRaw("Vertical");
         anim.SetFloat("X", x);
@@ -37,7 +49,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             playerPickManager.Picks();
             playerPickManager.EscapeDoor();
-            playerPickManager.DispenserMachineInteract();
+            //playerPickManager.DispenserMachineInteract();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {

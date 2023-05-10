@@ -14,13 +14,15 @@ public class EnemyMovement : MonoBehaviour
     float radious = 2f;
     public Animator WalkingEnemy;
     public bool enemyStun = false;
-    public bool stayAlert = true;
+    public bool stayAlert;
     public Vector3 dir;
     public float speedRoat;
     public NavMeshAgent agent;
 
+
     private void Start()
     {
+        stayAlert = true;
         Animator AnimE = GetComponent<Animator>();
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
     }
@@ -60,6 +62,18 @@ public class EnemyMovement : MonoBehaviour
         if (collider.transform.tag == "PlayerTrigger")
         {
             lifeController.Hit();
+            if (lifeController.lives == 3)
+            {
+                lifeController.heart1.SetActive(false);
+            }
+            if (lifeController.lives == 2)
+            {
+                lifeController.heart2.SetActive(false);
+            }
+            if (lifeController.lives == 1)
+            {
+                lifeController.heart3.SetActive(false);
+            }
         }
     }
 }

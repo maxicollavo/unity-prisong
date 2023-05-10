@@ -9,7 +9,7 @@ public class Config : MonoBehaviour
     PlayerInputManager playerInputManager;
     public static float sensitivityInGame = .5f;
     public static float sensitivityInPause = 0f;
-    public static float maxLives = 3;
+    public static float maxLives = 4;
     public static int picksRequired = 2;
     public static int escapePicksRequired = 1;
     public static int objectInstantiateCount = 0;
