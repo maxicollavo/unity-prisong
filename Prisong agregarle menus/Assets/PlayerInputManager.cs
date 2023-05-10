@@ -36,12 +36,12 @@ public class PlayerInputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             playerPickManager.Picks();
+            playerPickManager.EscapeDoor();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             playerPickManager.PartiturePick();
-            playerPickManager.EscapeDoor();
-            playerPickManager.EnemyKill();
+            //playerPickManager.EnemyKill();
         }
         if (Input.GetKeyDown(KeyCode.P))
         {

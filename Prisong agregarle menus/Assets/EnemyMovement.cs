@@ -13,8 +13,8 @@ public class EnemyMovement : MonoBehaviour
     public LayerMask mask;
     float radious = 2f;
     public Animator WalkingEnemy;
-    public bool stayAlert = false;
     public bool enemyStun = false;
+    public bool stayAlert = true;
     public Vector3 dir;
     public float speedRoat;
     public NavMeshAgent agent;
@@ -22,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
     private void Start()
     {
         Animator AnimE = GetComponent<Animator>();
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
     }
     void Update()
     {
@@ -34,17 +35,14 @@ public class EnemyMovement : MonoBehaviour
     void enemyMove()
     {
         Collider[] collidersPick = Physics.OverlapSphere(player.transform.position, radious, mask);
-        stayAlert = true;
         dir = player.transform.position - transform.position;
         transform.forward = dir;
     }
 
     void EnemyAnim()
     {
-        if (stayAlert == true)
-        {
-            WalkingEnemy.SetBool("WalkingE", true);
-        }
+        if (stayAlert == true) WalkingEnemy.SetBool("WalkingE", true);
+        else if (stayAlert == false) WalkingEnemy.SetBool("WalkingE", false);
     }
 
     public void EnemyStun()
@@ -53,6 +51,7 @@ public class EnemyMovement : MonoBehaviour
         {
             stayAlert = false;
             enemyStun = true;
+            agent.speed = 0f;
         }
     }
 

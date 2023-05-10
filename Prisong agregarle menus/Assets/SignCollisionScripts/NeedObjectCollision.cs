@@ -17,7 +17,7 @@ public class NeedObjectCollision : MonoBehaviour
                 needObjectInstruction.SetActive(true);
             }
         }
-        if (playerPickManager.enemyKill == false)
+        if (Config.partiturePickCount < Config.escapePicksRequired)
         {
             if (collision.transform.tag == "DoorEscape")
             {

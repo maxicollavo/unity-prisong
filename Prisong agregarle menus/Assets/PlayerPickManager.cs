@@ -13,6 +13,7 @@ public class PlayerPickManager : MonoBehaviour
     public AnxietyBarBehaviour anxietyBarBehaviour;
     public LayerMask pickMask;
     public LayerMask partitureMask;
+    public LayerMask doorEscapeMask;
     float radious = 1.33f;
     public GameObject enemy;
     public bool enemyKill = false;
@@ -49,7 +50,7 @@ public class PlayerPickManager : MonoBehaviour
         }
     }
 
-    public void EnemyKill()
+    /*public void EnemyKill()
     {
         if (enemyMovement.enemyStun == true)
         {
@@ -68,13 +69,13 @@ public class PlayerPickManager : MonoBehaviour
             Config.objectInstantiateCount++;
         }
         else return;
-    }
+    }*/
 
     public void EscapeDoor()
     {
-        if (/*Config.picksCount >= Config.escapePicksRequired*/ enemyKill == true)
+        if (Config.partiturePickCount >= Config.escapePicksRequired)
         {
-            Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, partitureMask);
+            Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)
             {
                 fCollision.pressFEscapeInstruction.SetActive(false);

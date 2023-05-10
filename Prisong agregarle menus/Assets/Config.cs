@@ -11,7 +11,7 @@ public class Config : MonoBehaviour
     public static float sensitivityInPause = 0f;
     public static float maxLives = 3;
     public static int picksRequired = 2;
-    public static int escapePicksRequired = 3;
+    public static int escapePicksRequired = 1;
     public static int objectInstantiateCount = 0;
     public static int picksCount = 0;
     public static int partiturePickCount = 0;
