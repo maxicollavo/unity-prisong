@@ -49,7 +49,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void EnemyStun()
     {
-        if (Config.partiturePickCount == 1)
+        if (Config.rockPickCount == 1)
         {
             stayAlert = false;
             enemyStun = true;

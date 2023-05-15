@@ -5,6 +5,7 @@ using UnityEngine;
 public class NeedObjectCollision : MonoBehaviour
 {
     public GameObject needObjectInstruction;
+    public GameObject needObjectPiano;
     public GameObject needObjectEscapeInstruction;
     public PlayerPickManager playerPickManager;
 
@@ -12,12 +13,23 @@ public class NeedObjectCollision : MonoBehaviour
     {
         if (Config.picksCount < Config.picksRequired)
         {
-            if (collision.transform.tag == "Partitures")
+            if (collision.transform.tag == "Rocks")
             {
                 needObjectInstruction.SetActive(true);
             }
         }
-        if (Config.partiturePickCount < Config.escapePicksRequired)
+
+        if (collision.transform.tag == "Piano" && Config.picksCount < Config.firstPiano)
+        {
+            needObjectPiano.SetActive(true);
+        }
+
+        if (collision.transform.tag == "Piano" && Config.picksCount < Config.secondPiano)
+        {
+            needObjectPiano.SetActive(true);
+        }
+
+        if (Config.rockPickCount < Config.escapePicksRequired)
         {
             if (collision.transform.tag == "DoorEscape")
             {
@@ -31,5 +43,6 @@ public class NeedObjectCollision : MonoBehaviour
     {
         needObjectInstruction.SetActive(false);
         needObjectEscapeInstruction.SetActive(false);
+        needObjectPiano.SetActive(false);
     }
 }

@@ -13,11 +13,11 @@ public class FCollision : MonoBehaviour
     {
         if (Config.picksCount >= Config.picksRequired)
         {
-            if (collision.transform.tag == "Partitures")
+            if (collision.transform.tag == "Rocks")
             {
                 pressFInstruction.SetActive(true);
             }
-            if (collision.transform.tag == "EnemyTrigger" && Config.partiturePickCount >= 1 && playerPickManager.enemyKill == false)
+            if (collision.transform.tag == "EnemyTrigger" && Config.rockPickCount >= 1 && playerPickManager.enemyKill == false)
             {
                 pressFKillEnemy.SetActive(true);
             }
