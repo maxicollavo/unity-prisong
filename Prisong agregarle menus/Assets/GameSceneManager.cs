@@ -31,31 +31,36 @@ public class GameSceneManager : MonoBehaviour
     public void LoadGame()
     {
         SceneManager.LoadScene(GameScene);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void LoadMainMenu()
     {
         SceneManager.LoadScene(GameMenu);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadWinMenu()
     {
         SceneManager.LoadScene(WinMenuScene);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadDeadMenu()
     {
         SceneManager.LoadScene(DeadMenuScene);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadCreditsMenu()
     {
         SceneManager.LoadScene(CreditsMenuScene);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ExitGame()
-    {
-        Application.Quit();
-    }
+        {
+            Application.Quit();
+        }
 
 }

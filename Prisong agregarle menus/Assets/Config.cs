@@ -11,10 +11,13 @@ public class Config : MonoBehaviour
     public static float sensitivityInPause = 0f;
     public static float maxLives = 4;
     public static int picksRequired = 2;
+    public static int pianoCount = 0;
+    public static int firstPiano = 1;
+    public static int secondPiano = 2;
     public static int escapePicksRequired = 1;
     public static int objectInstantiateCount = 0;
     public static int picksCount = 0;
-    public static int partiturePickCount = 0;
+    public static int rockPickCount = 0;
     public static int trepidationBarCount = 0;
     public static float anxietyBarCount = 0f;
     public static float anxietyBarToken = 4f;
@@ -45,9 +48,9 @@ public class Config : MonoBehaviour
         playerPickManager.Picks();
     }
 
-    public void PartiturePickMechanic()
+    public void RockPickMechanic()
     {
-        playerPickManager.PartiturePick();
+        playerPickManager.RockPick();
     }
 
     public void Pause()

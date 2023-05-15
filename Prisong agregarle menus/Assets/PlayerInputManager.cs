@@ -11,7 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     public int speed = 100;
     public int speedRun = 100;
     public Animator anim;
-    public GameObject partiture;
+    public GameObject rock;
     public GameObject gameBeginningSign;
     public float timeCount;
 
@@ -49,11 +49,12 @@ public class PlayerInputManager : MonoBehaviour
         {
             playerPickManager.Picks();
             playerPickManager.EscapeDoor();
+            playerPickManager.PianoInteract();
             //playerPickManager.DispenserMachineInteract();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            playerPickManager.PartiturePick();
+            playerPickManager.RockPick();
             //playerPickManager.EnemyKill();
         }
         if (Input.GetKeyDown(KeyCode.P))
