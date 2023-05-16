@@ -50,6 +50,8 @@ public class PlayerInputManager : MonoBehaviour
             playerPickManager.Picks();
             playerPickManager.EscapeDoor();
             playerPickManager.PianoInteract();
+            playerPickManager.ChestInteract();
+            playerPickManager.StoneInteract();
             //playerPickManager.DispenserMachineInteract();
         }
         if (Input.GetKeyDown(KeyCode.F))

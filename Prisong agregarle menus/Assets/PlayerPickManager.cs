@@ -78,7 +78,7 @@ public class PlayerPickManager : MonoBehaviour
 
     public void RockPick()
     {
-        if (Config.picksCount >= Config.picksRequired && Config.pianoCount == 2)
+        if (Config.pianoCount == 2)
         {
             Collider[] collidersRock = Physics.OverlapSphere(transform.position, radious, rockMask);
             if (collidersRock.Length > 0)
@@ -86,7 +86,6 @@ public class PlayerPickManager : MonoBehaviour
                 Collider rock = collidersRock[0];
                 rock.gameObject.SetActive(false);
                 Config.rockPickCount++;
-                //anxietyBarBehaviour.TokenEarned();
                 fCollision.pressFInstruction.SetActive(false);
             }
         }
@@ -116,9 +115,24 @@ public class PlayerPickManager : MonoBehaviour
                 eCollision.pressEInteractPiano.SetActive(false);
                 Config.pianoCount++;
                 cage.SetActive(false);
-                closeChest.SetActive(false);
-                openChest.SetActive(true);
             }
+        }
+    }
+
+    public void ChestInteract()
+    {
+        if (Config.pianoCount == 2)
+        {
+            closeChest.SetActive(false);
+            openChest.SetActive(true);
+        }
+    }
+
+    public void StoneInteract()
+    {
+        if (Config.pianoCount == 2)
+        {
+            rock.SetActive(false);
         }
     }
 

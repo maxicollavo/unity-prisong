@@ -19,12 +19,7 @@ public class NeedObjectCollision : MonoBehaviour
             }
         }
 
-        if (collision.transform.tag == "Piano" && Config.picksCount < Config.firstPiano)
-        {
-            needObjectPiano.SetActive(true);
-        }
-
-        if (collision.transform.tag == "Piano" && Config.picksCount < Config.secondPiano)
+        if (collision.transform.tag == "Piano" && Config.picksCount < 2)
         {
             needObjectPiano.SetActive(true);
         }
