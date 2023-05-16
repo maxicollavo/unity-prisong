@@ -6,9 +6,9 @@ using System;
 public class MouseLookAround : MonoBehaviour
 {
     public Vector2 turn;
-    public float sensitivity;
+    public float sensitivity = 200f;
     public Vector3 deltaMove;
-    public float speed = 1;
+    //public float speed = 200;
     public GameObject mover;
 
     void Start()

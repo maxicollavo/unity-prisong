@@ -18,6 +18,7 @@ public class EnemyMovement : MonoBehaviour
     public Vector3 dir;
     public float speedRoat;
     public NavMeshAgent agent;
+    public bool enemyTrigger = false;
 
 
     private void Start()
@@ -28,6 +29,7 @@ public class EnemyMovement : MonoBehaviour
     }
     void Update()
     {
+        EnemyAtack();
         enemyMove();
         EnemyAnim();
         EnemyStun();
@@ -57,11 +59,12 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collider)
-    {
+     void OnTriggerEnter(Collider collider)
+     {
         if (collider.transform.tag == "PlayerTrigger")
         {
             lifeController.Hit();
+            enemyTrigger = true;
             if (lifeController.lives == 3)
             {
                 lifeController.heart1.SetActive(false);
@@ -74,6 +77,21 @@ public class EnemyMovement : MonoBehaviour
             {
                 lifeController.heart3.SetActive(false);
             }
+        }
+     }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.transform.tag == "PlayerTrigger")
+        {
+            enemyTrigger = false;
+        }
+    }
+    void EnemyAtack()
+    {
+        if (enemyTrigger == true)
+        {
+            WalkingEnemy.SetBool("enemyTrigger", true);
         }
     }
 }
