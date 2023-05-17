@@ -17,10 +17,10 @@ public class FCollision : MonoBehaviour
             {
                 pressFInstruction.SetActive(true);
             }
-            if (collision.transform.tag == "EnemyTrigger" && Config.rockPickCount >= 1 && playerPickManager.enemyKill == false)
-            {
-                pressFKillEnemy.SetActive(true);
-            }
+            //if (collision.transform.tag == "EnemyTrigger" && Config.rockPickCount >= 1 && playerPickManager.enemyKill == false)
+            //{
+               // pressFKillEnemy.SetActive(true);
+            //}
             if (playerPickManager.enemyKill == true)
             {
                 pressFKillEnemy.SetActive(false);

@@ -14,6 +14,7 @@ public class PlayerPickManager : MonoBehaviour
     public AnxietyBarBehaviour anxietyBarBehaviour;
     public LayerMask pickMask;
     public LayerMask rockMask;
+    public LayerMask chestMask;
     public LayerMask doorEscapeMask;
     public LayerMask dispenserMask;
     public LayerMask pianoMask;
@@ -45,19 +46,7 @@ public class PlayerPickManager : MonoBehaviour
         {
             runSign.SetActive(false);
         }
-    }
-
-    public void Picks()
-    {
-        Collider[] collidersPick = Physics.OverlapSphere(transform.position, radious, pickMask);
-        for (int i = 0; i < collidersPick.Length; i++)
-        {
-            Collider pick = collidersPick[0];
-            pick.gameObject.SetActive(false);
-            enemy.SetActive(true);
-            Config.picksCount++;
-            eCollision.pressEInstruction.SetActive(false);
-        }
+        Debug.Log(Config.picksCount);
     }
 
     public void DispenserMachineInteract()
@@ -76,63 +65,88 @@ public class PlayerPickManager : MonoBehaviour
         }
     }
 
-    public void RockPick()
+    public void Picks()
     {
-        if (Config.pianoCount == 2)
+        Collider[] collidersPick = Physics.OverlapSphere(transform.position, radious, pickMask);
+        for (int i = 0; i < collidersPick.Length; i++)
         {
-            Collider[] collidersRock = Physics.OverlapSphere(transform.position, radious, rockMask);
-            if (collidersRock.Length > 0)
-            {
-                Collider rock = collidersRock[0];
-                rock.gameObject.SetActive(false);
-                Config.rockPickCount++;
-                fCollision.pressFInstruction.SetActive(false);
-            }
+            Collider pick = collidersPick[0];
+            pick.gameObject.SetActive(false);
+            enemy.SetActive(true);
+            Config.picksCount++;
+            eCollision.pressEInstruction.SetActive(false);
+            
         }
     }
 
     public void PianoInteract()
     {
-        if (Config.picksCount >= 1 && Config.pianoCount == 0)
+        /*if (Config.picksCount == 0)
+        {
+            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
+            if (collidersPiano.Length > 0)
+            {
+                Collider piano1 = collidersPiano[0];
+                //needObjectCollision.needObjectInstruction.SetActive(true);
+            }
+        }*/
+        
+        if (Config.picksCount == 2 && Config.keyCount == 0)
+        {
+            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
+            if (collidersPiano.Length > 0)
+            {
+                Config.picksCount--;
+            }
+        }
+        else if (Config.picksCount == 1 && Config.keyCount == 0)
         {
             Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
             if (collidersPiano.Length > 0)
             {
                 Collider piano1 = collidersPiano[0];
                 piano2.SetActive(true);
-                eCollision.pressEInteractPiano.SetActive(false);
-                Config.pianoCount++;
+                Config.keyCount++;
             }
         }
-        else if (Config.picksCount >= 2 && Config.pianoCount == 1)
+        else if (Config.picksCount == 2 && Config.keyCount == 1)
         {
             Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
             if (collidersPiano.Length > 0)
             {
-                Collider piano2 = collidersPiano[0];
-                piano2.gameObject.SetActive(false);
+                Collider piano1 = collidersPiano[0];
+                piano2.SetActive(true);
                 pianoFull.SetActive(true);
-                eCollision.pressEInteractPiano.SetActive(false);
-                Config.pianoCount++;
                 cage.SetActive(false);
+                Config.keyCount++;
             }
         }
     }
 
     public void ChestInteract()
     {
-        if (Config.pianoCount == 2)
+        if (Config.keyCount == 2)
         {
-            closeChest.SetActive(false);
-            openChest.SetActive(true);
+            Collider[] collidersChest = Physics.OverlapSphere(transform.position, radious, chestMask);
+            if (collidersChest.Length > 0)
+            {
+                closeChest.SetActive(false);
+                openChest.SetActive(true);
+                eCollision.pressEInstruction.SetActive(false);
+            }
         }
     }
 
     public void StoneInteract()
     {
-        if (Config.pianoCount == 2)
+        if (Config.keyCount == 2)
         {
-            rock.SetActive(false);
+            Collider[] collidersStone = Physics.OverlapSphere(transform.position, radious, rockMask);
+            if (collidersStone.Length > 0)
+            {
+                rock.SetActive(false);
+                Config.rockPickCount++;
+            }
         }
     }
 
@@ -159,7 +173,7 @@ public class PlayerPickManager : MonoBehaviour
 
     public void EscapeDoor()
     {
-        if (Config.rockPickCount >= Config.escapePicksRequired)
+        if (Config.rockPickCount >= 1)
         {
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)

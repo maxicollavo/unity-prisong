@@ -10,6 +10,7 @@ public class Config : MonoBehaviour
     public static float sensitivityInGame = .5f;
     public static float sensitivityInPause = 0f;
     public static float maxLives = 4;
+    public static int keyCount = 0;
     public static int picksRequired = 2;
     public static int pianoCount = 0;
     public static int firstPiano = 1;
@@ -50,7 +51,7 @@ public class Config : MonoBehaviour
 
     public void RockPickMechanic()
     {
-        playerPickManager.RockPick();
+        playerPickManager.StoneInteract();
     }
 
     public void Pause()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7103,7 +7103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &384816887
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13383,7 +13383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3e00558e309b2bf4488be393c7762d98, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.4200015
+      value: -13.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3e00558e309b2bf4488be393c7762d98, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13391,7 +13391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3e00558e309b2bf4488be393c7762d98, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.67
+      value: -6.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3e00558e309b2bf4488be393c7762d98, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13474,7 +13474,7 @@ MonoBehaviour:
   speed: 500
   speedRun: 100
   anim: {fileID: 697927173}
-  rock: {fileID: 0}
+  rock: {fileID: 401498167}
   gameBeginningSign: {fileID: 868659937}
   timeCount: 0
 --- !u!95 &697927173 stripped
@@ -13538,6 +13538,9 @@ MonoBehaviour:
   rockMask:
     serializedVersion: 2
     m_Bits: 256
+  chestMask:
+    serializedVersion: 2
+    m_Bits: 4096
   doorEscapeMask:
     serializedVersion: 2
     m_Bits: 512
@@ -16895,7 +16898,7 @@ GameObject:
   - component: {fileID: 870363436}
   - component: {fileID: 870363435}
   - component: {fileID: 870363434}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: OpenChestTrigger
   m_TagString: Chest
   m_Icon: {fileID: 0}
@@ -17964,7 +17967,7 @@ GameObject:
   - component: {fileID: 900375069}
   - component: {fileID: 900375068}
   - component: {fileID: 900375067}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: CloseChestTrigger
   m_TagString: Chest
   m_Icon: {fileID: 0}
@@ -25448,7 +25451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
