@@ -5,7 +5,6 @@ using UnityEngine;
 public class ItemsCount : MonoBehaviour
 {
     public GameObject player;
-    public int picksCounter;
     public PlayerPickManager playerPickManager;
     public int inventary;
 

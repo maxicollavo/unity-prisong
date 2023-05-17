@@ -16,7 +16,7 @@ public class ECollision : MonoBehaviour
             pressEInstruction.SetActive(true);
         }
 
-        if (collision.transform.tag == "Piano" && Config.picksCount >= 2)
+        if (collision.transform.tag == "Piano" && Config.picksCount >= 1)
         {
             pressEInteractPiano.SetActive(true);
         }
@@ -24,6 +24,10 @@ public class ECollision : MonoBehaviour
         if (collision.transform.tag == "DispenserMask")
         {
             pressEMachineInstruction.SetActive(true);
+        }
+        if (collision.transform.tag == "ChestMask" && Config.keyCount == 2)
+        {
+            pressEInstruction.SetActive(true);
         }
     }
 

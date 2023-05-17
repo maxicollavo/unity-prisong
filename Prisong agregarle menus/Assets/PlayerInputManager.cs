@@ -51,23 +51,15 @@ public class PlayerInputManager : MonoBehaviour
             playerPickManager.EscapeDoor();
             playerPickManager.PianoInteract();
             playerPickManager.ChestInteract();
-            playerPickManager.StoneInteract();
-            //playerPickManager.DispenserMachineInteract();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            playerPickManager.RockPick();
-            //playerPickManager.EnemyKill();
+            playerPickManager.StoneInteract();
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
             pauseManager.ActivatePause();
         }
-        /*if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            speed += speedRun; //Sumarle al speed del Move playerInputManager.speedRun;
-        }*/
-
     }
 
     private void FixedUpdate()

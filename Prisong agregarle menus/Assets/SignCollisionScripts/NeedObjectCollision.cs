@@ -11,15 +11,7 @@ public class NeedObjectCollision : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (Config.picksCount < Config.picksRequired)
-        {
-            if (collision.transform.tag == "Rocks")
-            {
-                needObjectInstruction.SetActive(true);
-            }
-        }
-
-        if (collision.transform.tag == "Piano" && Config.picksCount < 2)
+        if (collision.transform.tag == "Piano" && Config.picksCount < 1)
         {
             needObjectPiano.SetActive(true);
         }
