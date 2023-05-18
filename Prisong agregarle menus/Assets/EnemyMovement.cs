@@ -29,14 +29,21 @@ public class EnemyMovement : MonoBehaviour
     }
     void Update()
     {
-        EnemyAtack();
-        enemyMove();
+        FaceTarget(player.transform.position);
         EnemyAnim();
         EnemyStun();
         agent.SetDestination(player.transform.position);
     }
 
-    void enemyMove()
+    private void FaceTarget(Vector3 destination)
+    {
+        Vector3 lookPos = destination - transform.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
+    }
+
+    void EnemyMove()
     {
         Collider[] collidersPick = Physics.OverlapSphere(player.transform.position, radious, mask);
         dir = player.transform.position - transform.position;
@@ -59,12 +66,12 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-     void OnTriggerEnter(Collider collider)
-     {
-        if (collider.transform.tag == "PlayerTrigger")
+    public IEnumerator HitEnemy()
+    {
+        while (enemyTrigger == true)
         {
+            WalkingEnemy.SetBool("enemyTrigger", true);
             lifeController.Hit();
-            enemyTrigger = true;
             if (lifeController.lives == 3)
             {
                 lifeController.heart1.SetActive(false);
@@ -77,6 +84,16 @@ public class EnemyMovement : MonoBehaviour
             {
                 lifeController.heart3.SetActive(false);
             }
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+    void OnTriggerEnter(Collider collider)
+     {
+        if (collider.transform.tag == "PlayerTrigger")
+        {
+            enemyTrigger = true;
+            StartCoroutine(HitEnemy());
         }
      }
 
@@ -85,13 +102,8 @@ public class EnemyMovement : MonoBehaviour
         if (collider.transform.tag == "PlayerTrigger")
         {
             enemyTrigger = false;
-        }
-    }
-    void EnemyAtack()
-    {
-        if (enemyTrigger == true)
-        {
-            WalkingEnemy.SetBool("enemyTrigger", true);
+            WalkingEnemy.SetBool("enemyTrigger", false);
+
         }
     }
 }

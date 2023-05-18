@@ -21,6 +21,7 @@ public class PlayerPickManager : MonoBehaviour
     float radious = 1.33f;
     public GameObject enemy;
     public GameObject runSign;
+    public GameObject runAwaySign;
     public GameObject piano2;
     public GameObject pianoFull;
     public GameObject cage;
@@ -28,6 +29,9 @@ public class PlayerPickManager : MonoBehaviour
     public GameObject openChest;
     public GameObject rock;
     public bool enemyKill = false;
+    public bool chestOpen = false;
+    public bool signOne = false;
+    public bool signTwo = false;
     public float timeCount;
 
     void Start()
@@ -46,7 +50,6 @@ public class PlayerPickManager : MonoBehaviour
         {
             runSign.SetActive(false);
         }
-        Debug.Log(Config.picksCount);
     }
 
     public void DispenserMachineInteract()
@@ -75,77 +78,68 @@ public class PlayerPickManager : MonoBehaviour
             enemy.SetActive(true);
             Config.picksCount++;
             eCollision.pressEInstruction.SetActive(false);
-            
         }
     }
 
     public void PianoInteract()
     {
-        /*if (Config.picksCount == 0)
+        if (Config.picksCount == 1 && signOne == false)
         {
             Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
             if (collidersPiano.Length > 0)
             {
-                Collider piano1 = collidersPiano[0];
-                //needObjectCollision.needObjectInstruction.SetActive(true);
-            }
-        }*/
-        
-        if (Config.picksCount == 2 && Config.keyCount == 0)
-        {
-            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
-            if (collidersPiano.Length > 0)
-            {
-                Config.picksCount--;
-            }
-        }
-        else if (Config.picksCount == 1 && Config.keyCount == 0)
-        {
-            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
-            if (collidersPiano.Length > 0)
-            {
-                Collider piano1 = collidersPiano[0];
+                //Collider piano1 = collidersPiano[0];
                 piano2.SetActive(true);
-                Config.keyCount++;
+                eCollision.pressEInteractPiano.SetActive(false);
+                signOne = true;
             }
         }
-        else if (Config.picksCount == 2 && Config.keyCount == 1)
+        else if (Config.picksCount == 2 && signTwo == false)
         {
             Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
             if (collidersPiano.Length > 0)
             {
-                Collider piano1 = collidersPiano[0];
+                //Collider piano1 = collidersPiano[0];
                 piano2.SetActive(true);
                 pianoFull.SetActive(true);
                 cage.SetActive(false);
-                Config.keyCount++;
+                Config.keyCount = 2;
+                signTwo = true;
             }
+        }
+        else if (signTwo == true)
+        {
+            eCollision.pressEInteractPiano.SetActive(false);
         }
     }
 
     public void ChestInteract()
     {
-        if (Config.keyCount == 2)
+        if (Config.keyCount == 2 && closeChest.activeInHierarchy)
         {
             Collider[] collidersChest = Physics.OverlapSphere(transform.position, radious, chestMask);
             if (collidersChest.Length > 0)
             {
                 closeChest.SetActive(false);
                 openChest.SetActive(true);
-                eCollision.pressEInstruction.SetActive(false);
+                rock.SetActive(true);
+                fCollision.pressFInteractChest.SetActive(false);
+                chestOpen = true;
             }
         }
     }
 
     public void StoneInteract()
     {
-        if (Config.keyCount == 2)
+        if (rock.activeInHierarchy)
         {
             Collider[] collidersStone = Physics.OverlapSphere(transform.position, radious, rockMask);
             if (collidersStone.Length > 0)
             {
                 rock.SetActive(false);
                 Config.rockPickCount++;
+                eCollision.pressEInstruction.SetActive(false);
+                runAwaySign.SetActive(true);
             }
         }
     }

@@ -8,10 +8,11 @@ TagManager:
   - DoorEscape
   - DispenserMask
   - PlayerTrigger
-  - Rocks
   - Cage
   - Chest
   - Piano
+  - Undefined
+  - Rock
   layers:
   - Default
   - TransparentFX

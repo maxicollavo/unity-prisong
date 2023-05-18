@@ -32,6 +32,19 @@ public class Config : MonoBehaviour
     public static int WinMenuScene = 3;
     public static int CreditsMenuScene = 4;
 
+    public static void Reset()
+    {
+        keyCount = 0;
+        pianoCount = 0;
+        objectInstantiateCount = 0;
+        picksCount = 0;
+        rockPickCount = 0;
+        trepidationBarCount = 0;
+        anxietyBarCount = 0f;
+        anxietyBarTokensEarned = 0f;
+        playerSpeedStun = 0;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

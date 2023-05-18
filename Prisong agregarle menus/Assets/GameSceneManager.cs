@@ -32,6 +32,7 @@ public class GameSceneManager : MonoBehaviour
     {
         SceneManager.LoadScene(GameScene);
         Cursor.lockState = CursorLockMode.Locked;
+        Config.Reset();
     }
 
     public void LoadMainMenu()

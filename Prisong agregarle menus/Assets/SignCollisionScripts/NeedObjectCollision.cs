@@ -11,11 +11,18 @@ public class NeedObjectCollision : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Piano" && Config.picksCount < 1)
+        if (collision.transform.tag == "Piano" && Config.picksCount == 0)
         {
             needObjectPiano.SetActive(true);
         }
-
+        if (collision.transform.tag == "Piano" && Config.picksCount == 1 && playerPickManager.signOne == true)
+        {
+            needObjectPiano.SetActive(true);
+        }
+        if (collision.transform.tag == "Piano" && Config.rockPickCount == 1)
+        {
+            needObjectPiano.SetActive(false);
+        }
         if (Config.rockPickCount < Config.escapePicksRequired)
         {
             if (collision.transform.tag == "DoorEscape")
@@ -23,13 +30,18 @@ public class NeedObjectCollision : MonoBehaviour
                 needObjectEscapeInstruction.SetActive(true);
             }
         }
-
     }
 
     void OnTriggerExit(Collider collision)
     {
-        needObjectInstruction.SetActive(false);
-        needObjectEscapeInstruction.SetActive(false);
-        needObjectPiano.SetActive(false);
+        if (collision.transform.tag == "Piano")
+        {
+            needObjectInstruction.SetActive(false);
+            needObjectPiano.SetActive(false);
+        }
+        if (collision.transform.tag == "DoorEscape")
+        {
+            needObjectEscapeInstruction.SetActive(false);
+        }
     }
 }

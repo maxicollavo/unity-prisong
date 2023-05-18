@@ -7,27 +7,20 @@ public class FCollision : MonoBehaviour
     public GameObject pressFInstruction;
     public GameObject pressFEscapeInstruction;
     public GameObject pressFKillEnemy;
+    public GameObject pressFInteractChest;
     public PlayerPickManager playerPickManager;
 
     void OnTriggerEnter(Collider collision)
     {
-        if (Config.picksCount >= Config.picksRequired)
+        if (collision.transform.tag == "Chest" && Config.keyCount == 2 && playerPickManager.chestOpen == false)
         {
-            if (collision.transform.tag == "Rocks")
-            {
-                pressFInstruction.SetActive(true);
-            }
-            //if (collision.transform.tag == "EnemyTrigger" && Config.rockPickCount >= 1 && playerPickManager.enemyKill == false)
-            //{
-               // pressFKillEnemy.SetActive(true);
-            //}
-            if (playerPickManager.enemyKill == true)
-            {
-                pressFKillEnemy.SetActive(false);
-            }
-
+            pressFInteractChest.SetActive(true);
         }
-        if (/*Config.picksCount >= Config.escapePicksRequired && */playerPickManager.enemyKill == true)
+        else if (collision.transform.tag == "Chest" && playerPickManager.chestOpen == true)
+        {
+            pressFInteractChest.SetActive(false);
+        }
+        if (Config.rockPickCount == 1)
         {
             if (collision.transform.tag == "DoorEscape")
             {
@@ -42,6 +35,7 @@ public class FCollision : MonoBehaviour
         pressFKillEnemy.SetActive(false);
         pressFEscapeInstruction.SetActive(false);
         pressFInstruction.SetActive(false);
+        pressFInteractChest.SetActive(false);
 
     }
 }
