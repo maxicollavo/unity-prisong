@@ -19,10 +19,13 @@ public class EnemyMovement : MonoBehaviour
     public float speedRoat;
     public NavMeshAgent agent;
     public bool enemyTrigger = false;
+    private float _nextShoot = 0.15f;
+    [SerializeField] private float _fireDelay = 0.5f;
 
 
     private void Start()
     {
+        
         stayAlert = true;
         Animator AnimE = GetComponent<Animator>();
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
@@ -33,6 +36,7 @@ public class EnemyMovement : MonoBehaviour
         EnemyAnim();
         EnemyStun();
         agent.SetDestination(player.transform.position);
+    
     }
 
     private void FaceTarget(Vector3 destination)
@@ -52,7 +56,8 @@ public class EnemyMovement : MonoBehaviour
 
     void EnemyAnim()
     {
-        if (stayAlert == true) WalkingEnemy.SetBool("WalkingE", true);
+           
+        if (stayAlert == true && Time.time > _nextShoot) WalkingEnemy.SetBool("WalkingE", true);
         else if (stayAlert == false) WalkingEnemy.SetBool("WalkingE", false);
     }
 
@@ -103,7 +108,8 @@ public class EnemyMovement : MonoBehaviour
         {
             enemyTrigger = false;
             WalkingEnemy.SetBool("enemyTrigger", false);
-
         }
     }
+
+     
 }
