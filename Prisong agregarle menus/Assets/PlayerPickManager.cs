@@ -52,7 +52,7 @@ public class PlayerPickManager : MonoBehaviour
         }
     }
 
-    public void DispenserMachineInteract()
+    /*public void DispenserMachineInteract()
     {
         for (int i = 1; i >= Config.anxietyBarTokensEarned; i++)
         {
@@ -66,7 +66,7 @@ public class PlayerPickManager : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     public void Picks()
     {
@@ -89,8 +89,8 @@ public class PlayerPickManager : MonoBehaviour
             if (collidersPiano.Length > 0)
             {
                 //Collider piano1 = collidersPiano[0];
-                piano2.SetActive(true);
                 eCollision.pressEInteractPiano.SetActive(false);
+                piano2.SetActive(true);
                 signOne = true;
             }
         }
@@ -102,9 +102,12 @@ public class PlayerPickManager : MonoBehaviour
                 //Collider piano1 = collidersPiano[0];
                 piano2.SetActive(true);
                 pianoFull.SetActive(true);
+                eCollision.pressEInteractPiano.SetActive(false);
                 cage.SetActive(false);
                 Config.keyCount = 2;
                 signTwo = true;
+                Config.picksCount = 0;
+                fCollision.pressFInteractChest.SetActive(true);
             }
         }
         else if (signTwo == true)

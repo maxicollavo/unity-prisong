@@ -13,6 +13,7 @@ TagManager:
   - Piano
   - Undefined
   - Rock
+  - FollowTrigger
   layers:
   - Default
   - TransparentFX
