@@ -18,12 +18,12 @@ public class MouseLookAround : MonoBehaviour
 
     void Update()
     {
-        turn.x += Input.GetAxis("Mouse X") * sensitivity;
-        turn.y += Input.GetAxis("Mouse Y") * sensitivity;
-        turn.y = Math.Max(-100f, turn.y);
-        turn.y = Math.Min(90f, turn.y);
-        mover.transform.localRotation = Quaternion.Euler(0, turn.x, 0);
-        transform.localRotation = Quaternion.Euler(-turn.y, 0, 0);
+        turn.x += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+        turn.y += Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+       turn.y = Math.Max(-100f, turn.y);
+       turn.y = Math.Min(90f, turn.y);
+       mover.transform.localRotation = Quaternion.Euler(0, turn.x, 0);
+       transform.localRotation = Quaternion.Euler(-turn.y, 0, 0);   
     }
 }
 

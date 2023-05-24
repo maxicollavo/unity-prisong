@@ -65,8 +65,12 @@ public class PlayerInputManager : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        Look();
     }
 
+    private void Look()
+    {
 
+    }
 }
 
