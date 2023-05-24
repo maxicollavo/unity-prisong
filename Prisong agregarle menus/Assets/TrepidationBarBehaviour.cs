@@ -4,36 +4,36 @@ using UnityEngine;
 
 public class TrepidationBarBehaviour : MonoBehaviour
 {
-    Config config;
-    PlayerInputManager playerInputManager;
-    EnemyMovement enemyMovement;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public PlayerInputManager playerInputManager;
+    public GameObject trepBar1;
+    public GameObject trepBar2;
+    public GameObject trepBar3;
+    public GameObject trepBar4;
 
     // Update is called once per frame
     void Update()
     {
-        playerTrepidationBarIncrement();
-        playerStunTrepidationBar();
+        PlayerStunTrepidationBar();
     }
 
-    void playerStunTrepidationBar()
+    public void TrepBarHit()
     {
-        if (Config.trepidationBarCount >= Config.trepidationBarStunPoints)
+        Config.trepCount--;
+        Debug.Log(Config.trepCount);
+    }
+
+    public IEnumerator StunTime()
+    {
+        if (Config.trepCount == 0)
         {
-            playerInputManager.speed = Config.playerSpeedStun;
+            playerInputManager.speed = 0;
+            yield return new WaitForSeconds(2);
+            playerInputManager.speed = Config.playerSpeed;
         }
     }
 
-    void playerTrepidationBarIncrement()
+    public void PlayerStunTrepidationBar()
     {
-        if (enemyMovement.stayAlert == true)
-        {
-            Config.trepidationBarCount++;
-        }
+        StartCoroutine(StunTime());
     }
 }

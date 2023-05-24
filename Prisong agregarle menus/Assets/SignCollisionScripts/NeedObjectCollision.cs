@@ -11,19 +11,19 @@ public class NeedObjectCollision : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Piano" && Config.picksCount == 0)
+        if (collision.transform.tag == "Piano" && Config.picksCount == 0 && playerPickManager.signTwo == false)
         {
             needObjectPiano.SetActive(true);
         }
-        if (collision.transform.tag == "Piano" && Config.picksCount == 1 && playerPickManager.signOne == true)
+        else if (collision.transform.tag == "Piano" && Config.picksCount == 1 && playerPickManager.signOne == true)
         {
             needObjectPiano.SetActive(true);
         }
-        if (collision.transform.tag == "Piano" && Config.rockPickCount == 1)
+        else if (collision.transform.tag == "Piano" && Config.rockPickCount == 1)
         {
             needObjectPiano.SetActive(false);
         }
-        if (Config.rockPickCount < Config.escapePicksRequired)
+        else if (Config.rockPickCount < Config.escapePicksRequired)
         {
             if (collision.transform.tag == "DoorEscape")
             {

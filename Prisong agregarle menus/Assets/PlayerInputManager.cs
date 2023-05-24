@@ -8,7 +8,7 @@ public class PlayerInputManager : MonoBehaviour
     public PauseManager pauseManager;
     Rigidbody _rb;
     Vector3 _movement;
-    public int speed = 100;
+    [SerializeField] public int speed;
     public int speedRun = 100;
     public Animator anim;
     public GameObject rock;
@@ -20,6 +20,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         timeCount = 0f;
+        speed = Config.playerSpeed;
     }
 
     public void Move()

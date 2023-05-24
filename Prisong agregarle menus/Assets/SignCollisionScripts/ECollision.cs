@@ -19,11 +19,11 @@ public class ECollision : MonoBehaviour
         {
             pressEInteractPiano.SetActive(true);
         }
-        else if (collision.transform.tag == "Piano" && Config.picksCount == 2 && playerPickManager.signOne == true)
+        else if (collision.transform.tag == "Piano" && Config.picksCount == 2)
         {
             pressEInteractPiano.SetActive(true);
         }
-        else if (collision.transform.tag == "Piano" && playerPickManager.signTwo == true)
+        else if (collision.transform.tag == "Piano" && Config.picksCount == 0 && playerPickManager.signTwo == true)
         {
             pressEInteractPiano.SetActive(false);
         }

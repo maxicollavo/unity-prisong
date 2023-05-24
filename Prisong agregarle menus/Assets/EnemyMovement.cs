@@ -5,21 +5,21 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
+    public TrepidationBarBehaviour trepBarBeh;
     public PlayerPickManager playerPickManager;
     public LifeController lifeController;
     public GameObject player;
     public GameObject enemy;
     public GameObject enemyLastObject;
     public LayerMask mask;
-    float radious = 2f;
     public Animator WalkingEnemy;
+    public bool followTrigger = false;
     public bool enemyStun = false;
     public bool stayAlert;
     public Vector3 dir;
     public float speedRoat;
     public NavMeshAgent agent;
     public bool enemyTrigger = false;
-    private float _nextShoot = 0.15f;
 
     private void Start()
     {
@@ -32,23 +32,19 @@ public class EnemyMovement : MonoBehaviour
         FaceTarget(player.transform.position);
         EnemyAnim();
         EnemyStun();
-        agent.SetDestination(player.transform.position);
     }
 
     private void FaceTarget(Vector3 destination)
     {
-        Vector3 lookPos = destination - transform.position;
-        lookPos.y = 0;
-        Quaternion rotation = Quaternion.LookRotation(lookPos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
-    }
-
-    void EnemyMove()
-    {
-        Collider[] collidersPick = Physics.OverlapSphere(player.transform.position, radious, mask);
-        dir = player.transform.position - transform.position;
-        transform.forward = dir;
-    }
+        if (followTrigger == true)
+        {
+            agent.SetDestination(player.transform.position);
+            Vector3 lookPos = destination - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
+        }
+    }  
 
     void EnemyAnim()
     {
@@ -88,8 +84,38 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    public IEnumerator TrepBar()
+    {
+        while (followTrigger == true)
+        {
+            trepBarBeh.TrepBarHit();
+            if (Config.trepCount == 3)
+            {
+                trepBarBeh.trepBar1.SetActive(false);
+            }
+            if (Config.trepCount == 2)
+            {
+                trepBarBeh.trepBar2.SetActive(false);
+            }
+            if (Config.trepCount == 1)
+            {
+                trepBarBeh.trepBar3.SetActive(false);
+            }
+            if (Config.trepCount == 0)
+            {
+                trepBarBeh.trepBar4.SetActive(false);
+            }
+            yield return new WaitForSeconds(2);
+        }
+    }
+
     void OnTriggerEnter(Collider collider)
-     {
+    {
+        if (collider.transform.tag == "FollowTrigger")
+        {
+            followTrigger = true;
+            StartCoroutine(TrepBar());
+        }
         if (collider.transform.tag == "PlayerTrigger")
         {
             enemyTrigger = true;
@@ -99,6 +125,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
+        if (collider.transform.tag == "FollowTrigger")
+        {
+            followTrigger = false;
+        }
         if (collider.transform.tag == "PlayerTrigger")
         {
             enemyTrigger = false;

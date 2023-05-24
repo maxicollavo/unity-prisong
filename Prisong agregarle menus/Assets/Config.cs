@@ -9,7 +9,9 @@ public class Config : MonoBehaviour
     PlayerInputManager playerInputManager;
     public static float sensitivityInGame = .5f;
     public static float sensitivityInPause = 0f;
+    public static int playerSpeed = 500;
     public static float maxLives = 4;
+    public static int trepCount = 4;
     public static int keyCount = 0;
     public static int picksRequired = 2;
     public static int pianoCount = 0;
