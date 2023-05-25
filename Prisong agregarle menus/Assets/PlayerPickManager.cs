@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerPickManager : MonoBehaviour
 {
+    public LightConfig lightConfig;
     public PlayerInputManager playerInputManager;
     public EnemyMovement enemyMovement;
     public GameSceneManager gameSceneManager;

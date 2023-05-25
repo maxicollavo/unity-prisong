@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TrepidationBarBehaviour : MonoBehaviour
 {
+    public bool followTrigger = false;
     public PlayerInputManager playerInputManager;
     public GameObject trepBar1;
     public GameObject trepBar2;
@@ -16,10 +17,51 @@ public class TrepidationBarBehaviour : MonoBehaviour
         PlayerStunTrepidationBar();
     }
 
+    public IEnumerator TrepBar()
+    {
+        while (followTrigger == true)
+        {
+            TrepBarHit();
+            if (Config.trepCount == 3)
+            {
+                trepBar1.SetActive(false);
+            }
+            if (Config.trepCount == 2)
+            {
+                trepBar2.SetActive(false);
+            }
+            if (Config.trepCount == 1)
+            {
+                trepBar3.SetActive(false);
+            }
+            if (Config.trepCount == 0)
+            {
+                trepBar4.SetActive(false);
+            }
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.transform.tag == "FollowTrigger")
+        {
+            followTrigger = true;
+            StartCoroutine(TrepBar());
+        }
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.transform.tag == "FollowTrigger")
+        {
+            followTrigger = false;
+        }
+    }
+
     public void TrepBarHit()
     {
         Config.trepCount--;
-        Debug.Log(Config.trepCount);
     }
 
     public IEnumerator StunTime()
@@ -29,6 +71,7 @@ public class TrepidationBarBehaviour : MonoBehaviour
             playerInputManager.speed = 0;
             yield return new WaitForSeconds(2);
             playerInputManager.speed = Config.playerSpeed;
+            yield break;
         }
     }
 
