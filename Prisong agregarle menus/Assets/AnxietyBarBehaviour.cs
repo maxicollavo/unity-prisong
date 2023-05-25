@@ -9,8 +9,13 @@ public class AnxietyBarBehaviour : MonoBehaviour
     public GameObject anxBar2;
     public GameObject anxBar3;
     public GameObject anxBar4;
+    public bool fullPicks;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        fullPicks = false;
+    }
+
     void Update()
     {
         PointAnxBar();
@@ -28,6 +33,7 @@ public class AnxietyBarBehaviour : MonoBehaviour
         {
             anxBar3.SetActive(true);
             anxBar4.SetActive(true);
+            fullPicks = true;
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInputManager : MonoBehaviour
 {
     public PlayerPickManager playerPickManager;
+    public Mechanics mechanics;
     public PauseManager pauseManager;
     Rigidbody _rb;
     Vector3 _movement;
@@ -46,6 +47,10 @@ public class PlayerInputManager : MonoBehaviour
         anim.SetFloat("Z", z);
         _movement = transform.forward * z;
         _movement += transform.right * x;
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            mechanics.Invisibility();
+        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             playerPickManager.Picks();
