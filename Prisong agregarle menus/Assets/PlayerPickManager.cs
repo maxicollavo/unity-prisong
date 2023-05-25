@@ -6,6 +6,7 @@ public class PlayerPickManager : MonoBehaviour
 {
     public LightConfig lightConfig;
     public PlayerInputManager playerInputManager;
+    public TrepidationBarBehaviour trepBarBeh;
     public EnemyMovement enemyMovement;
     public GameSceneManager gameSceneManager;
     public LifeController lifeController;
@@ -93,6 +94,11 @@ public class PlayerPickManager : MonoBehaviour
                 eCollision.pressEInteractPiano.SetActive(false);
                 piano2.SetActive(true);
                 signOne = true;
+                if (Config.trepCount < 4 && Config.anxietyBarCount < 4)
+                {
+                    trepBarBeh.enemyTriggerMap.SetActive(true);
+                }
+                else trepBarBeh.enemyTriggerMap.SetActive(false);
             }
         }
         else if (Config.picksCount == 2 && signTwo == false)

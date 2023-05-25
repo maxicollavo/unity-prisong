@@ -10,11 +10,16 @@ public class TrepidationBarBehaviour : MonoBehaviour
     public GameObject trepBar2;
     public GameObject trepBar3;
     public GameObject trepBar4;
+    public GameObject enemyTriggerMap;
 
     // Update is called once per frame
     void Update()
     {
         PlayerStunTrepidationBar();
+        if (Config.trepCount <= 0)
+        {
+            enemyTriggerMap.SetActive(true);
+        }
     }
 
     public IEnumerator TrepBar()
