@@ -12,13 +12,14 @@ public class LightConfig : MonoBehaviour
 
     public IEnumerator LightsEnemy()
     {   
-        while (true)
+        while (enemyNear == true)
         {
-            yellowLight.SetActive(false);
-            greenLight.SetActive(true);
+            yellowLightOn = false;
+            greenLightOn = true;
             yield return new WaitForSeconds(1);
-            yellowLight.SetActive(true);
-            greenLight.SetActive(false);
+            yellowLightOn = true;
+            greenLightOn = false;
+            yield return new WaitForSeconds(1);
         }
     }
 
@@ -31,6 +32,7 @@ public class LightConfig : MonoBehaviour
         }
         if (other.transform.tag == "EnemyTriggerNear")
         {
+            Debug.Log("TriggerEnter");
             enemyNear = true;
             StartCoroutine(LightsEnemy());
         }
@@ -46,6 +48,7 @@ public class LightConfig : MonoBehaviour
         if (other.transform.tag == "EnemyTriggerNear")
         {
             enemyNear = false;
+            Debug.Log("TriggerExit");
         }
     }
 

@@ -49,7 +49,11 @@ public class PlayerInputManager : MonoBehaviour
         _movement += transform.right * x;
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            mechanics.Invisibility();
+            if (mechanics.invisibility == false)
+            {
+                mechanics.Invisibility();
+            }
+            else mechanics.InvisibilityOff();
         }
         if (Input.GetKeyDown(KeyCode.E))
         {

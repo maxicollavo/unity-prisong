@@ -12517,9 +12517,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e849d7a90c19a4f8a83c933a8294b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTrigger: {fileID: 879117892}
+  enemyTrepTrigger: {fileID: 1327859182}
   playerTriggerInv: {fileID: 962012944}
   playerTriggerFol: {fileID: 829373526}
   player: {fileID: 697927170}
+  enemy: {fileID: 1300524565}
   anxietyBarBeh: {fileID: 697927183}
   timeCount: 0
   invisibility: 0
@@ -24412,7 +24415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 320b1c2af77554f99a1658df4a6d3d5c, type: 3}
@@ -24438,7 +24441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2262d55ee91174846826d9123d7ef7c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trepBarBeh: {fileID: 0}
+  trepBarBeh: {fileID: 1327859187}
   playerPickManager: {fileID: 697927176}
   lifeController: {fileID: 697927181}
   player: {fileID: 697927170}
@@ -25708,7 +25711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1872487838}
-  mouseLookAround: {fileID: 0}
+  mouseLookAround: {fileID: 963194229}
 --- !u!4 &1354123953
 Transform:
   m_ObjectHideFlags: 0
