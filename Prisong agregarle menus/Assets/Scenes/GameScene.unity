@@ -17980,8 +17980,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yellowLightOn: 0
   greenLightOn: 0
-  redLightOn: 0
+  redLightOn: 1
   enemyNear: 0
+  enemyPickNear: 0
+  keyTrigger: 0
   yellowLight: {fileID: 1251685770}
   greenLight: {fileID: 1450299262}
   redLight: {fileID: 484505546}

@@ -8,54 +8,82 @@ public class LightConfig : MonoBehaviour
     public bool greenLightOn;
     public bool redLightOn;
     public bool enemyNear;
+    public bool enemyPickNear;
+    public bool keyTrigger;
     public GameObject yellowLight;
     public GameObject greenLight;
     public GameObject redLight;
 
-    public IEnumerator LightsEnemy()
-    {   
+    public void GreenLight()
+    {
+        yellowLightOn = false;
+        greenLightOn = true;
+        redLightOn = false;
+    }
+
+    public void YellowLight()
+    {
+        yellowLightOn = true;
+        greenLightOn = false;
+        redLightOn = false;
+    }
+
+    public void RedLight()
+    {
+        yellowLightOn = false;
+        greenLightOn = false;
+        redLightOn = true;
+    }
+
+    public IEnumerator RedYellowInter()
+    {
+        enemyNear = true;
+        enemyPickNear = false;
         while (enemyNear == true)
         {
-            yellowLightOn = false;
-            redLightOn = true;
+            RedLight();
             yield return new WaitForSeconds(1);
-            yellowLightOn = true;
-            redLightOn = false;
+            YellowLight();
             yield return new WaitForSeconds(1);
         }
     }
 
-    public IEnumerator PickAndEnemy()
+    public IEnumerator GreenRedInter()
     {
-        while (enemyNear == true)
+        enemyNear = false;
+        enemyPickNear = true;
+        while (enemyPickNear == true)
         {
-            yellowLightOn = false;
-            greenLightOn = true;
-            redLightOn = true;
+            GreenLight();
             yield return new WaitForSeconds(1);
-            yellowLightOn = true;
-            greenLightOn = false;
-            redLightOn = false;
+            RedLight();
             yield return new WaitForSeconds(1);
         }
+    }
+
+    public void LightEnemyOff()
+    {
+        yellowLightOn = true;
+        greenLightOn = false;
+        redLightOn = false;
+        enemyNear = false;
+        enemyPickNear = false;
     }
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "KeyTrigger")
         {
-            greenLightOn = true;
-            yellowLightOn = false;
+            keyTrigger = true;
+            GreenLight();
         }
-        if (other.transform.tag == "KeyTrigger" && other.transform.tag == "EnemyTriggerNear")
+        else if (other.transform.tag == "EnemyTriggerNear" && keyTrigger == true)
         {
-            enemyNear = true;
-            StartCoroutine(PickAndEnemy());
+            StartCoroutine(GreenRedInter());
         }
-        if (other.transform.tag == "EnemyTriggerNear")
+        else if (other.transform.tag == "EnemyTriggerNear")
         {
-            enemyNear = true;
-            StartCoroutine(LightsEnemy());
+            StartCoroutine(RedYellowInter());
         }
     }
 
@@ -63,23 +91,25 @@ public class LightConfig : MonoBehaviour
     {
         if (other.transform.tag == "KeyTrigger")
         {
-            greenLightOn = false;
-            yellowLightOn = true;
+            keyTrigger = false;
+            LightEnemyOff();
+        }
+        else if (other.transform.tag == "EnemyTriggerNear" && keyTrigger == true)
+        {
+            enemyPickNear = false;
+            LightEnemyOff();
         }
         if (other.transform.tag == "EnemyTriggerNear")
         {
-            enemyNear = false;
+            LightEnemyOff();
         }
     }
 
     public void Start()
     {
-        yellowLight.SetActive(true);
-        greenLight.SetActive(false);
-        yellowLightOn = true;
-        greenLightOn = false;
-        redLightOn = false;
-        enemyNear = false;
+        keyTrigger = false;
+        YellowLight();
+        LightEnemyOff();
     }
 
     public void Update()
@@ -90,19 +120,13 @@ public class LightConfig : MonoBehaviour
             yellowLight.SetActive(false);
             redLight.SetActive(false);
         }
-        else if (yellowLight == true && greenLightOn == false && redLightOn == false)
+        if (greenLightOn == false && yellowLightOn == true && redLightOn == false)
         {
             greenLight.SetActive(false);
             yellowLight.SetActive(true);
             redLight.SetActive(false);
         }
-        else if (redLightOn == true && yellowLight == false && greenLightOn == false)
-        {
-            greenLight.SetActive(false);
-            yellowLight.SetActive(false);
-            redLight.SetActive(true);
-        }
-        else if (yellowLight == true && greenLight == true && redLight == false)
+        if (greenLightOn == false && yellowLightOn == false && redLightOn == true)
         {
             greenLight.SetActive(false);
             yellowLight.SetActive(false);

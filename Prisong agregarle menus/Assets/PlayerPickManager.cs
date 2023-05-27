@@ -80,6 +80,7 @@ public class PlayerPickManager : MonoBehaviour
             enemy.SetActive(true);
             Config.picksCount++;
             eCollision.pressEInstruction.SetActive(false);
+            lightConfig.YellowLight();
         }
     }
 
