@@ -17,6 +17,7 @@ TagManager:
   - KeyTrigger
   - EnemyTrigger
   - EnemyTriggerNear
+  - Note
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - Dispenser
   - Piano
   - Chest
-  - 
+  - Note
   - 
   - 
   - 

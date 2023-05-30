@@ -61,6 +61,7 @@ public class PlayerInputManager : MonoBehaviour
             playerPickManager.EscapeDoor();
             playerPickManager.PianoInteract();
             playerPickManager.StoneInteract();
+            playerPickManager.NotePick();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {

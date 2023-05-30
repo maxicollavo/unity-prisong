@@ -20,6 +20,7 @@ public class PlayerPickManager : MonoBehaviour
     public LayerMask doorEscapeMask;
     public LayerMask dispenserMask;
     public LayerMask pianoMask;
+    public LayerMask noteMask;
     float radious = 1.33f;
     public GameObject enemy;
     public GameObject runSign;
@@ -30,29 +31,23 @@ public class PlayerPickManager : MonoBehaviour
     public GameObject closeChest;
     public GameObject openChest;
     public GameObject rock;
+    public GameObject note;
+    public GameObject noteUI;
     public bool enemyKill = false;
     public bool chestOpen = false;
     public bool signOne = false;
     public bool signTwo = false;
+    public bool noteOn;
     public float timeCount;
+
 
     void Start()
     {
         timeCount = 0f;
+        noteOn = false;
     }
 
-    void Update()
-    {
-        if (Config.picksCount == 1)
-        {
-            runSign.SetActive(true);
-            timeCount += Time.deltaTime;
-        }
-        if (timeCount >= 3f)
-        {
-            runSign.SetActive(false);
-        }
-    }
+   
 
     /*public void DispenserMachineInteract()
     {
@@ -188,4 +183,27 @@ public class PlayerPickManager : MonoBehaviour
             }
         }
     }
+    public void NotePick()
+    {
+        Collider[] collidersPick = Physics.OverlapSphere(transform.position, radious, noteMask);
+        for (int i = 0; i < collidersPick.Length; i++)
+        {
+            if (noteOn == false)
+            {
+                Collider pick = collidersPick[0];
+                note.gameObject.SetActive(false);
+                noteUI.gameObject.SetActive(true);
+                eCollision.pressEInstruction.SetActive(false);
+                noteOn = true;
+            }
+            else if (noteOn == true)
+            {
+                note.gameObject.SetActive(true);
+                noteUI.gameObject.SetActive(false);
+                eCollision.pressEInstruction.SetActive(true);
+            }
+
+        }
+    }
+
 }

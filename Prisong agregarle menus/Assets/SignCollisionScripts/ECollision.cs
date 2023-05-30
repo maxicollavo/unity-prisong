@@ -35,7 +35,10 @@ public class ECollision : MonoBehaviour
         {
             pressEMachineInstruction.SetActive(true);
         }
-        
+        else if (collision.transform.tag == "Note")
+        {
+            pressEInstruction.SetActive(true);
+        }
     }
 
     void OnTriggerExit(Collider collision)
@@ -55,6 +58,10 @@ public class ECollision : MonoBehaviour
         else if (collision.transform.tag == "Dispenser")
         {
             pressEMachineInstruction.SetActive(false);
+        }
+        else if (collision.transform.tag == "Note")
+        {
+            pressEInstruction.SetActive(false);
         }
     }
 
