@@ -13,16 +13,17 @@ public class EnemyMovement : MonoBehaviour
     public GameObject enemyLastObject;
     public LayerMask mask;
     public Animator WalkingEnemy;
-    public bool followTrigger = false;
-    public bool enemyStun = false;
+    public bool followTrigger;
+    public bool enemyStun;
     public bool stayAlert;
     public Vector3 dir;
     public float speedRoat;
     public NavMeshAgent agent;
-    public bool enemyTrigger = false;
 
     private void Start()
     {
+        followTrigger = false;
+        enemyStun = false;
         stayAlert = true;
         Animator AnimE = GetComponent<Animator>();
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
@@ -59,6 +60,22 @@ public class EnemyMovement : MonoBehaviour
             stayAlert = false;
             enemyStun = true;
             agent.speed = 0f;
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "FollowTrigger")
+        {
+            followTrigger = true;
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "FollowTrigger")
+        {
+            followTrigger = false;
         }
     }
 }

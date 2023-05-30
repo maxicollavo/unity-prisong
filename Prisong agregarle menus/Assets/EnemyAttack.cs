@@ -26,8 +26,9 @@ public class EnemyAttack : MonoBehaviour
             {
                 lifeController.heart3.SetActive(false);
             }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(0.0001f);
             WalkingEnemy.SetBool("enemyTrigger", false);
+            yield return new WaitForSeconds(2);
         }
     }
 
