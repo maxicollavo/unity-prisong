@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NieblaTest : MonoBehaviour
 {
-    public Tranform Player
+    public Transform Player;
     public float minDist;
     void Start()
     {
