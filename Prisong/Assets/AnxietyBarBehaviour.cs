@@ -44,7 +44,6 @@ public class AnxietyBarBehaviour : MonoBehaviour
             Config.anxietyBarCount++;
             if (Config.anxietyBarCount >= 1)
             {
-                playerInputManager.speed = 750;
             }
         }
     }

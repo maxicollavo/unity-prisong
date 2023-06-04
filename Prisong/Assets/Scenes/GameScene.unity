@@ -44759,12 +44759,14 @@ MonoBehaviour:
   playerPickManager: {fileID: 697927176}
   mechanics: {fileID: 697927184}
   pauseManager: {fileID: 1354123952}
-  speed: 300
-  speedRun: 100
   anim: {fileID: 697927173}
   rock: {fileID: 401498167}
   gameBeginningSign: {fileID: 868659937}
   timeCount: 0
+  isSprinting: 0
+  walkSpeed: 0
+  sprintSpeed: 0
+  realSpeed: 0
 --- !u!95 &697927173 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 3e00558e309b2bf4488be393c7762d98, type: 3}
@@ -127872,8 +127874,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872487838}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -13.597579}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -127883,7 +127885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 10.202446, y: 65.5181}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1873559728

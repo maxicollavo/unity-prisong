@@ -10,6 +10,7 @@ public class Config : MonoBehaviour
     public static float sensitivityInGame = .5f;
     public static float sensitivityInPause = 0f;
     public static int playerSpeed = 500;
+    public static int playerRunSpeed = 1000;
     public static float maxLives = 4;
     public static int trepCount = 4;
     public static int keyCount = 0;
@@ -76,6 +77,5 @@ public class Config : MonoBehaviour
 
     public void Run()
     {
-        playerInputManager.speed += playerInputManager.speedRun; //Sumarle al speed del Move playerInputManager.speedRun;
     }
 }
