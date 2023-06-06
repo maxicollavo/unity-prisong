@@ -73,9 +73,9 @@ public class TrepidationBarBehaviour : MonoBehaviour
     {
         if (Config.trepCount == 0)
         {
-            playerInputManager.realSpeed = 0;
+            playerInputManager.speed = 0;
             yield return new WaitForSeconds(2);
-            playerInputManager.realSpeed = Config.playerSpeed;
+            playerInputManager.speed = Config.playerSpeed;
             yield break;
         }
     }
