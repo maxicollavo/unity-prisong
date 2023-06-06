@@ -7,7 +7,6 @@ public class Sounds : MonoBehaviour
     public AudioClip InteractSource;
     public bool Audio;
     AudioSource Audiosource;
-    float timeCount = 0;    
 
     private void Start()
     {

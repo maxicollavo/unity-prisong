@@ -7,28 +7,31 @@ public class PlayerInputManager : MonoBehaviour
     public PlayerPickManager playerPickManager;
     public Mechanics mechanics;
     public PauseManager pauseManager;
+    Rigidbody _rb;
+    Vector3 _movement;
+    [SerializeField] public int speed;
+    public int speedRun = 100;
     public Animator anim;
     public GameObject rock;
     public GameObject gameBeginningSign;
     public float timeCount;
-    public bool isSprinting;
-    public float walkSpeed;
-    public float sprintSpeed;
-    public float realSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
         timeCount = 0f;
-        walkSpeed = 8f;
-        sprintSpeed = 12f;
+        speed = Config.playerSpeed;
+    }
+
+    public void Move()
+    {
+        _rb.velocity = _movement * speed * Time.deltaTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        realSpeed = Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed;
-
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
         {
@@ -42,10 +45,8 @@ public class PlayerInputManager : MonoBehaviour
         var z = Input.GetAxisRaw("Vertical");
         anim.SetFloat("X", x);
         anim.SetFloat("Z", z);
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-
-        }
+        _movement = transform.forward * z;
+        _movement += transform.right * x;
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (mechanics.invisibility == false)
@@ -74,8 +75,8 @@ public class PlayerInputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Move();
         Look();
-        transform.Translate(realSpeed * Input.GetAxis("Horizontal") * Time.deltaTime, 0f, realSpeed * Input.GetAxis("Vertical") * Time.deltaTime);
     }
 
     private void Look()
