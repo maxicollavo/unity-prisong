@@ -50,7 +50,7 @@ public class EnemyMovement : MonoBehaviour
     void EnemyAnim()
     {
         if (stayAlert == true) WalkingEnemy.SetBool("WalkingE", true);
-        else if (stayAlert == false) WalkingEnemy.SetBool("WalkingE", false);
+        //else if (stayAlert == false) WalkingEnemy.SetBool("WalkingE", false);
     }
 
     public void EnemyStun()
