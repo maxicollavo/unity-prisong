@@ -12,7 +12,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject enemy;
     public GameObject enemyLastObject;
     public LayerMask mask;
-    public Animator WalkingEnemy;
+    public Animator WalkingE;
     public bool followTrigger;
     public bool enemyStun;
     public bool stayAlert;
@@ -25,7 +25,7 @@ public class EnemyMovement : MonoBehaviour
         followTrigger = false;
         enemyStun = false;
         stayAlert = true;
-        Animator AnimE = GetComponent<Animator>();
+        Animator WalkingE = GetComponent<Animator>();
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
     }
     void Update()
@@ -49,8 +49,9 @@ public class EnemyMovement : MonoBehaviour
 
     void EnemyAnim()
     {
-        if (stayAlert == true) WalkingEnemy.SetBool("WalkingE", true);
-        //else if (stayAlert == false) WalkingEnemy.SetBool("WalkingE", false);
+        if (stayAlert == true) WalkingE.SetBool("WalkingE", true);
+        else if (stayAlert == false) WalkingE.SetBool("WalkingE", false);
+
     }
 
     public void EnemyStun()
