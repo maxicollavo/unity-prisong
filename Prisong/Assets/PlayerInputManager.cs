@@ -7,6 +7,7 @@ public class PlayerInputManager : MonoBehaviour
     public PlayerPickManager playerPickManager;
     public Mechanics mechanics;
     public PauseManager pauseManager;
+    public EnemyDetect enemyDetect;
     Rigidbody _rb;
     Vector3 _movement;
     [SerializeField] public int speed;
@@ -76,12 +77,11 @@ public class PlayerInputManager : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        Look();
     }
 
-    private void Look()
+    private void MakeNoise()
     {
-
+        enemyDetect.DetectNoise();
     }
 }
 

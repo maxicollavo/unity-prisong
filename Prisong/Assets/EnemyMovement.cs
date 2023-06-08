@@ -64,11 +64,6 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void EnemyEars()
-    {
-
-    }
-
     public void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "FollowTrigger")

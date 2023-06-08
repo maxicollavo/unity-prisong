@@ -18,6 +18,7 @@ TagManager:
   - EnemyTrigger
   - EnemyTriggerNear
   - Note
+  - Mirror
   layers:
   - Default
   - TransparentFX
