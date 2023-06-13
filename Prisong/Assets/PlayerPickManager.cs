@@ -15,6 +15,7 @@ public class PlayerPickManager : MonoBehaviour
     public NeedObjectCollision needObjectCollision;
     public AnxietyBarBehaviour anxietyBarBehaviour;
     public LayerMask pickMask;
+    public LayerMask diskMask;
     public LayerMask rockMask;
     public LayerMask chestMask;
     public LayerMask doorEscapeMask;
@@ -33,6 +34,7 @@ public class PlayerPickManager : MonoBehaviour
     public GameObject rock;
     public GameObject note;
     public GameObject noteUI;
+    public GameObject disk;
     public bool enemyKill = false;
     public bool chestOpen = false;
     public bool signOne = false;
@@ -65,6 +67,16 @@ public class PlayerPickManager : MonoBehaviour
         }
     }*/
 
+    public void Disk()
+    {
+        Collider[] collidersDisk = Physics.OverlapSphere(transform.position, radious, diskMask) ;
+        for (int i = 0; i < collidersDisk.Length; i++)
+        {
+            Collider pick = collidersDisk[0];
+            disk.gameObject.SetActive(false);
+            eCollision.pressEInstruction.SetActive(false);
+        }
+    }
     public void Picks()
     {
         Collider[] collidersPick = Physics.OverlapSphere(transform.position, radious, pickMask);

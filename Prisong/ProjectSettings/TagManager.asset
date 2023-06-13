@@ -19,6 +19,7 @@ TagManager:
   - EnemyTriggerNear
   - Note
   - Mirror
+  - Disco
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,7 @@ TagManager:
   - Piano
   - Chest
   - Note
-  - 
+  - Disk
   - 
   - 
   - 
