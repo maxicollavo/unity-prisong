@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
+    public Transform[] Waypoints;
     public TrepidationBarBehaviour trepBarBeh;
     public PlayerPickManager playerPickManager;
     public LifeController lifeController;
@@ -18,6 +19,8 @@ public class EnemyMovement : MonoBehaviour
     public bool stayAlert;
     public Vector3 dir;
     public float speedRoat;
+    public float minDist;
+    int _actualIndex;
     public NavMeshAgent agent;
 
     private void Start()
@@ -30,11 +33,30 @@ public class EnemyMovement : MonoBehaviour
     }
     void Update()
     {
+        if (followTrigger == false)
+        {
+            WaypointsMetodo();
+        }
         FaceTarget(player.transform.position);
         EnemyAnim();
         EnemyStun();
     }
 
+    private void WaypointsMetodo ()
+    {
+        var dir = Waypoints[_actualIndex].position - transform.position;
+        transform.forward = dir;
+        transform.position += dir.normalized * agent.speed * Time.deltaTime;
+
+        if (Vector3.Distance(transform.position, Waypoints[_actualIndex].position) <= minDist)
+        {
+            _actualIndex++;
+            if (_actualIndex >= Waypoints.Length)
+            {
+                _actualIndex = 0;
+            }
+        }
+    }
     private void FaceTarget(Vector3 destination)
     {
         if (followTrigger == true)
@@ -44,6 +66,7 @@ public class EnemyMovement : MonoBehaviour
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
+
         }
     }  
 
