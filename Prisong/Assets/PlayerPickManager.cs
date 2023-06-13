@@ -22,6 +22,7 @@ public class PlayerPickManager : MonoBehaviour
     public LayerMask dispenserMask;
     public LayerMask pianoMask;
     public LayerMask noteMask;
+    public LayerMask playRecordMask;
     float radious = 1.33f;
     public GameObject enemy;
     public GameObject runSign;
@@ -35,10 +36,12 @@ public class PlayerPickManager : MonoBehaviour
     public GameObject note;
     public GameObject noteUI;
     public GameObject disk;
+    public GameObject diskTwo;
     public bool enemyKill = false;
     public bool chestOpen = false;
     public bool signOne = false;
     public bool signTwo = false;
+    public bool haveDisk = false;
     public bool noteOn;
     public float timeCount;
 
@@ -47,6 +50,7 @@ public class PlayerPickManager : MonoBehaviour
     {
         timeCount = 0f;
         noteOn = false;
+
     }
 
    
@@ -69,14 +73,31 @@ public class PlayerPickManager : MonoBehaviour
 
     public void Disk()
     {
-        Collider[] collidersDisk = Physics.OverlapSphere(transform.position, radious, diskMask) ;
+        Collider[] collidersDisk = Physics.OverlapSphere(transform.position, radious, diskMask);
         for (int i = 0; i < collidersDisk.Length; i++)
         {
             Collider pick = collidersDisk[0];
             disk.gameObject.SetActive(false);
             eCollision.pressEInstruction.SetActive(false);
+            haveDisk = true;
+        }
+       
+    }
+
+    public void PlayRecord()
+    {
+        if (haveDisk == true)
+        {
+            Collider[] collidersPlayRecord = Physics.OverlapSphere(transform.position, radious, playRecordMask);
+            for (int i = 0; i < collidersPlayRecord.Length; i++)
+            {
+                Collider playRecord = collidersPlayRecord[0];
+                diskTwo.gameObject.SetActive(true);
+                eCollision.pressEInstruction.SetActive(false);
+            }
         }
     }
+
     public void Picks()
     {
         Collider[] collidersPick = Physics.OverlapSphere(transform.position, radious, pickMask);

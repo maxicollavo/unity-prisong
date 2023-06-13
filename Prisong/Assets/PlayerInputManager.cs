@@ -64,6 +64,7 @@ public class PlayerInputManager : MonoBehaviour
             playerPickManager.StoneInteract();
             playerPickManager.NotePick();
             playerPickManager.Disk();
+            playerPickManager.PlayRecord();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
