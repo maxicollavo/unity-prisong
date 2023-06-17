@@ -23,6 +23,14 @@ public class ECollision : MonoBehaviour
         {
             pressEInteractPiano.SetActive(true);
         }
+        else if (collision.transform.tag == "Piano" && Config.picksCount == 3 && playerPickManager.signThree == false)
+        {
+            pressEInteractPiano.SetActive(true);
+        }
+        else if (collision.transform.tag == "Piano" && Config.picksCount == 4)
+        {
+            pressEInteractPiano.SetActive(true);
+        }
         else if (collision.transform.tag == "Piano" && Config.picksCount == 0 && playerPickManager.signTwo == true)
         {
             pressEInteractPiano.SetActive(false);
@@ -38,6 +46,14 @@ public class ECollision : MonoBehaviour
         else if (collision.transform.tag == "Note")
         {
             pressEInstruction.SetActive(true);
+        }
+        else if (collision.transform.tag == "Disco")
+        {
+            pressEInstruction.SetActive(true);
+        }
+        else if (collision.transform.tag == "PlayRecord" && playerPickManager.haveDisk == true)
+        {
+            pressEInteractPiano.SetActive(true);
         }
     }
 
@@ -62,6 +78,14 @@ public class ECollision : MonoBehaviour
         else if (collision.transform.tag == "Note")
         {
             pressEInstruction.SetActive(false);
+        }
+        else if (collision.transform.tag == "Disco")
+        {
+            pressEInstruction.SetActive(false);
+        }
+        else if (collision.transform.tag == "PlayRecord")
+        {
+            pressEInteractPiano.SetActive(false);
         }
     }
 

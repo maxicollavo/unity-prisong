@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerPickManager : MonoBehaviour
 {
@@ -14,62 +15,18 @@ public class PlayerPickManager : MonoBehaviour
     public FCollision fCollision;
     public NeedObjectCollision needObjectCollision;
     public AnxietyBarBehaviour anxietyBarBehaviour;
-    public LayerMask pickMask;
-    public LayerMask diskMask;
-    public LayerMask rockMask;
-    public LayerMask chestMask;
-    public LayerMask doorEscapeMask;
-    public LayerMask dispenserMask;
-    public LayerMask pianoMask;
-    public LayerMask noteMask;
-    public LayerMask playRecordMask;
+    public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask;
     float radious = 1.33f;
-    public GameObject enemy;
-    public GameObject runSign;
-    public GameObject runAwaySign;
-    public GameObject piano2;
-    public GameObject pianoFull;
-    public GameObject cage;
-    public GameObject closeChest;
-    public GameObject openChest;
-    public GameObject rock;
-    public GameObject note;
-    public GameObject noteUI;
-    public GameObject disk;
-    public GameObject diskTwo;
-    public bool enemyKill = false;
-    public bool chestOpen = false;
-    public bool signOne = false;
-    public bool signTwo = false;
-    public bool haveDisk = false;
-    public bool noteOn;
+    public GameObject enemy, runSign, runAwaySign, piano2, pianoFull, cage, closeChest, openChest, rock, note, noteUI, disk, diskTwo, openWall;
+    public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark, rockDark;
+    public bool enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     public float timeCount;
 
-
-    void Start()
+    public void Start()
     {
         timeCount = 0f;
         noteOn = false;
-
     }
-
-   
-
-    /*public void DispenserMachineInteract()
-    {
-        for (int i = 1; i >= Config.anxietyBarTokensEarned; i++)
-        {
-            Collider[] collidersDispenser = Physics.OverlapSphere(transform.position, radious, dispenserMask);
-            if (collidersDispenser.Length > 0)
-            {
-                Collider dispenser = collidersDispenser[0];
-                if (Config.anxietyBarTokensEarned <= Config.anxietyBarMaxToken)
-                {
-                    lifeController.lives = Config.maxLives;
-                }
-            }
-        }
-    }*/
 
     public void Disk()
     {
@@ -81,7 +38,6 @@ public class PlayerPickManager : MonoBehaviour
             eCollision.pressEInstruction.SetActive(false);
             haveDisk = true;
         }
-       
     }
 
     public void PlayRecord()
@@ -93,7 +49,8 @@ public class PlayerPickManager : MonoBehaviour
             {
                 Collider playRecord = collidersPlayRecord[0];
                 diskTwo.gameObject.SetActive(true);
-                eCollision.pressEInstruction.SetActive(false);
+                openWall.gameObject.SetActive(false);
+                eCollision.pressEInteractPiano.SetActive(false);
             }
         }
     }
@@ -112,6 +69,44 @@ public class PlayerPickManager : MonoBehaviour
         }
     }
 
+    /*public void PianoInteractDarkWorld()
+    {
+        if (Config.picksCount == 1 && signThree == false)
+        {
+            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
+            if (collidersPiano.Length > 0)
+            {
+                eCollision.pressEInteractPiano.SetActive(false);
+                piano2Dark.SetActive(true);
+                signThree = true;
+                if (Config.trepCount < 4 && Config.anxietyBarCount < 4)
+                {
+                    trepBarBeh.enemyTriggerMap.SetActive(true);
+                }
+                else trepBarBeh.enemyTriggerMap.SetActive(false);
+            }
+        }
+        else if (Config.picksCount == 2 && signFour == false)
+        {
+            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
+            if (collidersPiano.Length > 0)
+            {
+                piano2Dark.SetActive(true);
+                pianoFullDark.SetActive(true);
+                eCollision.pressEInteractPiano.SetActive(false);
+                cageDark.SetActive(false);
+                Config.keyCount = 2;
+                signFour = true;
+                Config.picksCount = 0;
+                fCollision.pressFInteractChest.SetActive(true);
+            }
+        }
+        else if (signThree == true)
+        {
+            eCollision.pressEInteractPiano.SetActive(false);
+        }
+    }*/
+
     public void PianoInteract()
     {
         if (Config.picksCount == 1 && signOne == false)
@@ -119,7 +114,6 @@ public class PlayerPickManager : MonoBehaviour
             Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
             if (collidersPiano.Length > 0)
             {
-                //Collider piano1 = collidersPiano[0];
                 eCollision.pressEInteractPiano.SetActive(false);
                 piano2.SetActive(true);
                 signOne = true;
@@ -135,7 +129,6 @@ public class PlayerPickManager : MonoBehaviour
             Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
             if (collidersPiano.Length > 0)
             {
-                //Collider piano1 = collidersPiano[0];
                 piano2.SetActive(true);
                 pianoFull.SetActive(true);
                 eCollision.pressEInteractPiano.SetActive(false);
@@ -178,31 +171,13 @@ public class PlayerPickManager : MonoBehaviour
                 rock.SetActive(false);
                 Config.rockPickCount++;
                 eCollision.pressEInstruction.SetActive(false);
-                runAwaySign.SetActive(true);
+                if (Config.rockPickCount == 1)
+                {
+                    runAwaySign.SetActive(true);
+                }
             }
         }
     }
-
-    /*public void EnemyKill()
-    {
-        if (enemyMovement.enemyStun == true)
-        {
-            EnemyInteract();
-            enemyKill = true;
-        }
-    }
-
-    public void EnemyInteract()
-    {
-        enemy.SetActive(false);
-        if (Config.objectInstantiateCount == 0)
-        {
-            Vector3 posicion = new Vector3(0, 8.27f, 0);
-            Instantiate(enemyMovement.enemyLastObject, posicion, Quaternion.identity);
-            Config.objectInstantiateCount++;
-        }
-        else return;
-    }*/
 
     public void EscapeDoor()
     {
@@ -243,6 +218,4 @@ public class PlayerPickManager : MonoBehaviour
             }
         }
     }
-
-   
 }

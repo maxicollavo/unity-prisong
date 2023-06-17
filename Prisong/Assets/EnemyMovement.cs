@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject enemy;
     public GameObject enemyLastObject;
     public LayerMask mask;
-    public Animator WalkingE;
+    public Animator WalkingEnemy;
     public bool followTrigger;
     public bool enemyStun;
     public bool stayAlert;
@@ -28,33 +28,36 @@ public class EnemyMovement : MonoBehaviour
         followTrigger = false;
         enemyStun = false;
         stayAlert = true;
-        Animator WalkingE = GetComponent<Animator>();
+        Animator WalkingEnemy = GetComponent<Animator>();
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        _actualIndex = Random.Range(0, Waypoints.Length);
     }
     void Update()
     {
         if (followTrigger == false)
         {
-            WaypointsMetodo();
+            WaypointsMethod();
         }
         FaceTarget(player.transform.position);
         EnemyAnim();
         EnemyStun();
     }
-
-    private void WaypointsMetodo ()
+    private void WaypointsMethod ()
     {
-        var dir = Waypoints[_actualIndex].position - transform.position;
-        transform.forward = dir;
-        transform.position += dir.normalized * agent.speed * Time.deltaTime;
-
+        //var dir = Waypoints[_actualIndex].position - transform.position;
+        //transform.forward = dir;
+        //transform.position += dir.normalized * agent.speed * Time.deltaTime;
+        agent.SetDestination(Waypoints[_actualIndex].position);
         if (Vector3.Distance(transform.position, Waypoints[_actualIndex].position) <= minDist)
-        {
-            _actualIndex++;
-            if (_actualIndex >= Waypoints.Length)
             {
-                _actualIndex = 0;
-            }
+        
+            _actualIndex = Random.Range(0, Waypoints.Length);
+
+            /*  _actualIndex++;
+              if (_actualIndex >= Waypoints.Length)
+              {
+                  _actualIndex = 0;
+              }*/
         }
     }
     private void FaceTarget(Vector3 destination)
@@ -66,27 +69,23 @@ public class EnemyMovement : MonoBehaviour
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
-
         }
     }  
-
     void EnemyAnim()
     {
-        if (stayAlert == true) WalkingE.SetBool("WalkingE", true);
-        else if (stayAlert == false) WalkingE.SetBool("WalkingE", false);
+        if (stayAlert == true) WalkingEnemy.SetBool("WalkingEnemy", true);
+        else if (stayAlert == false) WalkingEnemy.SetBool("WalkingEnemy", false);
 
     }
-
     public void EnemyStun()
     {
-        if (Config.rockPickCount == 1)
+        if (Config.rockPickCount == 1 && TPDarkWorld.realWorld == true)
         {
             stayAlert = false;
             enemyStun = true;
             agent.speed = 0f;
         }
     }
-
     public void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "FollowTrigger")
@@ -94,7 +93,6 @@ public class EnemyMovement : MonoBehaviour
             followTrigger = true;
         }
     }
-
     public void OnTriggerExit(Collider other)
     {
         if (other.transform.tag == "FollowTrigger")

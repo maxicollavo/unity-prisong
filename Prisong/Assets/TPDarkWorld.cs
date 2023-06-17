@@ -4,21 +4,36 @@ using UnityEngine;
 
 public class TPDarkWorld : MonoBehaviour
 {
-    public float teleportHeight = -48f;
+    public float teleportHeightDown = -48f;
+    public float teleportHeightUp = 41f;
     public Collider other;
+    public static bool realWorld = true;
+    public static bool darkWorld = false;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Mirror"))
         {
-            Debug.Log("Entro");
             TeleportPlayer();
         }
     }
 
     void TeleportPlayer()
     {
-        Vector3 newPosition = new Vector3(transform.parent.localPosition.x, teleportHeight, transform.parent.localPosition.z);
-        transform.parent.localPosition = newPosition;
+        if (realWorld == true && darkWorld == false)
+        {
+            Vector3 newPosition = new Vector3(transform.parent.localPosition.x, teleportHeightDown, transform.parent.localPosition.z);
+            transform.parent.localPosition = newPosition;
+            realWorld = !realWorld;
+            darkWorld = !darkWorld;
+        }
+        else if (darkWorld == true && realWorld == false)
+        {
+            Vector3 newPosition = new Vector3(transform.parent.localPosition.x, teleportHeightUp, transform.parent.localPosition.z);
+            transform.parent.localPosition = newPosition;
+            realWorld = !realWorld;
+            darkWorld = !darkWorld;
+        }
+        
     }
 }

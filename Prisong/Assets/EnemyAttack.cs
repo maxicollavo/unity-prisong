@@ -6,13 +6,21 @@ public class EnemyAttack : MonoBehaviour
 {
     public LifeController lifeController;
     public Animator WalkingEnemy;
-    public bool enemyTrigger = false;
+    public bool EnemyTrigger = false;
 
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.transform.tag == "PlayerTrigger")
+        {
+            EnemyTrigger = true;
+            StartCoroutine(HitEnemy());
+        }
+    }
     public IEnumerator HitEnemy()
     {
-        while (enemyTrigger == true)
+        while (EnemyTrigger == true)
         {
-            WalkingEnemy.SetBool("enemyTrigger", true);
+            WalkingEnemy.SetBool("EnemyTrigger", true);
             lifeController.Hit();
             if (lifeController.lives == 3)
             {
@@ -27,17 +35,8 @@ public class EnemyAttack : MonoBehaviour
                 lifeController.heart3.SetActive(false);
             }
             yield return new WaitForSeconds(0.0001f);
-            WalkingEnemy.SetBool("enemyTrigger", false);
+            WalkingEnemy.SetBool("EnemyTrigger", false);
             yield return new WaitForSeconds(2);
-        }
-    }
-
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.transform.tag == "PlayerTrigger")
-        {
-            enemyTrigger = true;
-            StartCoroutine(HitEnemy());
         }
     }
 
@@ -45,8 +44,8 @@ public class EnemyAttack : MonoBehaviour
     {
         if (collider.transform.tag == "PlayerTrigger")
         {
-            enemyTrigger = false;
-            WalkingEnemy.SetBool("enemyTrigger", false);
+            EnemyTrigger = false;
+            WalkingEnemy.SetBool("EnemyTrigger", false);
         }
     }
 }
