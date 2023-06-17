@@ -12,15 +12,16 @@ public class FCollision : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Chest" && Config.keyCount == 2 && playerPickManager.chestOpen == false)
+        if (collision.transform.tag == "Chest")
         {
-            pressFInteractChest.SetActive(true);
+            ChestRefs chestRefs = collision.gameObject.GetComponent<ChestRefs>();
+            int pianoKeys = chestRefs.piano.GetComponent<PianoKeyCounter>().Keys;
+            if (pianoKeys == 2 && collision.gameObject.activeInHierarchy)
+            {
+                pressFInteractChest.SetActive(true);
+            }
         }
-        else if (collision.transform.tag == "Chest" && playerPickManager.chestOpen == true)
-        {
-            pressFInteractChest.SetActive(false);
-        }
-        if (Config.rockPickCount == 1)
+        if (Config.rockPickCount == 2)
         {
             if (collision.transform.tag == "DoorEscape")
             {

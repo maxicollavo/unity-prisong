@@ -11,7 +11,7 @@ public class NeedObjectCollision : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.tag == "Piano" && Config.picksCount == 0 && playerPickManager.signTwo == false)
+        if (collision.transform.tag == "Piano" && Config.picksCount == 0)
         {
             needObjectPiano.SetActive(true);
         }

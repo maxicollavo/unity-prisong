@@ -12,8 +12,8 @@ public class Config : MonoBehaviour
     public static int playerSpeed = 500;
     public static int playerRunSpeed = 1000;
     public static float maxLives = 4;
+    public static int picksCountUsed = 0;
     public static int trepCount = 4;
-    public static int keyCount = 0;
     public static int picksRequired = 2;
     public static int pianoCount = 0;
     public static int firstPiano = 1;
@@ -37,7 +37,7 @@ public class Config : MonoBehaviour
 
     public static void Reset()
     {
-        keyCount = 0;
+        picksCountUsed = 0;
         pianoCount = 0;
         objectInstantiateCount = 0;
         picksCount = 0;

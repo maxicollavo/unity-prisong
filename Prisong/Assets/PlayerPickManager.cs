@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerPickManager : MonoBehaviour
+public partial class PlayerPickManager : MonoBehaviour
 {
     public LightConfig lightConfig;
     public PlayerInputManager playerInputManager;
@@ -17,7 +17,7 @@ public class PlayerPickManager : MonoBehaviour
     public AnxietyBarBehaviour anxietyBarBehaviour;
     public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask;
     float radious = 1.33f;
-    public GameObject enemy, runSign, runAwaySign, piano2, pianoFull, cage, closeChest, openChest, rock, note, noteUI, disk, diskTwo, openWall;
+    public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall;
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark, rockDark;
     public bool enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     public float timeCount;
@@ -69,119 +69,79 @@ public class PlayerPickManager : MonoBehaviour
         }
     }
 
-    /*public void PianoInteractDarkWorld()
-    {
-        if (Config.picksCount == 1 && signThree == false)
-        {
-            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
-            if (collidersPiano.Length > 0)
-            {
-                eCollision.pressEInteractPiano.SetActive(false);
-                piano2Dark.SetActive(true);
-                signThree = true;
-                if (Config.trepCount < 4 && Config.anxietyBarCount < 4)
-                {
-                    trepBarBeh.enemyTriggerMap.SetActive(true);
-                }
-                else trepBarBeh.enemyTriggerMap.SetActive(false);
-            }
-        }
-        else if (Config.picksCount == 2 && signFour == false)
-        {
-            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
-            if (collidersPiano.Length > 0)
-            {
-                piano2Dark.SetActive(true);
-                pianoFullDark.SetActive(true);
-                eCollision.pressEInteractPiano.SetActive(false);
-                cageDark.SetActive(false);
-                Config.keyCount = 2;
-                signFour = true;
-                Config.picksCount = 0;
-                fCollision.pressFInteractChest.SetActive(true);
-            }
-        }
-        else if (signThree == true)
-        {
-            eCollision.pressEInteractPiano.SetActive(false);
-        }
-    }*/
-
     public void PianoInteract()
     {
-        if (Config.picksCount == 1 && signOne == false)
+        Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
+        if (collidersPiano.Length > 0)
         {
-            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
-            if (collidersPiano.Length > 0)
+            GameObject pianoGO = collidersPiano[0].gameObject;
+            var counter = pianoGO.GetComponent<PianoKeyCounter>();
+            var pianoRefs = pianoGO.GetComponent<PianoRefs>();
+
+            if (Config.picksCountUsed < Config.picksCount)
             {
+                Config.picksCountUsed++;
+                counter.Keys++;
+
                 eCollision.pressEInteractPiano.SetActive(false);
-                piano2.SetActive(true);
-                signOne = true;
-                if (Config.trepCount < 4 && Config.anxietyBarCount < 4)
+
+                // if (counter.Keys == 1) {
+                //     keyRefs.key1.SetActive(true);
+                // }
+                // else if (counter.Keys == 2) {
+                //     keyRefs.key2.SetActive(true);
+                // }
+
+                // Version simplificada del bloque de arriba, hace lo mismo
+                pianoRefs.key1.SetActive(counter.Keys >= 1);
+                pianoRefs.key2.SetActive(counter.Keys >= 2);
+
+                if (counter.Keys == 2)
                 {
-                    trepBarBeh.enemyTriggerMap.SetActive(true);
+                    fCollision.pressFInteractChest.SetActive(true);
+                    pianoRefs.cage.SetActive(false);
                 }
-                else trepBarBeh.enemyTriggerMap.SetActive(false);
             }
-        }
-        else if (Config.picksCount == 2 && signTwo == false)
-        {
-            Collider[] collidersPiano = Physics.OverlapSphere(transform.position, radious, pianoMask);
-            if (collidersPiano.Length > 0)
-            {
-                piano2.SetActive(true);
-                pianoFull.SetActive(true);
-                eCollision.pressEInteractPiano.SetActive(false);
-                cage.SetActive(false);
-                Config.keyCount = 2;
-                signTwo = true;
-                Config.picksCount = 0;
-                fCollision.pressFInteractChest.SetActive(true);
-            }
-        }
-        else if (signTwo == true)
-        {
-            eCollision.pressEInteractPiano.SetActive(false);
         }
     }
 
     public void ChestInteract()
     {
-        if (Config.keyCount == 2 && closeChest.activeInHierarchy)
+        Collider[] collidersChest = Physics.OverlapSphere(transform.position, radious, chestMask);
+        if (collidersChest.Length > 0)
         {
-            Collider[] collidersChest = Physics.OverlapSphere(transform.position, radious, chestMask);
-            if (collidersChest.Length > 0)
+            GameObject chestGO = collidersChest[0].gameObject;
+            ChestRefs chestRefs = chestGO.GetComponent<ChestRefs>();
+            int pianoKeys = chestRefs.piano.GetComponent<PianoKeyCounter>().Keys;
+
+            if (pianoKeys == 2 && chestGO.activeInHierarchy)
             {
-                closeChest.SetActive(false);
-                openChest.SetActive(true);
-                rock.SetActive(true);
+                chestRefs.openChest.SetActive(true);
+                chestRefs.rock.SetActive(true);
+                chestGO.SetActive(false);
                 fCollision.pressFInteractChest.SetActive(false);
-                chestOpen = true;
             }
         }
     }
 
     public void StoneInteract()
     {
-        if (rock.activeInHierarchy)
-        {
             Collider[] collidersStone = Physics.OverlapSphere(transform.position, radious, rockMask);
             if (collidersStone.Length > 0)
             {
-                rock.SetActive(false);
+                collidersStone[0].gameObject.SetActive(false);
                 Config.rockPickCount++;
                 eCollision.pressEInstruction.SetActive(false);
-                if (Config.rockPickCount == 1)
+                if (Config.rockPickCount == 2)
                 {
                     runAwaySign.SetActive(true);
                 }
             }
-        }
     }
 
     public void EscapeDoor()
     {
-        if (Config.rockPickCount >= 1)
+        if (Config.rockPickCount >= 2)
         {
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)
