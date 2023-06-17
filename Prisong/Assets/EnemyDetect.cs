@@ -11,15 +11,34 @@ public class EnemyDetect : MonoBehaviour
 
     private void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, playerTransform.position - transform.position, out hit, Mathf.Infinity, LayerMask.GetMask("Player")))
+        if (CanSeePlayer())
         {
-            Debug.DrawLine(transform.position, playerTransform.position, Color.red);
+            // El enemigo te ha detectado visualmente
+            Debug.Log("Player detected!");
+            // Aquí puedes realizar las acciones que deseas que ocurran cuando el enemigo te vea
         }
-        else
+    }
+
+    private bool CanSeePlayer()
+    {
+        Vector3 directionToPlayer = playerTransform.position - transform.position;
+        float distanceToPlayer = directionToPlayer.magnitude;
+
+        if (distanceToPlayer <= maxHearingDistance)
         {
-            Debug.DrawLine(transform.position, playerTransform.position, Color.green);
+            // Comprueba si no hay obstáculos entre el enemigo y el jugador
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, directionToPlayer, out hit, distanceToPlayer))
+            {
+                if (hit.transform.CompareTag("Player"))
+                {
+                    // El rayo ha alcanzado al jugador sin ser bloqueado por otros objetos
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
     public void DetectNoise()
