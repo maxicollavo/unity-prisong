@@ -70,10 +70,14 @@ public partial class PlayerPickManager : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collider)
     {
-        if (collider.transform.tag == EnemyTriggerNear)
+        if (collider.transform.tag == "EnemyTriggerNear")
         {
-            AudioListener.volume
-            
+            Audiosource.volume = 0.90f;
+          
+        }
+        else
+        {
+            return;
         }
     }
 
