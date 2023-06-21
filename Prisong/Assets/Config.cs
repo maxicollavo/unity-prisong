@@ -67,7 +67,7 @@ public class Config : MonoBehaviour
 
     public void RockPickMechanic()
     {
-        playerPickManager.StoneInteract();
+        //playerPickManager.StoneInteract();
     }
 
     public void Pause()

@@ -61,7 +61,7 @@ public class PlayerInputManager : MonoBehaviour
             playerPickManager.Picks();
             playerPickManager.EscapeDoor();
             playerPickManager.PianoInteract();
-            playerPickManager.StoneInteract();
+           // playerPickManager.StoneInteract();
             playerPickManager.NotePick();
             playerPickManager.Disk();
             playerPickManager.PlayRecord();
