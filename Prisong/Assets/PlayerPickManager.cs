@@ -54,7 +54,7 @@ public partial class PlayerPickManager : MonoBehaviour
                 diskTwo.gameObject.SetActive(true);
                 openWall.gameObject.SetActive(false);
                 eCollision.pressEInteractPiano.SetActive(false);
-                if (diskTwo.activeInHierarchy);
+                if (diskTwo.activeInHierarchy)
                 {
                     Audio = true;
                     if (Audio == true)
@@ -138,20 +138,26 @@ public partial class PlayerPickManager : MonoBehaviour
         }
     }
 
-    public void StoneInteract()
+    /*public void StoneInteract()
     {
-            Collider[] collidersStone = Physics.OverlapSphere(transform.position, radious, rockMask);
-            if (collidersStone.Length > 0)
+        Collider[] collidersStones = Physics.OverlapSphere(transform.position, radious, rockMask);
+        if (collidersStones.Length > 0)
+        {
+            GameObject stoneGO = collidersStones[0].gameObject;
+            StonesRefs stonesRefs = stoneGO.GetComponent<StonesRefs>();
+            int stonesPicks = stonesRefs.stone.GetComponent<StoneCounter>().stones;
+
+            stonesRefs.stone1.SetActive(stoneCounter.stones >= 1);
+            stonesRefs.stone2.SetActive(stoneCounter.stones >= 2);
+            Config.rockPickCount++;
+            eCollision.pressEInstruction.SetActive(false);
+
+            if (Config.rockPickCount == 2)
             {
-                collidersStone[0].gameObject.SetActive(false);
-                Config.rockPickCount++;
-                eCollision.pressEInstruction.SetActive(false);
-                if (Config.rockPickCount == 2)
-                {
-                    runAwaySign.SetActive(true);
-                }
+                runAwaySign.SetActive(true);
             }
-    }
+        }
+    }*/
 
     public void EscapeDoor()
     {
