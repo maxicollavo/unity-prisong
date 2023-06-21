@@ -62,10 +62,18 @@ public partial class PlayerPickManager : MonoBehaviour
                         Audiosource.Play();
                     }
                     else Audio = false;
-                   
-
+                    
                 }
             }
+        }
+
+    }
+    public void OnTriggerEnter(Collider collider)
+    {
+        if (collider.transform.tag == EnemyTriggerNear)
+        {
+            AudioListener.volume
+            
         }
     }
 
