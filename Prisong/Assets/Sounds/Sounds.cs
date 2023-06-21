@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Sounds : MonoBehaviour
 {
-    public AudioClip InteractSource;
-    public bool Audio;
-    AudioSource Audiosource;
+        public AudioClip InteractSource;
+        public bool Audio;
+        AudioSource Audiosource;
+
 
     private void Start()
     {

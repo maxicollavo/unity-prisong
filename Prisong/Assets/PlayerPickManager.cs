@@ -21,11 +21,14 @@ public partial class PlayerPickManager : MonoBehaviour
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark, rockDark;
     public bool enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     public float timeCount;
+    public bool Audio;
+    public AudioSource Audiosource;
 
     public void Start()
     {
         timeCount = 0f;
         noteOn = false;
+        Audio = false;
     }
 
     public void Disk()
@@ -51,6 +54,17 @@ public partial class PlayerPickManager : MonoBehaviour
                 diskTwo.gameObject.SetActive(true);
                 openWall.gameObject.SetActive(false);
                 eCollision.pressEInteractPiano.SetActive(false);
+                if (diskTwo.activeInHierarchy);
+                {
+                    Audio = true;
+                    if (Audio == true)
+                    {
+                        Audiosource.Play();
+                    }
+                    else Audio = false;
+                   
+
+                }
             }
         }
     }
