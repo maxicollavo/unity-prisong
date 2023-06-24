@@ -11,30 +11,21 @@ public class ECollision : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
+
         if (collision.transform.tag == "Picks")
         {
             pressEInstruction.SetActive(true);
         }
-        else if (collision.transform.tag == "Piano" && Config.picksCount == 1 && playerPickManager.signOne == false)
+
+        else if (collision.transform.tag == "Piano")
         {
-            pressEInteractPiano.SetActive(true);
+            var pianoKeyCounter = collision.gameObject.GetComponent<PianoKeyCounter>();
+            if (pianoKeyCounter.Keys < 2 && Config.picksCount - Config.picksCountUsed > 0)
+            {
+                pressEInteractPiano.SetActive(true);
+            }
         }
-        else if (collision.transform.tag == "Piano" && Config.picksCount == 2)
-        {
-            pressEInteractPiano.SetActive(true);
-        }
-        else if (collision.transform.tag == "Piano" && Config.picksCount == 3 && playerPickManager.signThree == false)
-        {
-            pressEInteractPiano.SetActive(true);
-        }
-        else if (collision.transform.tag == "Piano" && Config.picksCount == 4)
-        {
-            pressEInteractPiano.SetActive(true);
-        }
-        else if (collision.transform.tag == "Piano" && Config.picksCount == 0 && playerPickManager.signTwo == true)
-        {
-            pressEInteractPiano.SetActive(false);
-        }
+
         else if (collision.transform.tag == "Rock")
         {
             pressEInstruction.SetActive(true);

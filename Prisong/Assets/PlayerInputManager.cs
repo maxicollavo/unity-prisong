@@ -16,6 +16,8 @@ public class PlayerInputManager : MonoBehaviour
     public GameObject rock;
     public GameObject gameBeginningSign;
     public float timeCount;
+    public GameObject container;
+    public bool crouch = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,12 @@ public class PlayerInputManager : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         timeCount = 0f;
         speed = Config.playerSpeed;
+    }
+
+    public void Crouch()
+    {
+        container.transform.position += new Vector3(0, crouch ? 1 : -1, 0);
+        crouch = !crouch;
     }
 
     public void Move()
@@ -61,7 +69,7 @@ public class PlayerInputManager : MonoBehaviour
             playerPickManager.Picks();
             playerPickManager.EscapeDoor();
             playerPickManager.PianoInteract();
-           // playerPickManager.StoneInteract();
+            playerPickManager.StoneInteract();
             playerPickManager.NotePick();
             playerPickManager.Disk();
             playerPickManager.PlayRecord();
@@ -73,6 +81,10 @@ public class PlayerInputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             pauseManager.ActivatePause();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            Crouch();
         }
     }
 

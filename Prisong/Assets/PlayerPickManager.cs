@@ -18,7 +18,7 @@ public partial class PlayerPickManager : MonoBehaviour
     public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask;
     float radious = 1.33f;
     public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall;
-    public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark, rockDark;
+    public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
     public bool enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     public float timeCount;
     public bool Audio;
@@ -150,26 +150,21 @@ public partial class PlayerPickManager : MonoBehaviour
         }
     }
 
-    /*public void StoneInteract()
+    public void StoneInteract()
     {
         Collider[] collidersStones = Physics.OverlapSphere(transform.position, radious, rockMask);
-        if (collidersStones.Length > 0)
+        if (collidersStones.Length > 0 && collidersStones[0].gameObject.activeInHierarchy)
         {
-            GameObject stoneGO = collidersStones[0].gameObject;
-            StonesRefs stonesRefs = stoneGO.GetComponent<StonesRefs>();
-            int stonesPicks = stonesRefs.stone.GetComponent<StoneCounter>().stones;
-
-            stonesRefs.stone1.SetActive(stoneCounter.stones >= 1);
-            stonesRefs.stone2.SetActive(stoneCounter.stones >= 2);
             Config.rockPickCount++;
             eCollision.pressEInstruction.SetActive(false);
+            collidersStones[0].gameObject.SetActive(false);
 
             if (Config.rockPickCount == 2)
             {
                 runAwaySign.SetActive(true);
             }
         }
-    }*/
+    }
 
     public void EscapeDoor()
     {

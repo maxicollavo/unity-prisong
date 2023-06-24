@@ -29,7 +29,7 @@ public class LifeController : MonoBehaviour
                 gameSceneManager.LoadDeadMenu();
             }
         }
-        else if (lives <= 0 && TPDarkWorld.darkWorld == true)
+        else if (lives <= 0 && TPDarkWorld.realWorld == false)
         {
             if (gameSceneManager != null)
             {

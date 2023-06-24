@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class TPDarkWorld : MonoBehaviour
 {
-    public float teleportHeightDown = -48f;
-    public float teleportHeightUp = 41f;
-    public Collider other;
+    public float teleportHeightDown = -89f;
+    public float teleportHeightUp = 0.6f;
     public static bool realWorld = true;
-    public static bool darkWorld = false;
 
     void OnTriggerEnter(Collider other)
     {
@@ -20,20 +18,8 @@ public class TPDarkWorld : MonoBehaviour
 
     void TeleportPlayer()
     {
-        if (realWorld == true && darkWorld == false)
-        {
-            Vector3 newPosition = new Vector3(transform.parent.localPosition.x, teleportHeightDown, transform.parent.localPosition.z);
-            transform.parent.localPosition = newPosition;
-            realWorld = !realWorld;
-            darkWorld = !darkWorld;
-        }
-        else if (darkWorld == true && realWorld == false)
-        {
-            Vector3 newPosition = new Vector3(transform.parent.localPosition.x, teleportHeightUp, transform.parent.localPosition.z);
-            transform.parent.localPosition = newPosition;
-            realWorld = !realWorld;
-            darkWorld = !darkWorld;
-        }
-        
+        Vector3 newPosition = new Vector3(transform.parent.parent.localPosition.x, realWorld ? teleportHeightDown : teleportHeightUp, transform.parent.parent.localPosition.z);
+        transform.parent.parent.localPosition = newPosition;
+        realWorld = !realWorld;
     }
 }
