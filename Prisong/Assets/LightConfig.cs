@@ -35,16 +35,23 @@ public class LightConfig : MonoBehaviour
         redLightOn = true;
     }
 
+    public void NoLights()
+    {
+        yellowLightOn = false;
+        greenLightOn = false;
+        redLightOn = false;
+    }
+
     public IEnumerator RedYellowInter()
     {
         enemyNear = true;
         enemyPickNear = false;
         while (enemyNear == true)
         {
-            RedLight();
-            yield return new WaitForSeconds(1);
+            NoLights();
+            yield return new WaitForSeconds(0.3f);
             YellowLight();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.3f);
         }
     }
 

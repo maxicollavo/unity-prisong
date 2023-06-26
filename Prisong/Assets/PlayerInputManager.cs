@@ -9,6 +9,7 @@ public class PlayerInputManager : MonoBehaviour
     public PauseManager pauseManager;
     public EnemyDetect enemyDetect;
     Rigidbody _rb;
+    CapsuleCollider _cc;
     Vector3 _movement;
     [SerializeField] public int speed;
     public int speedRun = 100;
@@ -19,17 +20,22 @@ public class PlayerInputManager : MonoBehaviour
     public GameObject container;
     public bool crouch = false;
 
+
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _cc = GetComponent<CapsuleCollider>();
         timeCount = 0f;
         speed = Config.playerSpeed;
     }
 
-    public void Crouch()
+    public void Crouch() //Necesito que el CapsuleCollider achique Height y mueva su position al piso para poder pasar por obstaculos
     {
         container.transform.position += new Vector3(0, crouch ? 1 : -1, 0);
+        _cc.transform.position += new Vector3(0, crouch ? 0.81f : 0.40f, 0);
+        _cc.height = new Vector3(0, crouch ? 1.96f : 1, 0);
+        speed = Config.playerSpeedCrouched;
         crouch = !crouch;
     }
 
@@ -86,16 +92,15 @@ public class PlayerInputManager : MonoBehaviour
         {
             Crouch();
         }
+        if (crouch == false)
+        {
+            speed = Config.playerSpeed;
+        }
     }
 
     private void FixedUpdate()
     {
         Move();
-    }
-
-    private void MakeNoise()
-    {
-        enemyDetect.DetectNoise();
     }
 }
 

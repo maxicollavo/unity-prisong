@@ -2,53 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDetect : MonoBehaviour
+public class EnemyDetect : EnemyMovement
 {
-    public Transform playerTransform;
-    public EnemyMovement enemyMovement;
-    public float maxHearingDistance = 1f;
-    public float followDistance = 1f;
-
-    private void Update()
+    public void OnTriggerEnter(Collider other) //Necesito que cuando el vision trigger del enemigo colisione con el player trigger el enemigo me vea y me corra
     {
-        if (CanSeePlayer())
+        if (other.gameObject.layer == 16)
         {
-            // El enemigo te ha detectado visualmente
-            Debug.Log("Player detected!");
-            // Aquí puedes realizar las acciones que deseas que ocurran cuando el enemigo te vea
+            followTrigger = true;
+            Debug.Log("Entro");
         }
     }
-
-    private bool CanSeePlayer()
+    public void OnTriggerExit(Collider other)
     {
-        Vector3 directionToPlayer = playerTransform.position - transform.position;
-        float distanceToPlayer = directionToPlayer.magnitude;
-
-        if (distanceToPlayer <= maxHearingDistance)
+        if (other.gameObject.layer == 16)
         {
-            // Comprueba si no hay obstáculos entre el enemigo y el jugador
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, directionToPlayer, out hit, distanceToPlayer))
-            {
-                if (hit.transform.CompareTag("Player"))
-                {
-                    // El rayo ha alcanzado al jugador sin ser bloqueado por otros objetos
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    public void DetectNoise()
-    {
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
-
-        if (distanceToPlayer <= maxHearingDistance)
-        {
-            Vector3 directionToPlayer = (playerTransform.position - transform.position).normalized;
-            Vector3 targetPosition = playerTransform.position + directionToPlayer * followDistance;
+            followTrigger = false;
+            Debug.Log("Salio");
         }
     }
 }

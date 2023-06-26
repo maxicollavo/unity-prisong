@@ -37,6 +37,7 @@ public class EnemyMovement : MonoBehaviour
         if (followTrigger == false)
         {
             WaypointsMethod();
+            agent.speed = 3.5f;
         }
         FaceTarget(player.transform.position);
         EnemyAnim();
@@ -44,20 +45,11 @@ public class EnemyMovement : MonoBehaviour
     }
     private void WaypointsMethod ()
     {
-        //var dir = Waypoints[_actualIndex].position - transform.position;
-        //transform.forward = dir;
-        //transform.position += dir.normalized * agent.speed * Time.deltaTime;
         agent.SetDestination(Waypoints[_actualIndex].position);
         if (Vector3.Distance(transform.position, Waypoints[_actualIndex].position) <= minDist)
             {
         
             _actualIndex = Random.Range(0, Waypoints.Length);
-
-            /*  _actualIndex++;
-              if (_actualIndex >= Waypoints.Length)
-              {
-                  _actualIndex = 0;
-              }*/
         }
     }
     private void FaceTarget(Vector3 destination)
@@ -69,6 +61,7 @@ public class EnemyMovement : MonoBehaviour
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
+            agent.speed = 6;
         }
     }  
     void EnemyAnim()
@@ -84,20 +77,6 @@ public class EnemyMovement : MonoBehaviour
             stayAlert = false;
             enemyStun = true;
             agent.speed = 0f;
-        }
-    }
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.tag == "FollowTrigger")
-        {
-            followTrigger = true;
-        }
-    }
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.transform.tag == "FollowTrigger")
-        {
-            followTrigger = false;
         }
     }
 }
