@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Traps : MonoBehaviour
 {
+    public PlayerInputManager playerInputManager;
     public LifeController lifeController;
     public LightConfig lightConfig;
     public float time;
@@ -20,6 +21,11 @@ public class Traps : MonoBehaviour
         if (other.gameObject.layer == 18 && deactivatedAlarms.IndexOf(other.gameObject) == -1)
         {
             StartCoroutine(WaitAndAttack(other.gameObject));
+            playerInputManager.speed = 0;
+        }
+        if (other.gameObject.layer == 19)
+        {
+            lifeController.Hit(4);
         }
     }
 
@@ -33,17 +39,19 @@ public class Traps : MonoBehaviour
             lifeController.Hit(2);
             alarmActive = false;
             Debug.Log("Exploto");
+            playerInputManager.speed = Config.playerSpeed;
         }
         else
         {
             Debug.Log("Se desactivo");
             deactivatedAlarms.Add(alarm);
+            playerInputManager.speed = Config.playerSpeed;
         }
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKey(KeyCode.X))
         {
             alarmActive = false;
         }

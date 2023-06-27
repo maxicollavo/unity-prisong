@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
+    public Traps traps;
     public LightConfig lightConfig;
     public PlayerPickManager playerPickManager;
     public Mechanics mechanics;
@@ -20,6 +21,7 @@ public class PlayerInputManager : MonoBehaviour
     public float timeCount;
     public GameObject container;
     public bool crouch = false;
+    private int currentSpeed;
 
 
     // Start is called before the first frame update
@@ -29,6 +31,7 @@ public class PlayerInputManager : MonoBehaviour
         _cc = GetComponent<CapsuleCollider>();
         timeCount = 0f;
         speed = Config.playerSpeed;
+        currentSpeed = speed;
     }
 
     public void Crouch()
@@ -42,7 +45,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void Move()
     {
-        _rb.velocity = _movement * speed * Time.deltaTime;
+        _rb.velocity = _movement * currentSpeed * Time.deltaTime;
     }
 
     public void Update()
@@ -95,7 +98,7 @@ public class PlayerInputManager : MonoBehaviour
         }
         if (crouch == false)
         {
-            speed = Config.playerSpeed;
+            currentSpeed = speed;
         }
     }
 
