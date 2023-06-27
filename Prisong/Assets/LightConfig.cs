@@ -10,6 +10,7 @@ public class LightConfig : MonoBehaviour
     public bool enemyNear;
     public bool enemyPickNear;
     public bool keyTrigger;
+    public bool noLights;
     public GameObject yellowLight;
     public GameObject greenLight;
     public GameObject redLight;
@@ -19,6 +20,7 @@ public class LightConfig : MonoBehaviour
         yellowLightOn = false;
         greenLightOn = true;
         redLightOn = false;
+        noLights = true;
     }
 
     public void YellowLight()
@@ -26,6 +28,7 @@ public class LightConfig : MonoBehaviour
         yellowLightOn = true;
         greenLightOn = false;
         redLightOn = false;
+        noLights = false;
     }
 
     public void RedLight()
@@ -33,6 +36,7 @@ public class LightConfig : MonoBehaviour
         yellowLightOn = false;
         greenLightOn = false;
         redLightOn = true;
+        noLights = false;
     }
 
     public void NoLights()
@@ -40,6 +44,7 @@ public class LightConfig : MonoBehaviour
         yellowLightOn = false;
         greenLightOn = false;
         redLightOn = false;
+        noLights = true;
     }
 
     public IEnumerator RedYellowInter()
@@ -112,7 +117,7 @@ public class LightConfig : MonoBehaviour
         }
     }
 
-    public void Start()
+    public virtual void Start()
     {
         keyTrigger = false;
         YellowLight();
@@ -121,23 +126,13 @@ public class LightConfig : MonoBehaviour
 
     public void Update()
     {
-        if (greenLightOn == true && yellowLightOn == false && redLightOn == false)
-        {
-            greenLight.SetActive(true);
-            yellowLight.SetActive(false);
-            redLight.SetActive(false);
-        }
-        if (greenLightOn == false && yellowLightOn == true && redLightOn == false)
-        {
-            greenLight.SetActive(false);
-            yellowLight.SetActive(true);
-            redLight.SetActive(false);
-        }
-        if (greenLightOn == false && yellowLightOn == false && redLightOn == true)
-        {
-            greenLight.SetActive(false);
-            yellowLight.SetActive(false);
-            redLight.SetActive(true);
-        }
+        InitialConfig();
+    }
+
+    public void InitialConfig()
+    {
+        greenLight.SetActive(greenLightOn && !noLights);
+        yellowLight.SetActive(yellowLightOn && !noLights);
+        redLight.SetActive(redLightOn && !noLights);
     }
 }

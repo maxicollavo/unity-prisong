@@ -21,7 +21,7 @@ public class EnemyAttack : MonoBehaviour
         while (EnemyTrigger == true)
         {
             WalkingEnemy.SetBool("EnemyTrigger", true);
-            lifeController.Hit();
+            lifeController.Hit(1);
             if (lifeController.lives == 3)
             {
                 lifeController.heart1.SetActive(false);

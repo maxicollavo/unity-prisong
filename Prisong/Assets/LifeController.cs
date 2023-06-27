@@ -16,9 +16,9 @@ public class LifeController : MonoBehaviour
         lives = Config.maxLives;
     }
 
-    public void Hit()
+    public void Hit(float damage)
     {
-        lives--;
+        lives -= damage;
         if (lives <= 0 && TPDarkWorld.realWorld == true)
         {
             /*Vector3 newPosition = new Vector3(transform.position.x, teleportHeightDown, transform.position.z);

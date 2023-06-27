@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
+    public LightConfig lightConfig;
     public PlayerPickManager playerPickManager;
     public Mechanics mechanics;
     public PauseManager pauseManager;
@@ -22,7 +23,7 @@ public class PlayerInputManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _cc = GetComponent<CapsuleCollider>();
@@ -30,11 +31,11 @@ public class PlayerInputManager : MonoBehaviour
         speed = Config.playerSpeed;
     }
 
-    public void Crouch() //Necesito que el CapsuleCollider achique Height y mueva su position al piso para poder pasar por obstaculos
+    public void Crouch()
     {
         container.transform.position += new Vector3(0, crouch ? 1 : -1, 0);
-        _cc.transform.position += new Vector3(0, crouch ? 0.81f : 0.40f, 0);
-        _cc.height = new Vector3(0, crouch ? 1.96f : 1, 0);
+        transform.position += new Vector3(0, crouch ? 0.3f : -0.3f, 0);
+        _cc.height = crouch ? 1.96f : 1.5f;
         speed = Config.playerSpeedCrouched;
         crouch = !crouch;
     }
@@ -44,8 +45,7 @@ public class PlayerInputManager : MonoBehaviour
         _rb.velocity = _movement * speed * Time.deltaTime;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
@@ -83,6 +83,7 @@ public class PlayerInputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             playerPickManager.ChestInteract();
+            lightConfig.noLights = !lightConfig.noLights;
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
