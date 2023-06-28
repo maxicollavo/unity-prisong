@@ -6,7 +6,6 @@ public class Config : MonoBehaviour
 {
     public PauseManager pauseManager;
     PlayerPickManager playerPickManager;
-    PlayerInputManager playerInputManager;
     public static float sensitivityInGame = .5f;
     public static float sensitivityInPause = 0f;
     public static int playerSpeed = 500;
@@ -36,6 +35,7 @@ public class Config : MonoBehaviour
     public static int WinMenuScene = 3;
     public static int CreditsMenuScene = 4;
     public static int LoadingScreenScene = 5;
+    public static int TutorialScene = 6;
 
     public static void Reset()
     {

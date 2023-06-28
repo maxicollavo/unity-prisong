@@ -9,6 +9,10 @@ public class FCollision : MonoBehaviour
     public GameObject pressFKillEnemy;
     public GameObject pressFInteractChest;
     public PlayerPickManager playerPickManager;
+    public GameSceneManager gameSceneManager;
+
+    public GameObject tutorialNote;
+    public GameObject laserNote;
 
     void OnTriggerEnter(Collider collision)
     {
@@ -28,7 +32,35 @@ public class FCollision : MonoBehaviour
                 pressFEscapeInstruction.SetActive(true);
             }
         }
+            if (collision.gameObject.layer == 20)
+            {
+                gameSceneManager.LoadMainMenu();
+            }
 
+            if (collision.gameObject.layer == 21)
+            {
+                StartCoroutine(PickTutorial());
+            }
+
+            if (collision.gameObject.layer == 22)
+            {
+                StartCoroutine(LaserTutorial());
+            }
+
+    }
+
+    public IEnumerator PickTutorial()
+    {
+        tutorialNote.SetActive(true);
+        yield return new WaitForSeconds(2);
+        tutorialNote.SetActive(false);
+    }
+
+    public IEnumerator LaserTutorial()
+    {
+        laserNote.SetActive(true);
+        yield return new WaitForSeconds(2);
+        laserNote.SetActive(false);
     }
 
     void OnTriggerExit(Collider collision)

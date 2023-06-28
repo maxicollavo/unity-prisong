@@ -11,6 +11,7 @@ public class GameSceneManager : MonoBehaviour
     public int WinMenuScene;
     public int DeadMenuScene;
     public int CreditsMenuScene;
+    public int TutorialScene;
 
     // Start is called before the first frame update
     void Start()
@@ -20,15 +21,15 @@ public class GameSceneManager : MonoBehaviour
         DeadMenuScene = Config.DeadMenuScene;
         WinMenuScene = Config.WinMenuScene;
         CreditsMenuScene = Config.CreditsMenuScene;
-        
+        TutorialScene = Config.TutorialScene;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadTutorial()
     {
-
+        SceneManager.LoadScene(TutorialScene);
+        Cursor.lockState = CursorLockMode.None;
     }
-   
+
     public void LoadGame()
     {
         SceneManager.LoadScene(GameScene);
@@ -65,6 +66,5 @@ public class GameSceneManager : MonoBehaviour
     {
             Application.Quit();
     }
-
    
 }

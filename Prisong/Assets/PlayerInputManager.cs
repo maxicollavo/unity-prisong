@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInputManager : MonoBehaviour
 {
+    public GameSceneManager gameSceneManager;
     public Traps traps;
     public LightConfig lightConfig;
     public PlayerPickManager playerPickManager;
@@ -26,10 +27,6 @@ public class PlayerInputManager : MonoBehaviour
     public GameObject loadingScreen;
     public bool loading;
 
-
-
-
-    // Start is called before the first frame update
     public void Start()
     {
 
@@ -112,6 +109,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         Move();
     }
+
     private IEnumerator LoadingScreen()
     {
         loading = !loading;
@@ -120,5 +118,12 @@ public class PlayerInputManager : MonoBehaviour
         loadingScreen.SetActive(false);
         loading = !loading;
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == 20)
+        {
+            gameSceneManager.LoadMainMenu();
+        }
 }
 
