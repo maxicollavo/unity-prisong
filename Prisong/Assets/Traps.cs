@@ -18,7 +18,7 @@ public class Traps : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 18 && deactivatedAlarms.IndexOf(other.gameObject) == -1)
+        if (other.gameObject.layer == 18 && deactivatedAlarms.IndexOf(other.gameObject) == -1 && playerInputManager.crouch == false)
         {
             StartCoroutine(WaitAndAttack(other.gameObject));
             playerInputManager.speed = 0;
@@ -36,8 +36,8 @@ public class Traps : MonoBehaviour
         yield return new WaitForSeconds(2);
         if (alarmActive == true)
         {
-            lifeController.Hit(2);
             alarmActive = false;
+            lifeController.Hit(2);
             Debug.Log("Exploto");
             playerInputManager.speed = Config.playerSpeed;
         }

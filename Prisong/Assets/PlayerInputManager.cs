@@ -69,8 +69,6 @@ public class PlayerInputManager : MonoBehaviour
         }
         var x = Input.GetAxisRaw("Horizontal");
         var z = Input.GetAxisRaw("Vertical");
-        anim.SetFloat("X", x);
-        anim.SetFloat("Z", z);
         _movement = transform.forward * z;
         _movement += transform.right * x;
         if (Input.GetKeyDown(KeyCode.Q))
