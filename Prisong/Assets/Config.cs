@@ -35,6 +35,7 @@ public class Config : MonoBehaviour
     public static int DeadMenuScene = 2;
     public static int WinMenuScene = 3;
     public static int CreditsMenuScene = 4;
+    public static int LoadingScreenScene = 5;
 
     public static void Reset()
     {

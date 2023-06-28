@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     public Transform[] Waypoints;
-    public TrepidationBarBehaviour trepBarBeh;
     public PlayerPickManager playerPickManager;
     public LifeController lifeController;
     public GameObject player;
@@ -46,9 +45,10 @@ public class EnemyMovement : MonoBehaviour
     private void WaypointsMethod ()
     {
         agent.SetDestination(Waypoints[_actualIndex].position);
+
         if (Vector3.Distance(transform.position, Waypoints[_actualIndex].position) <= minDist)
-            {
-        
+        {
+
             _actualIndex = Random.Range(0, Waypoints.Length);
         }
     }

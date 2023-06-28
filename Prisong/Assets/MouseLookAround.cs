@@ -23,7 +23,11 @@ public class MouseLookAround : MonoBehaviour
         turn.y = Math.Max(playerInputManager.crouch ? 0 : -100, turn.y);
         turn.y = Math.Min(90f, turn.y);
         mover.transform.localRotation = Quaternion.Euler(0, turn.x, 0);
-        transform.localRotation = Quaternion.Euler(-turn.y, 0, 0);  
+        transform.localRotation = Quaternion.Euler(-turn.y, 0, 0);
+        if (playerInputManager.loading)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 }
 

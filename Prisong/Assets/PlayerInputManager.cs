@@ -22,11 +22,19 @@ public class PlayerInputManager : MonoBehaviour
     public GameObject container;
     public bool crouch = false;
     private int currentSpeed;
+    public int LoadingScreenScene;
+    public GameObject loadingScreen;
+    public bool loading;
+
+
 
 
     // Start is called before the first frame update
     public void Start()
     {
+
+        StartCoroutine(LoadingScreen());
+
         _rb = GetComponent<Rigidbody>();
         _cc = GetComponent<CapsuleCollider>();
         timeCount = 0f;
@@ -39,7 +47,7 @@ public class PlayerInputManager : MonoBehaviour
         container.transform.position += new Vector3(0, crouch ? 1 : -1, 0);
         transform.position += new Vector3(0, crouch ? 0.3f : -0.3f, 0);
         _cc.height = crouch ? 1.96f : 1.5f;
-        speed = Config.playerSpeedCrouched;
+        currentSpeed = Config.playerSpeedCrouched;
         crouch = !crouch;
     }
 
@@ -105,6 +113,14 @@ public class PlayerInputManager : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+    }
+    private IEnumerator LoadingScreen()
+    {
+        loading = !loading;
+        loadingScreen.SetActive(true);
+        yield return new WaitForSeconds(2);
+        loadingScreen.SetActive(false);
+        loading = !loading;
     }
 }
 

@@ -20,6 +20,7 @@ public class GameSceneManager : MonoBehaviour
         DeadMenuScene = Config.DeadMenuScene;
         WinMenuScene = Config.WinMenuScene;
         CreditsMenuScene = Config.CreditsMenuScene;
+        
     }
 
     // Update is called once per frame
@@ -27,10 +28,11 @@ public class GameSceneManager : MonoBehaviour
     {
 
     }
-
+   
     public void LoadGame()
     {
         SceneManager.LoadScene(GameScene);
+
         Cursor.lockState = CursorLockMode.Locked;
         Config.Reset();
     }
@@ -60,8 +62,9 @@ public class GameSceneManager : MonoBehaviour
     }
 
     public void ExitGame()
-        {
+    {
             Application.Quit();
-        }
+    }
 
+   
 }

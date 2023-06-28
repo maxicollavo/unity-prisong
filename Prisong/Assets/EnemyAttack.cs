@@ -15,6 +15,12 @@ public class EnemyAttack : MonoBehaviour
             EnemyTrigger = true;
             StartCoroutine(HitEnemy());
         }
+        if (collider.transform.tag == "EnemyFollow")
+        {
+            WalkingEnemy.SetBool("EnemyFollow", true);
+            
+        }
+        
     }
     public IEnumerator HitEnemy()
     {
@@ -48,4 +54,5 @@ public class EnemyAttack : MonoBehaviour
             WalkingEnemy.SetBool("EnemyTrigger", false);
         }
     }
+
 }
