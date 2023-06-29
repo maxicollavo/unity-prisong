@@ -23,6 +23,7 @@ TagManager:
   - PlayRecord
   - MirrorTrigger
   - EnemyFollow
+  - Waypoints
   layers:
   - Default
   - TransparentFX

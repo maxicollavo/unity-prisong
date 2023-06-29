@@ -17,12 +17,13 @@ public partial class PlayerPickManager : MonoBehaviour
     public AnxietyBarBehaviour anxietyBarBehaviour;
     public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask;
     float radious = 1.33f;
-    public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall;
+    public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall, stoneLeft1, stoneLeft2;
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
-    public bool enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
+    public bool putRockOneB = false, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     public float timeCount;
     public bool Audio;
     public AudioSource Audiosource;
+    public AudioSource putRock;
 
     public void Start()
     {
@@ -166,9 +167,64 @@ public partial class PlayerPickManager : MonoBehaviour
         }
     }
 
+    public IEnumerator putRockOne()
+    {
+        stoneLeft1.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        stoneLeft1.SetActive(false);
+        yield return new WaitForSeconds(.5f);
+        stoneLeft1.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        stoneLeft1.SetActive(false);
+        yield return new WaitForSeconds(.5f);
+        stoneLeft1.SetActive(true);
+    }
+
+    public IEnumerator putRockTwo()
+    {
+        stoneLeft2.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        stoneLeft2.SetActive(false);
+        yield return new WaitForSeconds(.5f);
+        stoneLeft2.SetActive(true);
+        yield return new WaitForSeconds(.5f);
+        stoneLeft2.SetActive(false);
+        yield return new WaitForSeconds(.5f);
+        stoneLeft2.SetActive(true);
+    }
+
     public void EscapeDoor()
     {
-        if (Config.rockPickCount >= 2)
+        if (Config.rockPickCount == 1)
+        {
+            Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
+            if (collidersDoor.Length > 0)
+            {
+                StartCoroutine(putRockOne());
+                putRockOneB = true;
+            }
+        }
+        if (Config.rockPickCount == 2 && putRockOneB == true)
+        {
+            Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
+            if (collidersDoor.Length > 0)
+            {
+                StartCoroutine(putRockTwo());
+                Config.rockPickCount++;
+            }
+        }
+        if (Config.rockPickCount == 2 && putRockOneB == false)
+        {
+            Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
+            if (collidersDoor.Length > 0)
+            {
+                StartCoroutine(putRockOne());
+                StartCoroutine(putRockTwo());
+                Config.rockPickCount++;
+                lightConfig.WinningLights(3);
+            }
+        }
+        else if (Config.rockPickCount == 3)
         {
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)

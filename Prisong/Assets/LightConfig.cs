@@ -7,6 +7,8 @@ public class LightConfig : MonoBehaviour
     public bool yellowLightOn;
     public bool greenLightOn;
     public bool redLightOn;
+    public bool roseLightOn;
+    public bool blueLightOn;
     public bool enemyNear;
     public bool enemyPickNear;
     public bool keyTrigger;
@@ -14,17 +16,32 @@ public class LightConfig : MonoBehaviour
     public GameObject yellowLight;
     public GameObject greenLight;
     public GameObject redLight;
+    public GameObject roseLight;
+    public GameObject blueLight;
+
+    public void WinningLights(int repeatCount)
+    {
+        enemyNear = false;
+        enemyPickNear = false;
+        keyTrigger = false;
+        noLights = false;
+        StartCoroutine(WinningLightsCoroutine(repeatCount));
+    }
 
     public void GreenLight()
     {
+        roseLightOn = false;
+        blueLightOn = false;
         yellowLightOn = false;
         greenLightOn = true;
         redLightOn = false;
-        noLights = true;
+        noLights = false;
     }
 
     public void YellowLight()
     {
+        roseLightOn = false;
+        blueLightOn = false;
         yellowLightOn = true;
         greenLightOn = false;
         redLightOn = false;
@@ -33,9 +50,31 @@ public class LightConfig : MonoBehaviour
 
     public void RedLight()
     {
+        roseLightOn = false;
+        blueLightOn = false;
         yellowLightOn = false;
         greenLightOn = false;
         redLightOn = true;
+        noLights = false;
+    }
+
+    public void RoseLight()
+    {
+        roseLightOn = true;
+        blueLightOn = false;
+        yellowLightOn = false;
+        greenLightOn = false;
+        redLightOn = false;
+        noLights = false;
+    }
+
+    public void BlueLight()
+    {
+        roseLightOn = false;
+        blueLightOn = true;
+        yellowLightOn = false;
+        greenLightOn = false;
+        redLightOn = false;
         noLights = false;
     }
 
@@ -45,6 +84,27 @@ public class LightConfig : MonoBehaviour
         greenLightOn = false;
         redLightOn = false;
         noLights = true;
+    }
+
+    public IEnumerator WinningLightsCoroutine(int repeatCount)
+    {
+        for (int i = 0; i < repeatCount; i++)
+        {
+            YellowLight();
+            Debug.Log("Amarilla");
+            yield return new WaitForSeconds(0.5f);
+            RedLight();
+            Debug.Log("Roja");
+            yield return new WaitForSeconds(0.5f);
+            GreenLight();
+            Debug.Log("Verde");
+            yield return new WaitForSeconds(0.5f);
+            RoseLight();
+            Debug.Log("Rosa");
+            yield return new WaitForSeconds(0.5f);
+            BlueLight();
+            Debug.Log("Azul");
+        }
     }
 
     public IEnumerator RedYellowInter()
@@ -131,6 +191,8 @@ public class LightConfig : MonoBehaviour
 
     public void InitialConfig()
     {
+        roseLight.SetActive(roseLightOn && !noLights);
+        blueLight.SetActive(blueLightOn && !noLights);
         greenLight.SetActive(greenLightOn && !noLights);
         yellowLight.SetActive(yellowLightOn && !noLights);
         redLight.SetActive(redLightOn && !noLights);

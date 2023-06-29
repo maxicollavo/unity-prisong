@@ -6,7 +6,6 @@ public class Traps : MonoBehaviour
 {
     public PlayerInputManager playerInputManager;
     public LifeController lifeController;
-    public LightConfig lightConfig;
     public float time;
     public bool alarmActive;
     public List <GameObject> deactivatedAlarms = new List<GameObject>();

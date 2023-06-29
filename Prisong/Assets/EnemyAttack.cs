@@ -14,23 +14,14 @@ public class EnemyAttack : MonoBehaviour
         {
             EnemyTrigger = true;
             StartCoroutine(HitEnemy());
-            
         }
-
-        if (collider.transform.tag == "EnemyFollow")
-        {
-            WalkingEnemy.SetBool("EnemyFollow", true);
-            
-        }
-        
     }
     public IEnumerator HitEnemy()
     {
         while (EnemyTrigger == true)
         {
-            Debug.Log("me dolio ");
-            WalkingEnemy.SetBool("EnemyTrigger", true);
             lifeController.Hit(1);
+            Debug.Log(lifeController.lives);
             if (lifeController.lives == 3)
             {
                 lifeController.heart1.SetActive(false);
@@ -44,10 +35,9 @@ public class EnemyAttack : MonoBehaviour
                 lifeController.heart3.SetActive(false);
             }
             yield return new WaitForSeconds(0.0001f);
-            WalkingEnemy.SetBool("EnemyTrigger", false);
             EnemyTrigger = false;
             yield return new WaitForSeconds(2);
-            
+            EnemyTrigger = true;
         }
     }
 
@@ -56,7 +46,6 @@ public class EnemyAttack : MonoBehaviour
         if (collider.transform.tag == "PlayerTrigger")
         {
             EnemyTrigger = false;
-            WalkingEnemy.SetBool("EnemyTrigger", false);
         }
     }
 

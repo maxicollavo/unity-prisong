@@ -8,7 +8,7 @@ public class EnemyDetect : EnemyMovement
     {
         if (other.gameObject.layer == 16)
         {
-            followTrigger = true;
+            //followTrigger = true;
             Debug.Log("Entro");
         }
     }
@@ -16,7 +16,7 @@ public class EnemyDetect : EnemyMovement
     {
         if (other.gameObject.layer == 16)
         {
-            followTrigger = false;
+            //followTrigger = false;
             Debug.Log("Salio");
         }
     }

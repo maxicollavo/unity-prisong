@@ -14,9 +14,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     private int currentWaypointIndex = 0;
     private bool isChasing = false;
+    private NavMeshAgent agent;
 
     private void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         SetNextWaypoint();
     }
 
@@ -28,6 +30,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else
         {
+            agent.speed = 3.5f;
             PatrolWaypoints();
         }
     }
@@ -39,14 +42,8 @@ public class EnemyBehaviour : MonoBehaviour
             SetNextWaypoint();
         }
 
-        Vector3 targetDirection = waypoints[currentWaypointIndex].position - transform.position;
-        Vector3 moveDirection = targetDirection.normalized;
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
-
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.1f);
-
-        animator.SetBool("IsRunning", false);
+        agent.SetDestination(waypoints[currentWaypointIndex].position);
+        animator.SetBool("EnemyFollow", false);
     }
 
     private void SetNextWaypoint()
@@ -58,18 +55,17 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, player.position) > chaseDistance)
         {
+            agent.speed = 3.5f;
+            animator.SetBool("WalkingEnemy", true);
+            animator.SetBool("EnemyFollow", false);
             isChasing = false;
             return;
         }
 
-        Vector3 targetDirection = player.position - transform.position;
-        Vector3 moveDirection = targetDirection.normalized;
-        transform.position += moveDirection * runSpeed * Time.deltaTime;
-
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.1f);
-
-        animator.SetBool("IsRunning", true);
+        agent.speed = 7f;
+        agent.SetDestination(player.position);
+        animator.SetBool("WalkingEnemy", false);
+        animator.SetBool("EnemyFollow", true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -77,6 +73,16 @@ public class EnemyBehaviour : MonoBehaviour
         if (other.CompareTag("PlayerTrigger"))
         {
             isChasing = true;
+            animator.SetBool("EnemyTrigger", true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("PlayerTrigger"))
+        {
+            isChasing = false;
+            animator.SetBool("EnemyTrigger", false);
         }
     }
 }

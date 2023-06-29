@@ -13,7 +13,6 @@ public class EnemyMovement : MonoBehaviour
     public GameObject enemyLastObject;
     public LayerMask mask;
     public Animator WalkingEnemy;
-    public bool followTrigger;
     public bool enemyStun;
     public bool stayAlert;
     public Vector3 dir;
@@ -23,29 +22,29 @@ public class EnemyMovement : MonoBehaviour
     int _actualIndex;
     NavMeshAgent agent;
     Vector3 target;
-    
+    public Animator anim;
 
     private void Start()
     {
-       
         Animator WalkingEnemy = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         UpdateDestination();
     }
     void Update()
     {
-        if (Vector3.Distance(transform.position, target )<1 && !EnemyDetection.playerDetected) 
+        if (Vector3.Distance(transform.position, target) <1 && EnemyDetection.playerDetected == false) 
         {
-            
             IterateWaypointIndex();
             UpdateDestination();
-
+            anim.SetBool("WalkingEnemy", true);
+            anim.SetBool("EnemyFollow", false);
         }
         else if(EnemyDetection.playerDetected)
         {
            agent.SetDestination(player.position);
+            anim.SetBool("WalkingEnemy", false);
+            anim.SetBool("EnemyFollow", true);
         }
-        
     }
 
     void IterateWaypointIndex()
@@ -61,19 +60,13 @@ public class EnemyMovement : MonoBehaviour
         {
           _actualIndex = 0;
         }
-        
-
-    
     }
    
-
-
     public void UpdateDestination()
     {
         target = Waypoints[_actualIndex].transform.position;
         agent.SetDestination(target);
     }
-
 }
 
 

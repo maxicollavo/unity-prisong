@@ -10,7 +10,6 @@ public class MouseLookAround : MonoBehaviour
     public float sensitivity = 200f;
     public Vector3 deltaMove;
     public GameObject mover;
-    public GameObject camera;
   
     void Update()
     {
