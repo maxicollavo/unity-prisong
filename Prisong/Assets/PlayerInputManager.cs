@@ -24,6 +24,8 @@ public class PlayerInputManager : MonoBehaviour
     public int LoadingScreenScene;
     public GameObject loadingScreen;
     public bool loading;
+    public AudioSource steps;
+    public AudioSource crouchSteps;
 
     public void Start()
     {
@@ -42,11 +44,28 @@ public class PlayerInputManager : MonoBehaviour
         _cc.height = crouch ? 1.96f : 1.5f;
         currentSpeed = Config.playerSpeedCrouched;
         crouch = !crouch;
+        if (crouch)
+        {
+            crouchSteps.Play();
+            steps.Stop();
+        }
     }
 
     public void Move()
     {
         _rb.velocity = _movement * currentSpeed * Time.deltaTime;
+        if (_movement.magnitude > 0 && !crouch)
+        {
+            if (!steps.isPlaying)
+            {
+                crouchSteps.Stop();
+                steps.Play();
+            }
+        }
+        else
+        {
+            steps.Stop();
+        }
     }
 
     public void Update()

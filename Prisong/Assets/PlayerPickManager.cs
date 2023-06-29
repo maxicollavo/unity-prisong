@@ -11,7 +11,6 @@ public partial class PlayerPickManager : MonoBehaviour
     public LifeController lifeController;
     public ECollision eCollision;
     public FCollision fCollision;
-    public PianoRefs pianoRefs;
     public NeedObjectCollision needObjectCollision;
     public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask;
     float radious = 1.33f;
@@ -19,7 +18,7 @@ public partial class PlayerPickManager : MonoBehaviour
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
     [HideInInspector] public bool putRockOneB = false, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     [HideInInspector] public float timeCount;
-    public AudioSource music, putRock, putDisk, firstDoor, pickSound, pianoCompleted, putKey, openCage;
+    public AudioSource music, putRock, putDisk, firstDoor, pickSound, pianoCompleted, putKey, openCage, monsterScream, openChest, rockPickSound, diskPick, noteSound;
 
     public void Start()
     {
@@ -33,6 +32,7 @@ public partial class PlayerPickManager : MonoBehaviour
         Collider[] collidersDisk = Physics.OverlapSphere(transform.position, radious, diskMask);
         for (int i = 0; i < collidersDisk.Length; i++)
         {
+            diskPick.Play();
             Collider pick = collidersDisk[0];
             disk.gameObject.SetActive(false);
             eCollision.pressEInstruction.SetActive(false);
@@ -79,6 +79,10 @@ public partial class PlayerPickManager : MonoBehaviour
             Config.picksCount++;
             eCollision.pressEInstruction.SetActive(false);
             lightConfig.greenLightOn = false;
+            if (Config.picksCount == 1)
+            {
+                monsterScream.Play();
+            }
         }
     }
 
@@ -98,14 +102,16 @@ public partial class PlayerPickManager : MonoBehaviour
 
                 eCollision.pressEInteractPiano.SetActive(false);
 
-                if (counter.Keys >= 1) 
+                if (counter.Keys == 1) 
                 {
                     putKey.Play();
                     pianoRefs.key1.SetActive(true);
                 }
-                else if (counter.Keys >= 2) 
+                else if (counter.Keys == 2) 
                 {
+                    pianoRefs.key2.SetActive(true);
                     StartCoroutine(PianoCoroutina());
+                    pianoRefs.cage.SetActive(false);
                 }
 
                 // Version simplificada del bloque de arriba, hace lo mismo
@@ -117,13 +123,9 @@ public partial class PlayerPickManager : MonoBehaviour
 
     public IEnumerator PianoCoroutina()
     {
-        pianoRefs.key2.SetActive(true);
-        putKey.Play();
-        yield return new WaitForSeconds(1);
         pianoCompleted.Play();
         yield return new WaitForSeconds(1);
         openCage.Play();
-        pianoRefs.cage.SetActive(false);
     }
 
     public void ChestInteract()
@@ -137,6 +139,7 @@ public partial class PlayerPickManager : MonoBehaviour
 
             if (pianoKeys == 2 && chestGO.activeInHierarchy)
             {
+                openChest.Play();
                 chestRefs.openChest.SetActive(true);
                 chestRefs.rock.SetActive(true);
                 chestGO.SetActive(false);
@@ -150,6 +153,7 @@ public partial class PlayerPickManager : MonoBehaviour
         Collider[] collidersStones = Physics.OverlapSphere(transform.position, radious, rockMask);
         if (collidersStones.Length > 0 && collidersStones[0].gameObject.activeInHierarchy)
         {
+            rockPickSound.Play();
             Config.rockPickCount++;
             eCollision.pressEInstruction.SetActive(false);
             collidersStones[0].gameObject.SetActive(false);
@@ -237,6 +241,7 @@ public partial class PlayerPickManager : MonoBehaviour
         {
             if (noteOn == false)
             {
+                noteSound.Play();
                 Collider pick = collidersPick[0];
                 note.gameObject.SetActive(false);
                 noteUI.gameObject.SetActive(true);
@@ -248,6 +253,7 @@ public partial class PlayerPickManager : MonoBehaviour
             }
             else if (noteOn == true)
             {
+                noteSound.Play();
                 Collider pick = collidersPick[0];
                 note.gameObject.SetActive(true);
                 noteUI.gameObject.SetActive(false);
