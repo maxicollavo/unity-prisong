@@ -9,6 +9,9 @@ public class Traps : MonoBehaviour
     public float time;
     public bool alarmActive;
     public List <GameObject> deactivatedAlarms = new List<GameObject>();
+    public AudioSource bombTick;
+    public AudioSource electro;
+    public AudioSource deactivateBomb;
 
     private void Start()
     {
@@ -36,13 +39,16 @@ public class Traps : MonoBehaviour
         if (alarmActive == true)
         {
             alarmActive = false;
-            lifeController.Hit(2);
+            electro.Play();
+            lifeController.Hit(1);
             Debug.Log("Exploto");
             playerInputManager.speed = Config.playerSpeed;
         }
         else
         {
             Debug.Log("Se desactivo");
+            deactivateBomb.Play();
+            bombTick.Stop();
             deactivatedAlarms.Add(alarm);
             playerInputManager.speed = Config.playerSpeed;
         }

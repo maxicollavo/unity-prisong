@@ -10,13 +10,11 @@ public class PlayerInputManager : MonoBehaviour
     public PlayerPickManager playerPickManager;
     public Mechanics mechanics;
     public PauseManager pauseManager;
-    public EnemyDetect enemyDetect;
     Rigidbody _rb;
     CapsuleCollider _cc;
     Vector3 _movement;
     [SerializeField] public int speed;
     public int speedRun = 100;
-    public Animator anim;
     public GameObject rock;
     public GameObject gameBeginningSign;
     public float timeCount;
@@ -29,9 +27,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void Start()
     {
-
         StartCoroutine(LoadingScreen());
-
         _rb = GetComponent<Rigidbody>();
         _cc = GetComponent<CapsuleCollider>();
         timeCount = 0f;

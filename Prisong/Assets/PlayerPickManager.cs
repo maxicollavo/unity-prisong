@@ -7,23 +7,19 @@ public partial class PlayerPickManager : MonoBehaviour
 {
     public LightConfig lightConfig;
     public PlayerInputManager playerInputManager;
-    public TrepidationBarBehaviour trepBarBeh;
-    public EnemyMovement enemyMovement;
     public GameSceneManager gameSceneManager;
     public LifeController lifeController;
     public ECollision eCollision;
     public FCollision fCollision;
+    public PianoRefs pianoRefs;
     public NeedObjectCollision needObjectCollision;
-    public AnxietyBarBehaviour anxietyBarBehaviour;
     public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask;
     float radious = 1.33f;
     public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall, stoneLeft1, stoneLeft2;
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
-    public bool putRockOneB = false, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
-    public float timeCount;
-    public bool Audio;
-    public AudioSource Audiosource;
-    public AudioSource putRock;
+    [HideInInspector] public bool putRockOneB = false, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
+    [HideInInspector] public float timeCount;
+    public AudioSource music, putRock, putDisk, firstDoor, pickSound, pianoCompleted, putKey, openCage;
 
     public void Start()
     {
@@ -44,6 +40,20 @@ public partial class PlayerPickManager : MonoBehaviour
         }
     }
 
+    public IEnumerator SoundsPlay()
+    {
+        diskTwo.SetActive(true);
+        putDisk.Play();
+        yield return new WaitForSeconds(1);
+        openWall.SetActive(false);
+        firstDoor.Play();
+        Debug.Log("Entra y espera");
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Reproduce Musica");
+        music.Play();
+        haveDisk = false;
+    }
+
     public void PlayRecord()
     {
         if (haveDisk == true)
@@ -52,33 +62,8 @@ public partial class PlayerPickManager : MonoBehaviour
             for (int i = 0; i < collidersPlayRecord.Length; i++)
             {
                 Collider playRecord = collidersPlayRecord[0];
-                diskTwo.gameObject.SetActive(true);
-                openWall.gameObject.SetActive(false);
-                eCollision.pressEInteractPiano.SetActive(false);
-                if (diskTwo.activeInHierarchy)
-                {
-                    Audio = true;
-                    if (Audio == true)
-                    {
-                        Audiosource.Play();
-                    }
-                    else Audio = false;
-                    
-                }
+                StartCoroutine(SoundsPlay());
             }
-        }
-
-    }
-    public void OnTriggerEnter(Collider collider)
-    {
-        if (collider.transform.tag == "EnemyTriggerNear")
-        {
-            Audiosource.volume = 0.90f;
-          
-        }
-        else
-        {
-            return;
         }
     }
 
@@ -88,11 +73,12 @@ public partial class PlayerPickManager : MonoBehaviour
         for (int i = 0; i < collidersPick.Length; i++)
         {
             Collider pick = collidersPick[0];
+            pickSound.Play();
             pick.gameObject.SetActive(false);
             enemy.SetActive(true);
             Config.picksCount++;
             eCollision.pressEInstruction.SetActive(false);
-            lightConfig.YellowLight();
+            lightConfig.greenLightOn = false;
         }
     }
 
@@ -112,24 +98,32 @@ public partial class PlayerPickManager : MonoBehaviour
 
                 eCollision.pressEInteractPiano.SetActive(false);
 
-                // if (counter.Keys == 1) {
-                //     keyRefs.key1.SetActive(true);
-                // }
-                // else if (counter.Keys == 2) {
-                //     keyRefs.key2.SetActive(true);
-                // }
+                if (counter.Keys >= 1) 
+                {
+                    putKey.Play();
+                    pianoRefs.key1.SetActive(true);
+                }
+                else if (counter.Keys >= 2) 
+                {
+                    StartCoroutine(PianoCoroutina());
+                }
 
                 // Version simplificada del bloque de arriba, hace lo mismo
-                pianoRefs.key1.SetActive(counter.Keys >= 1);
-                pianoRefs.key2.SetActive(counter.Keys >= 2);
-
-                if (counter.Keys == 2)
-                {
-                    fCollision.pressFInteractChest.SetActive(true);
-                    pianoRefs.cage.SetActive(false);
-                }
+                //pianoRefs.key1.SetActive(counter.Keys >= 1);
+                //pianoRefs.key2.SetActive(counter.Keys >= 2);
             }
         }
+    }
+
+    public IEnumerator PianoCoroutina()
+    {
+        pianoRefs.key2.SetActive(true);
+        putKey.Play();
+        yield return new WaitForSeconds(1);
+        pianoCompleted.Play();
+        yield return new WaitForSeconds(1);
+        openCage.Play();
+        pianoRefs.cage.SetActive(false);
     }
 
     public void ChestInteract()
@@ -169,6 +163,7 @@ public partial class PlayerPickManager : MonoBehaviour
 
     public IEnumerator putRockOne()
     {
+        putRock.Play();
         stoneLeft1.SetActive(true);
         yield return new WaitForSeconds(.5f);
         stoneLeft1.SetActive(false);
@@ -182,6 +177,7 @@ public partial class PlayerPickManager : MonoBehaviour
 
     public IEnumerator putRockTwo()
     {
+        putRock.Play();
         stoneLeft2.SetActive(true);
         yield return new WaitForSeconds(.5f);
         stoneLeft2.SetActive(false);

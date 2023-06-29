@@ -6,45 +6,44 @@ public class LifeController : MonoBehaviour
 {
     public GameSceneManager gameSceneManager;
     [HideInInspector] public float lives;
-    public float teleportHeightDown = -48f;
-    public GameObject heart1;
-    public GameObject heart2;
-    public GameObject heart3;
+    public GameObject heartHit1;
+    public GameObject heartHit2;
+    public GameObject heartHit3;
 
     public void Start()
     {
-        lives = 4;
+        lives = Config.maxLives;
     }
 
-    public void Hit(float damage)
+    public void Hit(int damage)
     {
-        lives -= damage;
+        lives = lives - damage;
         Debug.Log(lives);
+        if (lives == 3)
+        {
+            heartHit1.SetActive(false);
+        }
+        else if (lives == 2)
+        {
+            heartHit2.SetActive(false);
+        }
+        else if (lives == 1)
+        {
+            heartHit3.SetActive(false);
+        }
         if (lives <= 0 /*&& TPDarkWorld.realWorld == true*/)
         {
-            /*Vector3 newPosition = new Vector3(transform.position.x, teleportHeightDown, transform.position.z);
-            transform.position = newPosition;
-            lives = 1;*/
             if (gameSceneManager != null)
             {
                 gameSceneManager.LoadDeadMenu();
             }
         }
-        //else if (lives <= 0 /*&& TPDarkWorld.realWorld == false*/)
-        //{
-        //    if (gameSceneManager != null)
-        //    {
-        //        gameSceneManager.LoadDeadMenu();
-        //    }
-        //}
-    }
-
-    /*public void IncrementLives(int extraLives)
-    {
-        if (lives == maxLives)
+        /*else if (lives <= 0 && TPDarkWorld.realWorld == false*)
         {
-            return;
-        }
-        lives += extraLives;
-    }*/
+            if (gameSceneManager != null)
+            {
+                gameSceneManager.LoadDeadMenu();
+            }
+        }*/
+    }
 }

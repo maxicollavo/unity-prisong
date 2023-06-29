@@ -16,9 +16,16 @@ public class TPDarkWorld : MonoBehaviour
         }
     }
 
-    void TeleportPlayer()
+    public void TeleportPlayer()
     {
         Vector3 newPosition = new Vector3(transform.parent.parent.localPosition.x, realWorld ? teleportHeightDown : teleportHeightUp, transform.parent.parent.localPosition.z);
+        transform.parent.parent.localPosition = newPosition;
+        realWorld = !realWorld;
+    }
+
+    public void TeleportPlayerDead()
+    {
+        Vector3 newPosition = new Vector3(realWorld ? 0 : 0, realWorld ? teleportHeightDown : teleportHeightUp, transform.parent.parent.localPosition.z);
         transform.parent.parent.localPosition = newPosition;
         realWorld = !realWorld;
     }

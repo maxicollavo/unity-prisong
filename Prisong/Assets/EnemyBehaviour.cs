@@ -15,6 +15,8 @@ public class EnemyBehaviour : MonoBehaviour
     private int currentWaypointIndex = 0;
     private bool isChasing = false;
     private NavMeshAgent agent;
+    public AudioSource walkingEnemy;
+    public AudioSource runningEnemy;
 
     private void Start()
     {
@@ -26,6 +28,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (isChasing)
         {
+            agent.speed = 7;
             ChasePlayer();
         }
         else
