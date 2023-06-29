@@ -30,10 +30,6 @@ public class ECollision : MonoBehaviour
         {
             pressEInstruction.SetActive(true);
         }
-        else if (collision.transform.tag == "Dispenser")
-        {
-            pressEMachineInstruction.SetActive(true);
-        }
         else if (collision.transform.tag == "Note")
         {
             pressEInstruction.SetActive(true);

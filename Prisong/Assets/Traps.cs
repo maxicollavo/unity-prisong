@@ -8,10 +8,13 @@ public class Traps : MonoBehaviour
     public LifeController lifeController;
     public float time;
     public bool alarmActive;
+    public bool alarmActiveUse;
     public List <GameObject> deactivatedAlarms = new List<GameObject>();
     public AudioSource bombTick;
     public AudioSource electro;
     public AudioSource deactivateBomb;
+
+    public GameObject EscapeX;
 
     private void Start()
     {
@@ -22,8 +25,11 @@ public class Traps : MonoBehaviour
     {
         if (other.gameObject.layer == 18 && deactivatedAlarms.IndexOf(other.gameObject) == -1 && playerInputManager.crouch == false)
         {
-            StartCoroutine(WaitAndAttack(other.gameObject));
-            playerInputManager.speed = 0;
+            if (!alarmActiveUse)
+            {
+                alarmActive = true;
+                StartCoroutine(WaitAndAttack(other.gameObject));
+            }
         }
         if (other.gameObject.layer == 19)
         {
@@ -33,20 +39,21 @@ public class Traps : MonoBehaviour
 
     public IEnumerator WaitAndAttack(GameObject alarm)
     {
-        Debug.Log("Se activo");
-        alarmActive = true;
-        yield return new WaitForSeconds(2);
-        if (alarmActive == true)
+        while (alarmActive)
         {
-            alarmActive = false;
+            EscapeX.SetActive(true);
+            playerInputManager.speed = 0;
+            Debug.Log("Se activó");
+            yield return new WaitForSeconds(2);
             electro.Play();
             lifeController.Hit(1);
             Debug.Log("Exploto");
-            playerInputManager.speed = Config.playerSpeed;
+            yield return new WaitForSeconds(2);
         }
-        else
+        if (alarmActive == false)
         {
-            Debug.Log("Se desactivo");
+            EscapeX.SetActive(false);
+            Debug.Log("Se desactivó");
             deactivateBomb.Play();
             bombTick.Stop();
             deactivatedAlarms.Add(alarm);
@@ -59,6 +66,7 @@ public class Traps : MonoBehaviour
         if (Input.GetKey(KeyCode.X))
         {
             alarmActive = false;
+            alarmActiveUse = true;
         }
     }
 }

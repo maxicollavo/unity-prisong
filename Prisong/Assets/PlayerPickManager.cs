@@ -18,7 +18,7 @@ public partial class PlayerPickManager : MonoBehaviour
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
     [HideInInspector] public bool putRockOneB = false, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     [HideInInspector] public float timeCount;
-    public AudioSource music, putRock, putDisk, firstDoor, pickSound, pianoCompleted, putKey, openCage, monsterScream, openChest, rockPickSound, diskPick, noteSound;
+    public AudioSource music, putRock, putDisk, firstDoor, pickSound, pianoCompleted, putKey, openCage, monsterScream, openChest, rockPickSound, diskPick, noteSound, winningMusic, runAwayMusic;
 
     public void Start()
     {
@@ -42,16 +42,14 @@ public partial class PlayerPickManager : MonoBehaviour
 
     public IEnumerator SoundsPlay()
     {
+        haveDisk = false;
         diskTwo.SetActive(true);
         putDisk.Play();
         yield return new WaitForSeconds(1);
         openWall.SetActive(false);
         firstDoor.Play();
-        Debug.Log("Entra y espera");
         yield return new WaitForSeconds(0.5f);
-        Debug.Log("Reproduce Musica");
         music.Play();
-        haveDisk = false;
     }
 
     public void PlayRecord()
@@ -67,21 +65,26 @@ public partial class PlayerPickManager : MonoBehaviour
         }
     }
 
+    public IEnumerator EnemyScream()
+    {
+        yield return new WaitForSeconds(1);
+        monsterScream.Play();
+    }
+
     public void Picks()
     {
         Collider[] collidersPick = Physics.OverlapSphere(transform.position, radious, pickMask);
         for (int i = 0; i < collidersPick.Length; i++)
         {
             Collider pick = collidersPick[0];
-            pickSound.Play();
             pick.gameObject.SetActive(false);
             enemy.SetActive(true);
             Config.picksCount++;
             eCollision.pressEInstruction.SetActive(false);
-            lightConfig.greenLightOn = false;
+            lightConfig.YellowLight();
             if (Config.picksCount == 1)
             {
-                monsterScream.Play();
+                StartCoroutine(EnemyScream());
             }
         }
     }
@@ -161,6 +164,8 @@ public partial class PlayerPickManager : MonoBehaviour
             if (Config.rockPickCount == 2)
             {
                 runAwaySign.SetActive(true);
+                runAwayMusic.Play();
+                music.Stop();
             }
         }
     }
@@ -209,8 +214,11 @@ public partial class PlayerPickManager : MonoBehaviour
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)
             {
+                fCollision.pressFEscapeInstruction.SetActive(true);
+                winningMusic.Play();
                 StartCoroutine(putRockTwo());
                 Config.rockPickCount++;
+                lightConfig.WinningLights(3);
             }
         }
         if (Config.rockPickCount == 2 && putRockOneB == false)
@@ -218,6 +226,8 @@ public partial class PlayerPickManager : MonoBehaviour
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)
             {
+                fCollision.pressFEscapeInstruction.SetActive(true);
+                winningMusic.Play();
                 StartCoroutine(putRockOne());
                 StartCoroutine(putRockTwo());
                 Config.rockPickCount++;
