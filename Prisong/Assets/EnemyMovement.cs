@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public Transform[] Waypoints;
+    public Waypoint[] Waypoints;
     public PlayerPickManager playerPickManager;
     public LifeController lifeController;
-    public GameObject player;
+    public Transform player;
     public GameObject enemy;
     public GameObject enemyLastObject;
     public LayerMask mask;
@@ -17,66 +17,63 @@ public class EnemyMovement : MonoBehaviour
     public bool enemyStun;
     public bool stayAlert;
     public Vector3 dir;
+    public float contador;
     public float speedRoat;
     public float minDist;
     int _actualIndex;
-    public NavMeshAgent agent;
+    NavMeshAgent agent;
+    Vector3 target;
+    
 
     private void Start()
     {
-        followTrigger = false;
-        enemyStun = false;
-        stayAlert = true;
+       
         Animator WalkingEnemy = GetComponent<Animator>();
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        _actualIndex = Random.Range(0, Waypoints.Length);
+        agent = GetComponent<NavMeshAgent>();
+        UpdateDestination();
     }
     void Update()
     {
-        if (followTrigger == false)
+        if (Vector3.Distance(transform.position, target )<1 && !EnemyDetection.playerDetected) 
         {
-            WaypointsMethod();
-            agent.speed = 3.5f;
-        }
-        FaceTarget(player.transform.position);
-        EnemyAnim();
-        EnemyStun();
-    }
-    private void WaypointsMethod ()
-    {
-        agent.SetDestination(Waypoints[_actualIndex].position);
+            
+            IterateWaypointIndex();
+            UpdateDestination();
 
-        if (Vector3.Distance(transform.position, Waypoints[_actualIndex].position) <= minDist)
+        }
+        else if(EnemyDetection.playerDetected)
         {
+           agent.SetDestination(player.position);
+        }
+        
+    }
 
-            _actualIndex = Random.Range(0, Waypoints.Length);
-        }
-    }
-    private void FaceTarget(Vector3 destination)
+    void IterateWaypointIndex()
     {
-        if (followTrigger == true)
-        {
-            agent.SetDestination(player.transform.position);
-            Vector3 lookPos = destination - transform.position;
-            lookPos.y = 0;
-            Quaternion rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1);
-            agent.speed = 6;
-        }
-    }  
-    void EnemyAnim()
-    {
-        if (stayAlert == true) WalkingEnemy.SetBool("WalkingEnemy", true);
-        else if (stayAlert == false) WalkingEnemy.SetBool("WalkingEnemy", false);
+        contador += Time.deltaTime;
 
-    }
-    public void EnemyStun()
-    {
-        if (Config.rockPickCount == 1 && TPDarkWorld.realWorld == true)
+        if (contador >= Waypoints[_actualIndex ].duration)
         {
-            stayAlert = false;
-            enemyStun = true;
-            agent.speed = 0f;
+          _actualIndex++;
+            contador = 0;
         }
+        if (_actualIndex>= Waypoints.Length)
+        {
+          _actualIndex = 0;
+        }
+        
+
+    
     }
+   
+
+
+    public void UpdateDestination()
+    {
+        target = Waypoints[_actualIndex].transform.position;
+        agent.SetDestination(target);
+    }
+
 }
+
+

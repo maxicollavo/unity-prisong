@@ -10,12 +10,8 @@ public class MouseLookAround : MonoBehaviour
     public float sensitivity = 200f;
     public Vector3 deltaMove;
     public GameObject mover;
-
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
+    public GameObject camera;
+  
     void Update()
     {
         turn.x += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
@@ -30,4 +26,5 @@ public class MouseLookAround : MonoBehaviour
         }
     }
 }
+
 

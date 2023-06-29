@@ -13,13 +13,14 @@ public class LifeController : MonoBehaviour
 
     public void Start()
     {
-        lives = Config.maxLives;
+        lives = 4;
     }
 
     public void Hit(float damage)
     {
         lives -= damage;
-        if (lives <= 0 && TPDarkWorld.realWorld == true)
+        Debug.Log(lives);
+        if (lives <= 0 /*&& TPDarkWorld.realWorld == true*/)
         {
             /*Vector3 newPosition = new Vector3(transform.position.x, teleportHeightDown, transform.position.z);
             transform.position = newPosition;
@@ -29,13 +30,13 @@ public class LifeController : MonoBehaviour
                 gameSceneManager.LoadDeadMenu();
             }
         }
-        else if (lives <= 0 && TPDarkWorld.realWorld == false)
-        {
-            if (gameSceneManager != null)
-            {
-                gameSceneManager.LoadDeadMenu();
-            }
-        }
+        //else if (lives <= 0 /*&& TPDarkWorld.realWorld == false*/)
+        //{
+        //    if (gameSceneManager != null)
+        //    {
+        //        gameSceneManager.LoadDeadMenu();
+        //    }
+        //}
     }
 
     /*public void IncrementLives(int extraLives)

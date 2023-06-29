@@ -125,5 +125,6 @@ public class PlayerInputManager : MonoBehaviour
         {
             gameSceneManager.LoadMainMenu();
         }
+    }
 }
 
