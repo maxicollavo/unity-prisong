@@ -70,32 +70,48 @@ public class PlayerInputManager : MonoBehaviour
         _rb.velocity = _movement * currentSpeed * Time.deltaTime;
         if (currentSpeed > 400)
         {
-                walking = !walking;
-                crouchSteps.Stop();
-                steps.Play();
-        }
-        else if (currentSpeed > 400)
-        {
-            crouch = !crouch;
             walking = !walking;
-            steps.Stop();
         }
+        else walking = !walking;
     }
 
     public void Animations()
     {
+        playerAnim.SetBool("PlayerWalking", false);
+        playerAnim.SetBool("PlayerCrouch", false);
+
         if (walking)
         {
-            playerAnim.SetBool("PlayerWalking", true);
+            if (crouch)
+            {
+                playerAnim.SetBool("PlayerCrouch", true);
+                playerAnim.SetBool("PlayerWalking", true);
+            }
+            else
+            {
+                playerAnim.SetBool("PlayerWalking", true);
+                playerAnim.SetBool("PlayerCrouch", false);
+
+            }
         }
-        if (crouch)
+        else if (crouch)
         {
-            playerAnim.SetBool("PlayerCrouch", true);
+            if (walking)
+            {
+                playerAnim.SetBool("PlayerWalking", true);
+                playerAnim.SetBool("PlayerCrouch", true);
+            }
+            else
+            {
+                playerAnim.SetBool("PlayerWalking", false);
+                playerAnim.SetBool("PlayerCrouch", true);
+            }
         }
     }
 
     public void Update()
     {
+        Animations();
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
         {
