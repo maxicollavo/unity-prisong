@@ -26,6 +26,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public float timeCount;
     [SerializeField] public int speed;
+    [SerializeField] public int crouchSpeed;
     public int speedRun = 100;
     private int currentSpeed;
     public int LoadingScreenScene;
@@ -41,6 +42,7 @@ public class PlayerInputManager : MonoBehaviour
         _cc = GetComponent<CapsuleCollider>();
         timeCount = 0f;
         speed = Config.playerSpeed;
+        crouchSpeed = Config.playerSpeedCrouched;
         currentSpeed = speed;
     }
 
@@ -49,48 +51,51 @@ public class PlayerInputManager : MonoBehaviour
         container.transform.position += new Vector3(0, crouch ? 1 : -1, 0);
         transform.position += new Vector3(0, crouch ? 0.3f : -0.3f, 0);
         _cc.height = crouch ? 1.96f : 1.5f;
-        currentSpeed = Config.playerSpeedCrouched;
-        crouch = !crouch;
+        currentSpeed = crouchSpeed;
         if (crouch)
         {
+            currentSpeed = crouchSpeed;
             steps.Stop();
             crouchSteps.Play();
         }
-        else crouch = false;
+        else 
+        {
+            currentSpeed = speed;
+            crouch = false;
+        }
     }
 
     public void Move()
     {
         _rb.velocity = _movement * currentSpeed * Time.deltaTime;
-        if (_movement.magnitude > 0 && !crouch)
+        if (currentSpeed > 400)
         {
-            if (!steps.isPlaying)
-            {
                 walking = !walking;
                 crouchSteps.Stop();
                 steps.Play();
-            }
         }
-        else
+        else if (currentSpeed > 400)
         {
+            crouch = !crouch;
             walking = !walking;
             steps.Stop();
         }
     }
 
-    public void Update()
+    public void Animations()
     {
         if (walking)
         {
             playerAnim.SetBool("PlayerWalking", true);
         }
-        else playerAnim.SetBool("PlayerWalking", false);
         if (crouch)
         {
-            playerAnim.SetBool("PlayerWalking", true);
+            playerAnim.SetBool("PlayerCrouch", true);
         }
-        else playerAnim.SetBool("PlayerWalking", false);
+    }
 
+    public void Update()
+    {
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
         {
