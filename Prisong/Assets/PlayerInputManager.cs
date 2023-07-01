@@ -13,23 +13,30 @@ public class PlayerInputManager : MonoBehaviour
     Rigidbody _rb;
     CapsuleCollider _cc;
     Vector3 _movement;
-    [SerializeField] public int speed;
-    public int speedRun = 100;
+    public Animator playerAnim;
+
     public GameObject rock;
     public GameObject gameBeginningSign;
-    public float timeCount;
     public GameObject container;
+    public GameObject loadingScreen;
+
+    public bool loading;
     public bool crouch = false;
+    public bool walking = false;
+
+    public float timeCount;
+    [SerializeField] public int speed;
+    public int speedRun = 100;
     private int currentSpeed;
     public int LoadingScreenScene;
-    public GameObject loadingScreen;
-    public bool loading;
+
     public AudioSource steps;
     public AudioSource crouchSteps;
 
     public void Start()
     {
         StartCoroutine(LoadingScreen());
+        Animator WalkingPlayer = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody>();
         _cc = GetComponent<CapsuleCollider>();
         timeCount = 0f;
@@ -46,9 +53,10 @@ public class PlayerInputManager : MonoBehaviour
         crouch = !crouch;
         if (crouch)
         {
-            crouchSteps.Play();
             steps.Stop();
+            crouchSteps.Play();
         }
+        else crouch = false;
     }
 
     public void Move()
@@ -58,18 +66,31 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (!steps.isPlaying)
             {
+                walking = !walking;
                 crouchSteps.Stop();
                 steps.Play();
             }
         }
         else
         {
+            walking = !walking;
             steps.Stop();
         }
     }
 
     public void Update()
     {
+        if (walking)
+        {
+            playerAnim.SetBool("PlayerWalking", true);
+        }
+        else playerAnim.SetBool("PlayerWalking", false);
+        if (crouch)
+        {
+            playerAnim.SetBool("PlayerWalking", true);
+        }
+        else playerAnim.SetBool("PlayerWalking", false);
+
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
         {
