@@ -23,10 +23,12 @@ public class PlayerInputManager : MonoBehaviour
     public bool loading;
     public bool crouch;
     public bool walking;
+    public bool running;
 
     public float timeCount;
     [SerializeField] public int speed;
     [SerializeField] public int crouchSpeed;
+    [SerializeField] public int runningSpeed;
     public int speedRun = 100;
     private int currentSpeed;
     public int LoadingScreenScene;
@@ -43,11 +45,12 @@ public class PlayerInputManager : MonoBehaviour
         timeCount = 0f;
         speed = Config.playerSpeed;
         crouchSpeed = Config.playerSpeedCrouched;
-        currentSpeed = speed;
+        runningSpeed = Config.playerRunSpeed;
         playerAnim.SetBool("PlayerWalking", false);
         playerAnim.SetBool("PlayerCrouch", false);
         crouch = false;
         walking = false;
+        running = false;
     }
 
     public void Crouch()
@@ -72,29 +75,42 @@ public class PlayerInputManager : MonoBehaviour
     public void Move()
     {
         _rb.velocity = _movement * currentSpeed * Time.deltaTime;
-        if (crouch && walking)
+        if (crouch && walking && running == false)
         {
             playerAnim.SetBool("PlayerWalking", true);
             playerAnim.SetBool("PlayerCrouch", true);
+           //playerAnim.SetBool("PlayerRunning", false);
         }
-        else if (walking && crouch == false)
+        else if (walking && crouch == false && running == false)
         {
             playerAnim.SetBool("PlayerWalking", true);
             playerAnim.SetBool("PlayerCrouch", false);
+            //playerAnim.SetBool("PlayerRunning", false);
+        }
+        else if (running && walking == false && crouch == false)
+        {
+            playerAnim.SetBool("PlayerWalking", false);
+            playerAnim.SetBool("PlayerCrouch", false);
+            //playerAnim.SetBool("PlayerRunning", true);
         }
     }
 
     public void IdleAnim()
     {
-        if (walking == false && crouch == false)
+        if (walking == false && crouch == false && running == false)
         {
             playerAnim.SetBool("PlayerWalking", false);
             playerAnim.SetBool("PlayerCrouch", false);
+            //playerAnim.SetBool("PlayerRunning", false);
         }
     }
 
     public void Update()
     {
+        if (running == false && crouch == false)
+        {
+            currentSpeed = speed;
+        }
         IdleAnim();
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
@@ -149,6 +165,20 @@ public class PlayerInputManager : MonoBehaviour
                 {
                     Crouch();
                 }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            running = !running;
+            if (running)
+            {
+                currentSpeed = runningSpeed;
+                Debug.Log("Corre");
+            }
+            else
+            {
+                currentSpeed = speed;
+                Debug.Log("No corre");
             }
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyUp(KeyCode.A))
