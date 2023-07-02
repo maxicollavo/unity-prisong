@@ -21,8 +21,8 @@ public class PlayerInputManager : MonoBehaviour
     public GameObject loadingScreen;
 
     public bool loading;
-    public bool crouch = false;
-    public bool walking = false;
+    public bool crouch;
+    public bool walking;
 
     public float timeCount;
     [SerializeField] public int speed;
@@ -44,6 +44,10 @@ public class PlayerInputManager : MonoBehaviour
         speed = Config.playerSpeed;
         crouchSpeed = Config.playerSpeedCrouched;
         currentSpeed = speed;
+        playerAnim.SetBool("PlayerWalking", false);
+        playerAnim.SetBool("PlayerCrouch", false);
+        crouch = false;
+        walking = false;
     }
 
     public void Crouch()
@@ -52,66 +56,46 @@ public class PlayerInputManager : MonoBehaviour
         transform.position += new Vector3(0, crouch ? 0.3f : -0.3f, 0);
         _cc.height = crouch ? 1.96f : 1.5f;
         currentSpeed = crouchSpeed;
-        if (crouch)
+        crouch = !crouch;
+        if (walking && crouch)
         {
-            currentSpeed = crouchSpeed;
-            steps.Stop();
-            crouchSteps.Play();
+            playerAnim.SetBool("PlayerWalking", true);
+            playerAnim.SetBool("PlayerCrouch", true);
         }
-        else 
+        else if (crouch && walking == false)
         {
-            currentSpeed = speed;
-            crouch = false;
+            playerAnim.SetBool("PlayerWalking", false);
+            playerAnim.SetBool("PlayerCrouch", true);
         }
     }
 
     public void Move()
     {
         _rb.velocity = _movement * currentSpeed * Time.deltaTime;
-        if (currentSpeed > 400)
+        if (crouch && walking)
         {
-            walking = !walking;
+            playerAnim.SetBool("PlayerWalking", true);
+            playerAnim.SetBool("PlayerCrouch", true);
         }
-        else walking = !walking;
+        else if (walking && crouch == false)
+        {
+            playerAnim.SetBool("PlayerWalking", true);
+            playerAnim.SetBool("PlayerCrouch", false);
+        }
     }
 
-    public void Animations()
+    public void IdleAnim()
     {
-        playerAnim.SetBool("PlayerWalking", false);
-        playerAnim.SetBool("PlayerCrouch", false);
-
-        if (walking)
+        if (walking == false && crouch == false)
         {
-            if (crouch)
-            {
-                playerAnim.SetBool("PlayerCrouch", true);
-                playerAnim.SetBool("PlayerWalking", true);
-            }
-            else
-            {
-                playerAnim.SetBool("PlayerWalking", true);
-                playerAnim.SetBool("PlayerCrouch", false);
-
-            }
-        }
-        else if (crouch)
-        {
-            if (walking)
-            {
-                playerAnim.SetBool("PlayerWalking", true);
-                playerAnim.SetBool("PlayerCrouch", true);
-            }
-            else
-            {
-                playerAnim.SetBool("PlayerWalking", false);
-                playerAnim.SetBool("PlayerCrouch", true);
-            }
+            playerAnim.SetBool("PlayerWalking", false);
+            playerAnim.SetBool("PlayerCrouch", false);
         }
     }
 
     public void Update()
     {
-        Animations();
+        IdleAnim();
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
         {
@@ -155,6 +139,29 @@ public class PlayerInputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.LeftControl))
         {
             Crouch();
+        }
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyUp(KeyCode.W))
+        {
+            walking = !walking;
+            if (walking == false)
+            {
+                if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.LeftControl))
+                {
+                    Crouch();
+                }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyUp(KeyCode.A))
+        {
+            walking = !walking;
+        }
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyUp(KeyCode.D))
+        {
+            walking = !walking;
+        }
+        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyUp(KeyCode.S))
+        {
+            walking = !walking;
         }
         if (crouch == false)
         {

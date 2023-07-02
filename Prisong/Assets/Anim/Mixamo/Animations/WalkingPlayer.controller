@@ -96,7 +96,7 @@ AnimatorStateTransition:
     m_ConditionEvent: PlayerWalking
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: PlayerWalking
+    m_ConditionEvent: PlayerCrouch
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2986230945328565299}

@@ -14,7 +14,7 @@ public partial class PlayerPickManager : MonoBehaviour
     public NeedObjectCollision needObjectCollision;
     public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask;
     float radious = 1.33f;
-    public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall, stoneLeft1, stoneLeft2;
+    public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWaaaaaaaaaall, stoneLeft1, stoneLeft2;
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
     [HideInInspector] public bool putRockOneB = false, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     [HideInInspector] public float timeCount;
@@ -46,7 +46,7 @@ public partial class PlayerPickManager : MonoBehaviour
         diskTwo.SetActive(true);
         putDisk.Play();
         yield return new WaitForSeconds(1);
-        openWall.SetActive(false);
+        openWaaaaaaaaaall.SetActive(false);
         firstDoor.Play();
         yield return new WaitForSeconds(0.5f);
         music.Play();

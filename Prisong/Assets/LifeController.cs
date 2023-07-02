@@ -18,17 +18,19 @@ public class LifeController : MonoBehaviour
     public void Hit(int damage)
     {
         lives = lives - damage;
-        Debug.Log(lives);
         if (lives == 3)
         {
             heartHit1.SetActive(false);
         }
         else if (lives == 2)
         {
+            heartHit1.SetActive(false);
             heartHit2.SetActive(false);
         }
         else if (lives == 1)
         {
+            heartHit1.SetActive(false);
+            heartHit2.SetActive(false);
             heartHit3.SetActive(false);
         }
         if (lives <= 0 /*&& TPDarkWorld.realWorld == true*/)
