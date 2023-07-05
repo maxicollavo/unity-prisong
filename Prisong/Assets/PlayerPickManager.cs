@@ -12,9 +12,9 @@ public partial class PlayerPickManager : MonoBehaviour
     public ECollision eCollision;
     public FCollision fCollision;
     public NeedObjectCollision needObjectCollision;
-    public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask;
+    public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask, buttonMask, panelMask;
     float radious = 1.33f;
-    public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWaaaaaaaaaall, stoneLeft1, stoneLeft2;
+    public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall, stoneLeft1, stoneLeft2, panelButton;
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
     [HideInInspector] public bool putRockOneB = false, putRockTwoB = false, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     [HideInInspector] public float timeCount;
@@ -46,7 +46,7 @@ public partial class PlayerPickManager : MonoBehaviour
         diskTwo.SetActive(true);
         putDisk.Play();
         yield return new WaitForSeconds(1);
-        openWaaaaaaaaaall.SetActive(false);
+        openWall.SetActive(false);
         firstDoor.Play();
         yield return new WaitForSeconds(0.5f);
         music.Play();
@@ -69,6 +69,33 @@ public partial class PlayerPickManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         monsterScream.Play();
+    }
+
+    public void Button()
+    {
+        Collider[] collidersButton = Physics.OverlapSphere(transform.position, radious, buttonMask);
+        for (int i = 0; i < collidersButton.Length; i++)
+        {
+            Collider button = collidersButton[0];
+            button.gameObject.SetActive(false);
+            Config.buttonCount++;
+            eCollision.pressEInstruction.SetActive(false);
+        }
+    }
+
+    public void LaserDeactivate()
+    {
+        Collider[] collidersPanel = Physics.OverlapSphere(transform.position, radious, panelMask);
+        for (int i = 0; i < collidersPanel.Length; i++)
+        {
+            Collider button = collidersPanel[0];
+            if (Config.buttonCount == 1)
+            {
+                panelButton.SetActive(true);
+                Config.buttonCount--;
+                eCollision.pressEInstruction.SetActive(false);
+            }
+        }
     }
 
     public void Picks()

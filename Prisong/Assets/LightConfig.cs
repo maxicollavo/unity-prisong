@@ -91,19 +91,14 @@ public class LightConfig : MonoBehaviour
         for (int i = 0; i < repeatCount; i++)
         {
             YellowLight();
-            Debug.Log("Amarilla");
             yield return new WaitForSeconds(0.5f);
             RedLight();
-            Debug.Log("Roja");
             yield return new WaitForSeconds(0.5f);
             GreenLight();
-            Debug.Log("Verde");
             yield return new WaitForSeconds(0.5f);
             RoseLight();
-            Debug.Log("Rosa");
             yield return new WaitForSeconds(0.5f);
             BlueLight();
-            Debug.Log("Azul");
         }
     }
 

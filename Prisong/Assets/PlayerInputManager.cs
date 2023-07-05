@@ -109,6 +109,8 @@ public class PlayerInputManager : MonoBehaviour
             playerPickManager.NotePick();
             playerPickManager.Disk();
             playerPickManager.PlayRecord();
+            playerPickManager.Button();
+            playerPickManager.LaserDeactivate();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {

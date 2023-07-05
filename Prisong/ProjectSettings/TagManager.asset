@@ -25,6 +25,8 @@ TagManager:
   - EnemyFollow
   - Waypoints
   - ArmorTrigger
+  - Button
+  - Panel
   layers:
   - Default
   - TransparentFX
@@ -49,8 +51,8 @@ TagManager:
   - TutorialDoor
   - PickTutorial
   - LaserTutorial
-  - 
-  - 
+  - Button
+  - Panel
   - 
   - 
   - 

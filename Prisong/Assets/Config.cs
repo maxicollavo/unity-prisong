@@ -8,9 +8,9 @@ public class Config : MonoBehaviour
     PlayerPickManager playerPickManager;
     public static float sensitivityInGame = .5f;
     public static float sensitivityInPause = 0f;
-    public static int playerSpeed = 250;
-    public static int playerSpeedCrouched = 100;
-    public static int playerRunSpeed = 500;
+    public static int playerSpeed = 150;
+    public static int playerSpeedCrouched = 50;
+    public static int playerRunSpeed = 250;
     public static float maxLives = 4;
     public static int picksCountUsed = 0;
     public static int trepCount = 4;
@@ -22,6 +22,7 @@ public class Config : MonoBehaviour
     public static int escapePicksRequired = 1;
     public static int objectInstantiateCount = 0;
     public static int picksCount = 0;
+    public static int buttonCount = 0;
     public static int picksCountInv = 0;
     public static int rockPickCount = 0;
     public static int trepidationBarCount = 0;
