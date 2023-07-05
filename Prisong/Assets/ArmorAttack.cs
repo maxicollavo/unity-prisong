@@ -16,7 +16,7 @@ public class ArmorAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerTrigger") && deactivatedArmors.IndexOf(other.gameObject) == -1 && playerInputManager.crouch == false)
+        if (other.CompareTag("PlayerTrigger") && deactivatedArmors.IndexOf(other.gameObject) == -1)
         {
             if (!armorTriggerUse)
             {
@@ -34,19 +34,19 @@ public class ArmorAttack : MonoBehaviour
             EscapeX.SetActive(true);
             playerInputManager.speed = 0;
             yield return new WaitForSeconds(2);
-            armorAnim.SetBool("ArmorAttack", false);
-            //sword.Play();
-            lifeController.Hit(2);
-            yield return new WaitForSeconds(2);
+            if (armorTrigger)
+            {
+                armorAnim.SetBool("ArmorAttack", false);
+                //sword.Play();
+                lifeController.Hit(2);
+                yield return new WaitForSeconds(2);
+            }
         }
-        if (armorTrigger == false)
-        {
-            EscapeX.SetActive(false);
-            //deactivateBomb.Play();
-            //bombTick.Stop();
-            deactivatedArmors.Add(armor);
-            playerInputManager.speed = Config.playerSpeed;
-        }
+        EscapeX.SetActive(false);
+        //deactivateBomb.Play();
+        //bombTick.Stop();
+        deactivatedArmors.Add(armor);
+        playerInputManager.speed = Config.playerSpeed;
     }
 
     private void Update()

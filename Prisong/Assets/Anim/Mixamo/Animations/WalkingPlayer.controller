@@ -181,7 +181,7 @@ AnimatorStateTransition:
     m_ConditionEvent: PlayerWalking
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: PlayerWalking
+    m_ConditionEvent: PlayerCrouch
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4694829872468454015}
@@ -239,10 +239,10 @@ AnimatorStateMachine:
     m_Position: {x: 388.92285, y: 149.43088, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8933353458982488123}
-    m_Position: {x: 1110, y: -220, z: 0}
+    m_Position: {x: 1000, y: -20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6195436356774089725}
-    m_Position: {x: 1000, y: 570, z: 0}
+    m_Position: {x: 880, y: 320, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2986230945328565299}
     m_Position: {x: 780, y: 160, z: 0}
@@ -270,13 +270,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: PlayerCrouch
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer

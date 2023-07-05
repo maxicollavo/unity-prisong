@@ -59,57 +59,17 @@ public class Items : MonoBehaviour
 
     public void Item()
     {
-        if (playerPickManager.haveDisk)
-        {
-            noDisk.SetActive(false);
-            diskC.SetActive(true);
-        }
-        else
-        {
-            noDisk.SetActive(true);
-            diskC.SetActive(false);
-        }
+        noDisk.SetActive(!playerPickManager.haveDisk);
+        diskC.SetActive(playerPickManager.haveDisk);
 
-        if (pickCount == 1)
-        {
-            noPick.SetActive(false);
-            pickC.SetActive(true);
-        }
-        else if (pickCount == 2)
-        {
-            pickC.SetActive(false);
-            pickC2.SetActive(true);
-        }
-        else if (pickCount == 3)
-        {
-            pickC2.SetActive(false);
-            pickC3.SetActive(true);
-        }
-        else if (pickCount == 4)
-        {
-            pickC3.SetActive(false);
-            pickC4.SetActive(true);
-        }
-        else if (pickCount == 0)
-        {
-            noPick.SetActive(true);
-            pickC4.SetActive(false);
-        }
+        noPick.SetActive(pickCount == 0);
+        pickC.SetActive(pickCount == 1);
+        pickC2.SetActive(pickCount == 2);
+        pickC3.SetActive(pickCount == 3);
+        pickC4.SetActive(pickCount == 4);
 
-        if (rockCount == 1)
-        {
-            noRock.SetActive(false);
-            rockC1.SetActive(true);
-        }
-        else if (rockCount == 2)
-        {
-            rockC1.SetActive(false);
-            rockC2.SetActive(true);
-        }
-        else if (rockCount == 0)
-        {
-            noRock.SetActive(true);
-            rockC2.SetActive(false);
-        }
+        noRock.SetActive(rockCount == 0);
+        rockC1.SetActive(rockCount == 1);
+        rockC2.SetActive(rockCount == 2);
     }
 }
