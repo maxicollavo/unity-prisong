@@ -24,6 +24,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool crouch;
     public bool walking;
     public bool running;
+    public bool inventory;
 
     public float timeCount;
     [SerializeField] public int speed;
@@ -51,6 +52,7 @@ public class PlayerInputManager : MonoBehaviour
         crouch = false;
         walking = false;
         running = false;
+        inventory = false;
     }
 
     public void Crouch()
@@ -125,6 +127,10 @@ public class PlayerInputManager : MonoBehaviour
         var z = Input.GetAxisRaw("Vertical");
         _movement = transform.forward * z;
         _movement += transform.right * x;
+        if (Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyUp(KeyCode.Tab))
+        {
+            inventory = !inventory;
+        }
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (mechanics.invisibility == false)

@@ -16,7 +16,7 @@ public partial class PlayerPickManager : MonoBehaviour
     float radious = 1.33f;
     public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWaaaaaaaaaall, stoneLeft1, stoneLeft2;
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
-    [HideInInspector] public bool putRockOneB = false, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
+    [HideInInspector] public bool putRockOneB = false, putRockTwoB = false, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
     [HideInInspector] public float timeCount;
     public AudioSource music, putRock, putDisk, firstDoor, pickSound, pianoCompleted, putKey, openCage, monsterScream, openChest, rockPickSound, diskPick, noteSound, winningMusic, runAwayMusic;
 
@@ -80,6 +80,7 @@ public partial class PlayerPickManager : MonoBehaviour
             pick.gameObject.SetActive(false);
             enemy.SetActive(true);
             Config.picksCount++;
+            Config.picksCountInv++;
             eCollision.pressEInstruction.SetActive(false);
             lightConfig.YellowLight();
             if (Config.picksCount == 1)
@@ -100,6 +101,7 @@ public partial class PlayerPickManager : MonoBehaviour
 
             if (Config.picksCountUsed < Config.picksCount)
             {
+                Config.picksCountInv--;
                 Config.picksCountUsed++;
                 counter.Keys++;
 
@@ -207,9 +209,10 @@ public partial class PlayerPickManager : MonoBehaviour
             {
                 StartCoroutine(putRockOne());
                 putRockOneB = true;
+                Config.rockPickCount--;
             }
         }
-        if (Config.rockPickCount == 2 && putRockOneB == true)
+        if (Config.rockPickCount == 1 && putRockOneB)
         {
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)
@@ -219,6 +222,21 @@ public partial class PlayerPickManager : MonoBehaviour
                 StartCoroutine(putRockTwo());
                 Config.rockPickCount++;
                 lightConfig.WinningLights(3);
+                Config.rockPickCount--;
+            }
+        }
+        if (Config.rockPickCount == 2 && putRockOneB)
+        {
+            Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
+            if (collidersDoor.Length > 0)
+            {
+                fCollision.pressFEscapeInstruction.SetActive(true);
+                winningMusic.Play();
+                StartCoroutine(putRockTwo());
+                Config.rockPickCount++;
+                lightConfig.WinningLights(3);
+                putRockTwoB = true;
+                Config.rockPickCount--;
             }
         }
         if (Config.rockPickCount == 2 && putRockOneB == false)
@@ -232,9 +250,11 @@ public partial class PlayerPickManager : MonoBehaviour
                 StartCoroutine(putRockTwo());
                 Config.rockPickCount++;
                 lightConfig.WinningLights(3);
+                putRockTwoB = true;
+                Config.rockPickCount--;
             }
         }
-        else if (Config.rockPickCount == 3)
+        else if (putRockOneB && putRockTwoB)
         {
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)
