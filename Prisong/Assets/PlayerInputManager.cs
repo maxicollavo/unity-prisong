@@ -19,6 +19,10 @@ public class PlayerInputManager : MonoBehaviour
     public GameObject gameBeginningSign;
     public GameObject container;
     public GameObject loadingScreen;
+    
+    public Transform tutorialPosition;
+    public Transform noTutorialPosition;
+    public Transform player;
 
     public bool loading;
     public bool crouch;
@@ -54,6 +58,15 @@ public class PlayerInputManager : MonoBehaviour
         walking = false;
         running = false;
         inventory = false;
+        if (Config.tutorial)
+        {
+            player.position = tutorialPosition.position;
+
+        }
+        else
+        {
+            player.position = noTutorialPosition.position;
+        }
     }
 
     public void Crouch()

@@ -9,11 +9,12 @@ public class Traps : MonoBehaviour
     public float time;
     public bool alarmActive;
     public bool alarmActiveUse;
+    public static bool tutorialTerminado = false;
     public List <GameObject> deactivatedAlarms = new List<GameObject>();
     public AudioSource bombTick;
     public AudioSource electro;
     public AudioSource deactivateBomb;
-
+    public GameObject paredes;
     public GameObject EscapeX;
 
     private void Start()
@@ -35,8 +36,26 @@ public class Traps : MonoBehaviour
         {
             lifeController.Hit(4);
         }
-    }
+        if (other.CompareTag("ResetTutorial"))
+        {
+            if (tutorialTerminado == false)
+            {
+             paredes.SetActive(false);
+                LifeController.lives = Config.maxLives;
 
+            }
+        }
+
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("ResetTutorial"))
+        {
+            paredes.SetActive(true);
+            tutorialTerminado = true;
+
+        }
+    }
     public IEnumerator WaitAndAttack(GameObject alarm)
     {
         while (alarmActive)

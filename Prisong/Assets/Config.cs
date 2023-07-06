@@ -39,6 +39,7 @@ public class Config : MonoBehaviour
     public static int CreditsMenuScene = 4;
     public static int LoadingScreenScene = 5;
     public static int TutorialScene = 6;
+    public static bool tutorial = false;
 
     public static void Reset()
     {

@@ -13,7 +13,6 @@ public class GameSceneManager : MonoBehaviour
     public int CreditsMenuScene;
     public int TutorialScene;
 
-    // Start is called before the first frame update
     void Start()
     {
         GameMenu = Config.GameMenu;
@@ -26,14 +25,14 @@ public class GameSceneManager : MonoBehaviour
 
     public void LoadTutorial()
     {
-        SceneManager.LoadScene(TutorialScene);
+        Config.tutorial = true;
+        LoadGame();
         Cursor.lockState = CursorLockMode.None;
     }
 
     public void LoadGame()
     {
         SceneManager.LoadScene(GameScene);
-
         Cursor.lockState = CursorLockMode.Locked;
         Config.Reset();
     }

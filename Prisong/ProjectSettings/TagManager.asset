@@ -27,6 +27,7 @@ TagManager:
   - ArmorTrigger
   - Button
   - Panel
+  - ResetTutorial
   layers:
   - Default
   - TransparentFX
