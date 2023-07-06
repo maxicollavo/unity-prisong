@@ -45,10 +45,14 @@ public class Traps : MonoBehaviour
             playerInputManager.speed = 0;
             Debug.Log("Se activó");
             yield return new WaitForSeconds(2);
-            electro.Play();
-            lifeController.Hit(1);
-            Debug.Log("Exploto");
-            yield return new WaitForSeconds(2);
+            if (alarmActive)
+            {
+                electro.Play();
+                lifeController.Hit(1);
+                Debug.Log("Exploto");
+                yield return new WaitForSeconds(2);
+            }
+
         }
         if (alarmActive == false)
         {
