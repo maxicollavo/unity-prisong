@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TPDarkWorld : MonoBehaviour
 {
-    public float teleportHeightDown = -89f;
+    public float teleportHeightDown = 2.2f;
     public float teleportHeightUp = 0.6f;
     public static bool realWorld = true;
 

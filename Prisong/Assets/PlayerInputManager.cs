@@ -49,6 +49,7 @@ public class PlayerInputManager : MonoBehaviour
         runningSpeed = Config.playerRunSpeed;
         playerAnim.SetBool("PlayerWalking", false);
         playerAnim.SetBool("PlayerCrouch", false);
+        playerAnim.SetBool("PlayerRunning", false);
         crouch = false;
         walking = false;
         running = false;
@@ -75,6 +76,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             currentSpeed = speed;
         }
+       
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
         {
@@ -133,19 +135,29 @@ public class PlayerInputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift))
         {
             running = !running;
-            if (running)
+            if (crouch)
             {
-                currentSpeed = runningSpeed;
-                Debug.Log("Corre");
+                running = false;
             }
             else
             {
-                currentSpeed = speed;
-                Debug.Log("No corre");
+                if (running)
+                {
+                    currentSpeed = runningSpeed;
+                    Debug.Log("Corre");
+                }
+                else
+                {
+                    currentSpeed = speed;
+                    Debug.Log("No corre");
+                }
             }
+            
         }
         playerAnim.SetBool("PlayerWalking", walking);
         playerAnim.SetBool("PlayerCrouch", crouch);
+        playerAnim.SetBool("PlayerRunning", running);
+
     }
 
     private void FixedUpdate()

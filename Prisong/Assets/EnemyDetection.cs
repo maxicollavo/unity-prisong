@@ -23,12 +23,12 @@ public class EnemyDetection : MonoBehaviour
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
         Gizmos.DrawFrustum(Vector3.zero, anguloVision, 0f, rangoVision, 1f);
 
-        // Dibujar la línea hacia el jugador
-        Gizmos.color = Color.red;
-        if (jugador != null)
-        {
-            Gizmos.DrawLine(transform.position, jugador.position);
-        }
+      // // Dibujar la línea hacia el jugador
+      // Gizmos.color = Color.red;
+      // if (jugador != null)
+      // {
+      //     Gizmos.DrawLine(transform.position, jugador.position);
+      // }
     }
 
     void Update()

@@ -51,9 +51,9 @@ public class Config : MonoBehaviour
         anxietyBarCount = 0f;
         anxietyBarTokensEarned = 0f;
         playerSpeedStun = 0;
+        picksCountInv = 0;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
 

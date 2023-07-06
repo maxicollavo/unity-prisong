@@ -22,8 +22,7 @@ public class Items : MonoBehaviour
 
     private void Start()
     {
-        pickCount = Config.picksCountInv;
-        rockCount = Config.rockPickCount;
+        
 
         inventory.SetActive(false);
 
@@ -49,6 +48,8 @@ public class Items : MonoBehaviour
             Inventory();
         }
         else inventory.SetActive(false);
+        pickCount = Config.picksCountInv;
+        rockCount = Config.rockPickCount;
     }
 
     public void Inventory()

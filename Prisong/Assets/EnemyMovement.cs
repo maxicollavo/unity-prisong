@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
     public LifeController lifeController;
     public Transform player;
     public GameObject enemy;
-    public GameObject enemyLastObject;
+    //public GameObject enemyLastObject;
     public LayerMask mask;
     public Animator WalkingEnemy;
     public bool enemyStun;
@@ -21,7 +21,8 @@ public class EnemyMovement : MonoBehaviour
     public float minDist;
     int _actualIndex;
     NavMeshAgent agent;
-    Vector3 target;
+    public GameObject target;
+    public Vector3 target1;
     public Animator anim;
 
     private void Start()
@@ -29,10 +30,11 @@ public class EnemyMovement : MonoBehaviour
         Animator WalkingEnemy = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         UpdateDestination();
+        target = GameObject.Find("Player");
     }
     void Update()
     {
-        if (Vector3.Distance(transform.position, target) <1 && EnemyDetection.playerDetected == false) 
+        if (Vector3.Distance(transform.position, target1) <1 && EnemyDetection.playerDetected == false) 
         {
             IterateWaypointIndex();
             UpdateDestination();
@@ -45,7 +47,17 @@ public class EnemyMovement : MonoBehaviour
             anim.SetBool("WalkingEnemy", false);
             anim.SetBool("EnemyFollow", true);
         }
+    
+
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "EnemyTriggerNear")
+        {
+            agent.SetDestination(player.transform.position);
+        }
+    }
+
 
     void IterateWaypointIndex()
     {
@@ -64,8 +76,8 @@ public class EnemyMovement : MonoBehaviour
    
     public void UpdateDestination()
     {
-        target = Waypoints[_actualIndex].transform.position;
-        agent.SetDestination(target);
+        target1 = Waypoints[_actualIndex].transform.position;
+        agent.SetDestination(target1);
     }
 }
 
