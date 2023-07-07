@@ -9,6 +9,9 @@ public class ArmorAttack : MonoBehaviour
     public Animator armorAnim;
     public GameObject EscapeX;
 
+    public AudioSource sword;
+    public AudioSource armorSound;
+
     public static bool armorTrigger;
 
     public List<GameObject> deactivatedArmors = new List<GameObject>();
@@ -17,7 +20,6 @@ public class ArmorAttack : MonoBehaviour
     {
         if (other.CompareTag("PlayerTrigger") && deactivatedArmors.IndexOf(other.gameObject) == -1)
         {
-            Debug.LogWarning("Entro");
             armorTrigger = true;
             StartCoroutine(WaitAndAttack(other.gameObject));
         }
@@ -27,21 +29,18 @@ public class ArmorAttack : MonoBehaviour
     {
         while (armorTrigger)
         {
+            armorSound.Play();
             armorAnim.SetBool("ArmorAttack", true);
             EscapeX.SetActive(true);
-            Debug.LogWarning("Speed 0");
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1f);
             if (armorTrigger)
             {
-                armorAnim.SetBool("ArmorAttack", false);
-                //sword.Play();
+                sword.Play();
                 lifeController.Hit(2);
+                armorAnim.SetBool("ArmorAttack", false);
                 yield return new WaitForSeconds(2);
             }
         }
-        EscapeX.SetActive(false);
-        //deactivateBomb.Play();
-        //bombTick.Stop();
         deactivatedArmors.Add(armor);
     }
 
@@ -53,6 +52,8 @@ public class ArmorAttack : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.X) && armorTrigger)
         {
+            EscapeX.SetActive(false);
+            //deactivateArmor.Play();
             armorTrigger = false;
         }
     }

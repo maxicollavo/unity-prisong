@@ -24,7 +24,7 @@ public class Config : MonoBehaviour
     public static int picksCount = 0;
     public static int buttonCount = 0;
     public static int picksCountInv = 0;
-    public static int rockPickCount = 2;
+    public static int rockPickCount = 0;
     public static int trepidationBarCount = 0;
     public static float anxietyBarCount = 0f;
     public static float anxietyBarToken = 4f;

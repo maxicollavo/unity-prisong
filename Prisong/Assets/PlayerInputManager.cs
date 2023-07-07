@@ -5,10 +5,8 @@ using UnityEngine;
 public class PlayerInputManager : MonoBehaviour
 {
     public GameSceneManager gameSceneManager;
-    public Traps traps;
     public LightConfig lightConfig;
     public PlayerPickManager playerPickManager;
-    public Mechanics mechanics;
     public PauseManager pauseManager;
     Rigidbody _rb;
     CapsuleCollider _cc;
@@ -139,14 +137,6 @@ public class PlayerInputManager : MonoBehaviour
         {
             inventory = !inventory;
         }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (mechanics.invisibility == false)
-            {
-                mechanics.Invisibility();
-            }
-            else mechanics.InvisibilityOff();
-        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             playerPickManager.Picks();
@@ -156,7 +146,6 @@ public class PlayerInputManager : MonoBehaviour
             playerPickManager.NotePick();
             playerPickManager.Disk();
             playerPickManager.PlayRecord();
-            playerPickManager.Button();
             playerPickManager.LaserDeactivate();
         }
         if (Input.GetKeyDown(KeyCode.F))

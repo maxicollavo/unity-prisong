@@ -22,7 +22,7 @@ public class FCollision : MonoBehaviour
             int pianoKeys = chestRefs.piano.GetComponent<PianoKeyCounter>().Keys;
             if (pianoKeys == 2 && collision.gameObject.activeInHierarchy)
             {
-                pressFInteractChest.SetActive(true);
+                pressFInteractChest.SetActive(true);    
             }
         }
         if (Config.rockPickCount == 2)

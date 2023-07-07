@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TPDarkWorld : MonoBehaviour
 {
-    public float teleportHeightDown = 2.2f;
-    public float teleportHeightUp = 0.6f;
-    public static bool realWorld = true;
+    public float teleportHeightDown = -91.5f;
+    public float teleportHeightUp = -1.65f;
+    public bool realWorld = true;
 
     void OnTriggerEnter(Collider other)
     {

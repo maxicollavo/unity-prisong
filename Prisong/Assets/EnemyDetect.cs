@@ -9,7 +9,6 @@ public class EnemyDetect : EnemyMovement
         if (other.gameObject.layer == 16)
         {
             //followTrigger = true;
-            Debug.Log("Entro");
         }
     }
     public void OnTriggerExit(Collider other)
@@ -17,7 +16,6 @@ public class EnemyDetect : EnemyMovement
         if (other.gameObject.layer == 16)
         {
             //followTrigger = false;
-            Debug.Log("Salio");
         }
     }
 }

@@ -14,6 +14,7 @@ public class LifeController : MonoBehaviour
     public GameObject heartHitBlue2;
     public GameObject heartHitBlue3;
     public GameObject heartHitBlue4;
+    public AudioSource playerHurt;
 
     public void Start()
     {
@@ -21,7 +22,7 @@ public class LifeController : MonoBehaviour
     }
     private void Update()
     {
-        if (Traps.tutorialTerminado)
+        if (TutorialEnd.tutorialTerminado)
         {
             lives = Config.maxLives;
             heartHit1.SetActive(true);
@@ -82,6 +83,7 @@ public class LifeController : MonoBehaviour
 
     public void Hit(int damage)
     {
+        playerHurt.Play();
         lives = lives - damage;
         NotShowBlueHearts();
         if (lives == 3)
@@ -100,19 +102,12 @@ public class LifeController : MonoBehaviour
             heartHit3.SetActive(false);
         }
 
-        if (lives <= 0 /*&& TPDarkWorld.realWorld == true*/)
+        if (lives <= 0)
         {
             if (gameSceneManager != null)
             {
                 gameSceneManager.LoadDeadMenu();
             }
         }
-        /*else if (lives <= 0 && TPDarkWorld.realWorld == false*)
-        {
-            if (gameSceneManager != null)
-            {
-                gameSceneManager.LoadDeadMenu();
-            }
-        }*/
     }
 }

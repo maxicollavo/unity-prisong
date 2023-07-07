@@ -15,10 +15,10 @@ public partial class PlayerPickManager : MonoBehaviour
     public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask, buttonMask, panelMask;
     float radious = 1.33f;
     int rocksInDoor = 0;
-    bool winningLightsOn = false;
-    public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall, stoneLeft1, stoneLeft2, panelButton;
+    public static bool winningLightsOn = false;
+    public GameObject mirrors, enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall, stoneLeft1, stoneLeft2, panelButton;
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
-    [HideInInspector] public bool putRockOneB = false, putRockTwoB = true, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
+    [HideInInspector] public bool putRockOneB = false, putRockTwoB = true, Audio, enemyKill = false, haveDisk = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, noteOn;
     [HideInInspector] public float timeCount;
     public AudioSource music, putRock, putDisk, firstDoor, pickSound, pianoCompleted, putKey, openCage, monsterScream, openChest, rockPickSound, diskPick, noteSound, winningMusic, runAwayMusic;
     public void Start()
@@ -72,18 +72,6 @@ public partial class PlayerPickManager : MonoBehaviour
         monsterScream.Play();
     }
 
-    public void Button()
-    {
-        Collider[] collidersButton = Physics.OverlapSphere(transform.position, radious, buttonMask);
-        for (int i = 0; i < collidersButton.Length; i++)
-        {
-            Collider button = collidersButton[0];
-            button.gameObject.SetActive(false);
-            Config.buttonCount++;
-            eCollision.pressEInstruction.SetActive(false);
-        }
-    }
-
     public void LaserDeactivate()
     {
         Collider[] collidersPanel = Physics.OverlapSphere(transform.position, radious, panelMask);
@@ -104,6 +92,7 @@ public partial class PlayerPickManager : MonoBehaviour
         Collider[] collidersPick = Physics.OverlapSphere(transform.position, radious, pickMask);
         for (int i = 0; i < collidersPick.Length; i++)
         {
+            pickSound.Play();
             Collider pick = collidersPick[0];
             pick.gameObject.SetActive(false);
             enemy.SetActive(true);
@@ -181,12 +170,24 @@ public partial class PlayerPickManager : MonoBehaviour
             }
         }
     }
+    private void Update()
+    {
+        if (Config.rockPickCount == 2)
+        {
+            timeCount += Time.deltaTime;
+        }
+        if (timeCount >= 3)
+        {
+            runAwaySign.SetActive(false);
+        }
+    }
 
     public void StoneInteract()
     {
         Collider[] collidersStones = Physics.OverlapSphere(transform.position, radious, rockMask);
         if (collidersStones.Length > 0 && collidersStones[0].gameObject.activeInHierarchy)
         {
+            mirrors.SetActive(true);
             rockPickSound.Play();
             Config.rockPickCount++;
             eCollision.pressEInstruction.SetActive(false);
@@ -194,9 +195,9 @@ public partial class PlayerPickManager : MonoBehaviour
 
             if (Config.rockPickCount == 2)
             {
-                runAwaySign.SetActive(true);
                 runAwayMusic.Play();
                 music.Stop();
+                runAwaySign.SetActive(true);
             }
         }
     }
@@ -309,7 +310,6 @@ public partial class PlayerPickManager : MonoBehaviour
             {
                 fCollision.pressFEscapeInstruction.SetActive(false);
                 gameSceneManager.LoadWinMenu();
-                Debug.Log("ganaste");
             }
         }
     }*/
