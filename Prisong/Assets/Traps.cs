@@ -67,11 +67,12 @@ public class Traps : MonoBehaviour
             if (alarmActive)
             {
                 electro.Play();
+                lifeController.LivesElectro();
+                yield return new WaitForSeconds(1);
                 lifeController.Hit(1);
                 Debug.Log("Exploto");
                 yield return new WaitForSeconds(2);
             }
-
         }
         if (alarmActive == false)
         {

@@ -9,8 +9,8 @@ public class ArmorAttack : MonoBehaviour
     public Animator armorAnim;
     public GameObject EscapeX;
 
-    public bool armorTrigger;
-    public bool armorTriggerUse;
+    public static bool armorTrigger;
+    public static bool armorTriggerUse;
 
     public List<GameObject> deactivatedArmors = new List<GameObject>();
 
@@ -20,6 +20,7 @@ public class ArmorAttack : MonoBehaviour
         {
             if (!armorTriggerUse)
             {
+                Debug.LogWarning("Entro");
                 armorTrigger = true;
                 StartCoroutine(WaitAndAttack(other.gameObject));
             }
@@ -32,7 +33,7 @@ public class ArmorAttack : MonoBehaviour
         {
             armorAnim.SetBool("ArmorAttack", true);
             EscapeX.SetActive(true);
-            playerInputManager.speed = 0;
+            Debug.LogWarning("Speed 0");
             yield return new WaitForSeconds(2);
             if (armorTrigger)
             {
@@ -46,7 +47,6 @@ public class ArmorAttack : MonoBehaviour
         //deactivateBomb.Play();
         //bombTick.Stop();
         deactivatedArmors.Add(armor);
-        playerInputManager.speed = Config.playerSpeed;
     }
 
     private void Update()

@@ -19,7 +19,7 @@ public class PlayerInputManager : MonoBehaviour
     public GameObject gameBeginningSign;
     public GameObject container;
     public GameObject loadingScreen;
-    
+
     public Transform tutorialPosition;
     public Transform noTutorialPosition;
     public Transform player;
@@ -35,7 +35,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] public int crouchSpeed;
     [SerializeField] public int runningSpeed;
     public int speedRun = 100;
-    private int currentSpeed;
+    public int currentSpeed;
     public int LoadingScreenScene;
 
     public AudioSource steps;
@@ -71,6 +71,7 @@ public class PlayerInputManager : MonoBehaviour
 
     public void Crouch()
     {
+        Debug.LogWarning("Crouch speed");
         container.transform.position += new Vector3(0, crouch ? 1 : -1, 0);
         transform.position += new Vector3(0, crouch ? 0.3f : -0.3f, 0);
         _cc.height = crouch ? 1.96f : 1.5f;
@@ -87,9 +88,9 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (running == false && crouch == false)
         {
+            Debug.LogWarning("Normal speed");
             currentSpeed = speed;
         }
-       
         timeCount += Time.deltaTime;
         if (timeCount >= 1f)
         {
@@ -138,7 +139,11 @@ public class PlayerInputManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyUp(KeyCode.LeftControl))
         {
-            Crouch();
+            if (!running)
+            {
+                Crouch();
+            }
+            else crouch = false;
         }
         walking = Input.GetKey(KeyCode.W) ||
             Input.GetKey(KeyCode.A) ||
@@ -165,7 +170,6 @@ public class PlayerInputManager : MonoBehaviour
                     Debug.Log("No corre");
                 }
             }
-            
         }
         playerAnim.SetBool("PlayerWalking", walking);
         playerAnim.SetBool("PlayerCrouch", crouch);
@@ -175,7 +179,10 @@ public class PlayerInputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if (!ArmorAttack.armorTrigger)
+        {
+            Move();
+        }
     }
 
     private IEnumerator LoadingScreen()
