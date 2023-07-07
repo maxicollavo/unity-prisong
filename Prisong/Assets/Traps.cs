@@ -9,11 +9,11 @@ public class Traps : MonoBehaviour
     public static bool alarmActive;
     public static bool tutorialTerminado = false;
     public bool deactivatedAlarm;
-    //public AudioSource bombTick;
-    //public AudioSource electro;
-    //public AudioSource deactivateBomb;
-    //public GameObject paredes;
-    //public GameObject EscapeX;
+    public AudioSource bombTick;
+    public AudioSource electro;
+    public AudioSource deactivateBomb;
+    public GameObject paredes;
+    public GameObject EscapeX;
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class Traps : MonoBehaviour
         {
             if (tutorialTerminado == false)
             {
-                //paredes.SetActive(false);
+                paredes.SetActive(false);
                 LifeController.lives = Config.maxLives;
 
             }
@@ -46,7 +46,7 @@ public class Traps : MonoBehaviour
     {
         if (other.CompareTag("ResetTutorial"))
         {
-            //paredes.SetActive(true);
+            paredes.SetActive(true);
             tutorialTerminado = true;
 
         }
@@ -55,25 +55,23 @@ public class Traps : MonoBehaviour
     {
         while (alarmActive)
         {
-            //EscapeX.SetActive(true);
-            Debug.Log("Se activó");
+            EscapeX.SetActive(true);
             yield return new WaitForSeconds(2);
             if (alarmActive)
             {
-                //electro.Play();
-                lifeController.LivesElectro();
-                yield return new WaitForSeconds(1);
+                electro.Play();
+                StartCoroutine(lifeController.LivesElectro());
+                yield return new WaitForSeconds(2f);
+                Debug.Log("Saca vida");
                 lifeController.Hit(1);
-                Debug.Log("Exploto");
                 yield return new WaitForSeconds(2);
             }
         }
         if (alarmActive == false)
         {
-            //EscapeX.SetActive(false);
-            Debug.Log("Se desactivó");
-            //deactivateBomb.Play();
-            //bombTick.Stop();
+            deactivateBomb.Play();
+            EscapeX.SetActive(false);
+            bombTick.Stop();
             deactivatedAlarm = true;
         }
     }

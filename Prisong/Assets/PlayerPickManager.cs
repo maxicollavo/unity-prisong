@@ -239,11 +239,11 @@ public partial class PlayerPickManager : MonoBehaviour
                 //poner piedra puerta
                 if (rocksInDoor == 0)
                 {
-                    putRockOne();
+                    StartCoroutine(putRockOne());
                 }
                 else
                 {
-                    putRockTwo();
+                    StartCoroutine(putRockTwo());
                 }
                 rocksInDoor++;
                 Config.rockPickCount--;
@@ -255,7 +255,7 @@ public partial class PlayerPickManager : MonoBehaviour
             }
             else if (rocksInDoor == 2)
             {
-                //ganaste
+                StartCoroutine(putRockOne());
                 winningMusic.Play();
                 lightConfig.WinningLights(3);
                 winningLightsOn = true;

@@ -35,85 +35,69 @@ public class LifeController : MonoBehaviour
         }
     }
 
+    void ShowRedHearts()
+    {
+        heartHit1.SetActive(true);
+        heartHit2.SetActive(true);
+        heartHit3.SetActive(true);
+        heartHit4.SetActive(true);
+    }
+
+    void NotShowRedHearts()
+    {
+        heartHit1.SetActive(false);
+        heartHit2.SetActive(false);
+        heartHit3.SetActive(false);
+        heartHit4.SetActive(false);
+    }
+
+    void ShowBlueHearts()
+    {
+        heartHitBlue1.SetActive(true);
+        heartHitBlue2.SetActive(true);
+        heartHitBlue3.SetActive(true);
+        heartHitBlue4.SetActive(true);
+    }
+
+    void NotShowBlueHearts()
+    {
+        heartHitBlue1.SetActive(false);
+        heartHitBlue2.SetActive(false);
+        heartHitBlue3.SetActive(false);
+        heartHitBlue4.SetActive(false);
+    }
+
 
     public IEnumerator LivesElectro()
     {
-        if (lives == 3)
-        {
-            heartHit1.SetActive(false);
-            heartHitBlue1.SetActive(false);
-            yield return new WaitForSeconds(0.5f);
-            heartHit1.SetActive(true);
-            heartHitBlue1.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
-            heartHit1.SetActive(false);
-            heartHitBlue1.SetActive(false);
-        }
-        if (lives == 2)
-        {
-            heartHit1.SetActive(false);
-            heartHit2.SetActive(false);
-            heartHitBlue1.SetActive(false);
-            heartHitBlue2.SetActive(false);
-            yield return new WaitForSeconds(0.5f);
-            heartHit1.SetActive(true);
-            heartHit2.SetActive(true);
-            heartHitBlue1.SetActive(true);
-            heartHitBlue2.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
-            heartHit1.SetActive(false);
-            heartHit2.SetActive(false);
-            heartHitBlue1.SetActive(false);
-            heartHitBlue2.SetActive(false);
-        }
-        if (lives == 1)
-        {
-            heartHit1.SetActive(false);
-            heartHit2.SetActive(false);
-            heartHit3.SetActive(false);
-            heartHitBlue1.SetActive(false);
-            heartHitBlue2.SetActive(false);
-            heartHitBlue3.SetActive(false);
-            yield return new WaitForSeconds(0.5f);
-            heartHit1.SetActive(true);
-            heartHit2.SetActive(true);
-            heartHit3.SetActive(true);
-            heartHitBlue1.SetActive(true);
-            heartHitBlue2.SetActive(true);
-            heartHitBlue3.SetActive(true);
-            yield return new WaitForSeconds(0.5f);
-            heartHit1.SetActive(false);
-            heartHit2.SetActive(false);
-            heartHit3.SetActive(false);
-            heartHitBlue1.SetActive(false);
-            heartHitBlue2.SetActive(false);
-            heartHitBlue3.SetActive(false);
-        }
+        ShowRedHearts();
+        NotShowBlueHearts();
+        yield return new WaitForSeconds(0.5f);
+        NotShowRedHearts();
+        ShowBlueHearts();
+        yield return new WaitForSeconds(0.5f);
+        ShowRedHearts();
+        NotShowBlueHearts();
     }
 
     public void Hit(int damage)
     {
         lives = lives - damage;
+        NotShowBlueHearts();
         if (lives == 3)
         {
             heartHit1.SetActive(false);
-            heartHitBlue1.SetActive(false);
         }
         if (lives == 2)
         {
             heartHit1.SetActive(false);
             heartHit2.SetActive(false);
-            heartHitBlue1.SetActive(false);
-            heartHitBlue2.SetActive(false);
         }
         if (lives == 1)
         {
             heartHit1.SetActive(false);
             heartHit2.SetActive(false);
             heartHit3.SetActive(false);
-            heartHitBlue1.SetActive(false);
-            heartHitBlue2.SetActive(false);
-            heartHitBlue3.SetActive(false);
         }
 
         if (lives <= 0 /*&& TPDarkWorld.realWorld == true*/)

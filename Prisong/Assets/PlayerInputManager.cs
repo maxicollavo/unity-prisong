@@ -38,7 +38,8 @@ public class PlayerInputManager : MonoBehaviour
     public int currentSpeed;
     public int LoadingScreenScene;
 
-    public AudioSource steps;
+    public AudioSource walkingSteps;
+    public AudioSource runningSteps;
     public AudioSource crouchSteps;
 
     public void Start()
@@ -78,6 +79,12 @@ public class PlayerInputManager : MonoBehaviour
         crouch = !crouch;
     }
 
+    public void Speed()
+    {
+        currentSpeed = runningSpeed;
+        running = !running;
+    }
+
     public void Move()
     {
         _rb.velocity = _movement * currentSpeed * Time.deltaTime;
@@ -85,6 +92,32 @@ public class PlayerInputManager : MonoBehaviour
 
     public void Update()
     {
+        if (walking && !crouch && !running)
+        {
+            if (!walkingSteps.isPlaying)
+            {
+                walkingSteps.Play();
+            }
+        }
+        else walkingSteps.Stop();
+
+        if (walking && crouch && !running)
+        {
+            if (!crouchSteps.isPlaying)
+            {
+                crouchSteps.Play();
+            }
+        }
+        else crouchSteps.Stop();
+
+        if (running)
+        {
+            if (!runningSteps.isPlaying)
+            {
+                runningSteps.Play();
+            }
+        }
+        else runningSteps.Stop();
         if (running == false && crouch == false)
         {
             currentSpeed = speed;
@@ -141,7 +174,6 @@ public class PlayerInputManager : MonoBehaviour
             {
                 Crouch();
             }
-            else crouch = false;
         }
         walking = Input.GetKey(KeyCode.W) ||
             Input.GetKey(KeyCode.A) ||
@@ -150,29 +182,14 @@ public class PlayerInputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.LeftShift))
         {
-            running = !running;
-            if (crouch)
+            if (!crouch)
             {
-                running = false;
-            }
-            else
-            {
-                if (running)
-                {
-                    currentSpeed = runningSpeed;
-                    Debug.Log("Corre");
-                }
-                else
-                {
-                    currentSpeed = speed;
-                    Debug.Log("No corre");
-                }
+                Speed();
             }
         }
         playerAnim.SetBool("PlayerWalking", walking);
         playerAnim.SetBool("PlayerCrouch", crouch);
         playerAnim.SetBool("PlayerRunning", running);
-
     }
 
     private void FixedUpdate()
