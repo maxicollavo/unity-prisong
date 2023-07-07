@@ -10,7 +10,6 @@ public class ArmorAttack : MonoBehaviour
     public GameObject EscapeX;
 
     public static bool armorTrigger;
-    public static bool armorTriggerUse;
 
     public List<GameObject> deactivatedArmors = new List<GameObject>();
 
@@ -18,12 +17,9 @@ public class ArmorAttack : MonoBehaviour
     {
         if (other.CompareTag("PlayerTrigger") && deactivatedArmors.IndexOf(other.gameObject) == -1)
         {
-            if (!armorTriggerUse)
-            {
-                Debug.LogWarning("Entro");
-                armorTrigger = true;
-                StartCoroutine(WaitAndAttack(other.gameObject));
-            }
+            Debug.LogWarning("Entro");
+            armorTrigger = true;
+            StartCoroutine(WaitAndAttack(other.gameObject));
         }
     }
 
@@ -55,10 +51,9 @@ public class ArmorAttack : MonoBehaviour
         {
             armorAnim.SetBool("ArmorAttack", false);
         }
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) && armorTrigger)
         {
             armorTrigger = false;
-            armorTriggerUse = true;
         }
     }
 }

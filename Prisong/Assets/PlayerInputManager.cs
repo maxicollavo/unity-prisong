@@ -71,7 +71,6 @@ public class PlayerInputManager : MonoBehaviour
 
     public void Crouch()
     {
-        Debug.LogWarning("Crouch speed");
         container.transform.position += new Vector3(0, crouch ? 1 : -1, 0);
         transform.position += new Vector3(0, crouch ? 0.3f : -0.3f, 0);
         _cc.height = crouch ? 1.96f : 1.5f;
@@ -88,7 +87,6 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (running == false && crouch == false)
         {
-            Debug.LogWarning("Normal speed");
             currentSpeed = speed;
         }
         timeCount += Time.deltaTime;
@@ -179,7 +177,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!ArmorAttack.armorTrigger)
+        if (!ArmorAttack.armorTrigger && !Traps.alarmActive)
         {
             Move();
         }

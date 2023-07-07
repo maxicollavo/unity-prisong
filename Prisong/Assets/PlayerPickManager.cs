@@ -14,6 +14,8 @@ public partial class PlayerPickManager : MonoBehaviour
     public NeedObjectCollision needObjectCollision;
     public LayerMask pickMask, diskMask, rockMask, chestMask, doorEscapeMask, pianoMask, noteMask, playRecordMask, buttonMask, panelMask;
     float radious = 1.33f;
+    int rocksInDoor = 0;
+    bool winningLightsOn = false;
     public GameObject enemy, runSign, runAwaySign, note, noteUI, disk, diskTwo, openWall, stoneLeft1, stoneLeft2, panelButton;
     public GameObject piano2Dark, pianoFullDark, cageDark, closeChestDark, openChestDark;
     [HideInInspector] public bool putRockOneB = false, putRockTwoB = true, Audio, enemyKill = false, chestOpen = false, signOne = false, signTwo = false, signThree = false, signFour = false, haveDisk = false, noteOn;
@@ -133,12 +135,12 @@ public partial class PlayerPickManager : MonoBehaviour
 
                 eCollision.pressEInteractPiano.SetActive(false);
 
-                if (counter.Keys == 1) 
+                if (counter.Keys == 1)
                 {
                     putKey.Play();
                     pianoRefs.key1.SetActive(true);
                 }
-                else if (counter.Keys == 2) 
+                else if (counter.Keys == 2)
                 {
                     pianoRefs.key2.SetActive(true);
                     StartCoroutine(PianoCoroutina());
@@ -229,6 +231,40 @@ public partial class PlayerPickManager : MonoBehaviour
 
     public void EscapeDoor()
     {
+        Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
+        if (collidersDoor.Length > 0)
+        {
+            while (Config.rockPickCount > 0)
+            {
+                //poner piedra puerta
+                if (rocksInDoor == 0)
+                {
+                    putRockOne();
+                }
+                else
+                {
+                    putRockTwo();
+                }
+                rocksInDoor++;
+                Config.rockPickCount--;
+            }
+
+            if (winningLightsOn)
+            {
+                gameSceneManager.LoadWinMenu();
+            }
+            else if (rocksInDoor == 2)
+            {
+                //ganaste
+                winningMusic.Play();
+                lightConfig.WinningLights(3);
+                winningLightsOn = true;
+            }
+        }
+    }
+
+    /* public void EscapeDoor()
+    {
         if (Config.rockPickCount == 1)
         {
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
@@ -251,8 +287,8 @@ public partial class PlayerPickManager : MonoBehaviour
                 Config.rockPickCount--;
             }
         }
-       
-        if (Config.rockPickCount == 2 && putRockOneB == false)
+
+        if (Config.rockPickCount == 2)
         {
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0)
@@ -263,22 +299,20 @@ public partial class PlayerPickManager : MonoBehaviour
                 StartCoroutine(putRockTwo());
                 lightConfig.WinningLights(3);
                 putRockTwoB = true;
-                Config.rockPickCount-=2;
+                Config.rockPickCount -= 2;
             }
         }
-          if (putRockTwoB)
-          {
+        if (putRockTwoB)
+        {
             Collider[] collidersDoor = Physics.OverlapSphere(transform.position, radious, doorEscapeMask);
             if (collidersDoor.Length > 0) //no entra
             {
                 fCollision.pressFEscapeInstruction.SetActive(false);
                 gameSceneManager.LoadWinMenu();
                 Debug.Log("ganaste");
-            
             }
-
-          }
-    }
+        }
+    }*/
     public void NotePick()
     {
         Collider[] collidersPick = Physics.OverlapSphere(transform.position, radious, noteMask);
