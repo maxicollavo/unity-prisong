@@ -6,78 +6,51 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     public Waypoint[] Waypoints;
-    public PlayerPickManager playerPickManager;
-    public LifeController lifeController;
     public Transform player;
-    public GameObject enemy;
-    //public GameObject enemyLastObject;
-    public LayerMask mask;
-    public Animator WalkingEnemy;
-    public bool enemyStun;
-    public bool stayAlert;
-    public Vector3 dir;
-    public float contador;
-    public float speedRoat;
-    public float minDist;
-    int _actualIndex;
+    public static bool followingPlayer;
     NavMeshAgent agent;
-    public GameObject target;
     public Vector3 target1;
-    public Animator anim;
+    private int _currentWaypointIndex = 0;
+    public Transform[] waypoints;
 
     private void Start()
     {
         Animator WalkingEnemy = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        UpdateDestination();
-        target = GameObject.Find("Player");
+        SetNextWaypoint();
     }
+
+    private void SetNextWaypoint()
+    {
+        _currentWaypointIndex = Random.Range(0, waypoints.Length);
+    }
+
     void Update()
     {
-        if (Vector3.Distance(transform.position, target1) <1 && EnemyDetection.playerDetected == false) 
+        if (!followingPlayer)
         {
-            IterateWaypointIndex();
-            UpdateDestination();
-            anim.SetBool("WalkingEnemy", true);
-            anim.SetBool("EnemyFollow", false);
+            if (Vector3.Distance(transform.position, target1) < 1)
+            {
+                SetNextWaypoint();
+            }
         }
-        else if(EnemyDetection.playerDetected)
-        {
-           agent.SetDestination(player.position);
-            anim.SetBool("WalkingEnemy", false);
-            anim.SetBool("EnemyFollow", true);
-        }
-    
-
     }
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider collision)
     {
-        if (other.transform.tag == "EnemyTriggerNear")
+        if (collision.CompareTag("PlayerTrigger"))
         {
+            followingPlayer = true;
             agent.SetDestination(player.transform.position);
         }
     }
 
-
-    void IterateWaypointIndex()
+    public void OnTriggerExit(Collider other)
     {
-        contador += Time.deltaTime;
-
-        if (contador >= Waypoints[_actualIndex ].duration)
+        if (other.CompareTag("PlayerTrigger"))
         {
-          _actualIndex++;
-            contador = 0;
+            followingPlayer = false;
+            SetNextWaypoint();
         }
-        if (_actualIndex>= Waypoints.Length)
-        {
-          _actualIndex = 0;
-        }
-    }
-   
-    public void UpdateDestination()
-    {
-        target1 = Waypoints[_actualIndex].transform.position;
-        agent.SetDestination(target1);
     }
 }
 
