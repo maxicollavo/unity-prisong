@@ -9,7 +9,6 @@ public class EnemyMovement : MonoBehaviour
     public Transform player;
     public static bool followingPlayer;
     NavMeshAgent agent;
-    public Vector3 target1;
     private int _currentWaypointIndex = 0;
     public Transform[] waypoints;
 
@@ -23,13 +22,14 @@ public class EnemyMovement : MonoBehaviour
     private void SetNextWaypoint()
     {
         _currentWaypointIndex = Random.Range(0, waypoints.Length);
+        agent.SetDestination(waypoints[_currentWaypointIndex].position);
     }
 
     void Update()
     {
         if (!followingPlayer)
         {
-            if (Vector3.Distance(transform.position, target1) < 1)
+            if (Vector3.Distance(transform.position, waypoints[_currentWaypointIndex].position) < 1)
             {
                 SetNextWaypoint();
             }

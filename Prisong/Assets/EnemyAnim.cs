@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAnim : MonoBehaviour
 {
-    Animator enemyAnim;
+    public Animator enemyAnim;
 
     public void Update()
     {
@@ -22,6 +22,7 @@ public class EnemyAnim : MonoBehaviour
         }
         else
         {
+            enemyAnim.SetBool("EnemyAttack", false);
             enemyAnim.SetBool("EnemyRun", false);
             enemyAnim.SetBool("EnemyWalk", true);
         }
