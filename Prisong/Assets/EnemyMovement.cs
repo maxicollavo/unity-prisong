@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public Waypoint[] Waypoints;
     public Transform player;
     public static bool followingPlayer;
     NavMeshAgent agent;
