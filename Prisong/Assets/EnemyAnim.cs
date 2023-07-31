@@ -19,6 +19,7 @@ public class EnemyAnim : MonoBehaviour
                 enemyAnim.SetBool("EnemyRun", true);
                 enemyAnim.SetBool("EnemyAttack", false);
             }
+            enemyAnim.SetBool("EnemyWalk", false);
         }
         else
         {

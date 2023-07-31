@@ -33,6 +33,10 @@ public class EnemyMovement : MonoBehaviour
                 SetNextWaypoint();
             }
         }
+        else
+        {
+            agent.SetDestination(player.transform.position);
+        }
     }
     public void OnTriggerEnter(Collider collision)
     {
@@ -45,7 +49,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("PlayerTrigger"))
+        if (other.CompareTag("PlayerTrigger") && Vector3.Distance(transform.position, player.transform.position) > 3.5f)
         {
             followingPlayer = false;
             SetNextWaypoint();
