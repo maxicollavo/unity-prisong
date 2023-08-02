@@ -31,11 +31,13 @@ public class EnemyMovement : MonoBehaviour
             if (Vector3.Distance(transform.position, waypoints[_currentWaypointIndex].position) < 1)
             {
                 SetNextWaypoint();
+                agent.speed = 3.5f;
             }
         }
         else
         {
             agent.SetDestination(player.transform.position);
+            agent.speed = 5f;
         }
     }
     public void OnTriggerEnter(Collider collision)
@@ -53,6 +55,7 @@ public class EnemyMovement : MonoBehaviour
         {
             followingPlayer = false;
             SetNextWaypoint();
+            agent.speed = 3.5f;
         }
     }
 }

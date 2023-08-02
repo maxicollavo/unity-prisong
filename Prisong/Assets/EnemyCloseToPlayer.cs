@@ -10,7 +10,6 @@ public class EnemyCloseToPlayer : MonoBehaviour
     {
         if (collision.CompareTag("PlayerTrigger"))
         {
-            Debug.Log("isClose true");
             isClose = true;
         }
     }
@@ -19,7 +18,6 @@ public class EnemyCloseToPlayer : MonoBehaviour
     {
         if (other.CompareTag("PlayerTrigger"))
         {
-            Debug.Log("isClose false");
             isClose = false;
         }
     }
