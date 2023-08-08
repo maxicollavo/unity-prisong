@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.AI;
 
 public class Powervelocida : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Powervelocida : MonoBehaviour
     public bool destruirConCursor;
     public bool destruirAutomatico;
     public PlayerInputManager playerInputManager;
+    public NavMeshAgent navMesh;
 
     public int aumentavelocidad; 
 
@@ -32,7 +34,7 @@ public class Powervelocida : MonoBehaviour
 
     public void Efecto()
     {
-        PlayerInputManager.spe += 80;
+       navMesh.speed += 80;
 
 
 
