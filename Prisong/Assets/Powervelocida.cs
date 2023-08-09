@@ -37,9 +37,11 @@ public class Powervelocida : MonoBehaviour
                 break;
             case 2: playerInputManager.speed += 100;
                 break;
-            // case 3: powerUpTeleport.GetComponent<PowerUpTeleport>().TeleportPlayer();
             case 3: laserTrap.gameObject.SetActive(false);
                 break;
+            case 4: powerUpTeleport.GetComponent<PowerUpTeleport>().TeleportPlayer();
+                break;
+
             default:
                 Debug.Log("sin efecto");
                 break;

@@ -110,4 +110,32 @@ public class LifeController : MonoBehaviour
             }
         }
     }
+    public void LiveUp()
+    {
+        lives++;
+        if (lives == 4)
+        {
+            heartHit1.SetActive(true);
+            heartHit2.SetActive(true);
+            heartHit3.SetActive(true);
+            heartHit4.SetActive(true);
+        }
+        if (lives == 3)
+        {
+            heartHit1.SetActive(true);
+            heartHit2.SetActive(true);
+            heartHit3.SetActive(true);
+        }
+        if (lives == 2)
+        {
+            heartHit1.SetActive(true);
+            heartHit2.SetActive(true);
+        }
+        if (lives == 1)
+        {
+            heartHit1.SetActive(true);
+         
+        }
+
+    }
 }
