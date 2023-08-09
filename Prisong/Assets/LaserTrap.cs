@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class LaserTrap : MonoBehaviour
 {
+    public bool setActive;
     public LifeController lifeController;
 
+   
+    void Start()
+    {
+        gameObject.SetActive(true);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 6)
@@ -13,4 +19,5 @@ public class LaserTrap : MonoBehaviour
             lifeController.Hit(4);
         }
     }
+  
 }

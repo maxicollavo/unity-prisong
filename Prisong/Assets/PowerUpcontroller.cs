@@ -25,5 +25,5 @@ public class PowerUpcontroller : MonoBehaviour
                 Debug.Log("se hizo");
             }
         }
-    }
+    }   
 }

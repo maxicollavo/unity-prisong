@@ -11,6 +11,8 @@ public class Powervelocida : MonoBehaviour
     public bool destruirAutomatico;
     public PlayerInputManager playerInputManager;
     public LifeController lifeController;
+    public PowerUpTeleport powerUpTeleport;
+    public LaserTrap laserTrap;
 
 
 
@@ -35,7 +37,9 @@ public class Powervelocida : MonoBehaviour
                 break;
             case 2: playerInputManager.speed += 100;
                 break;
-            case 3: 
+            // case 3: powerUpTeleport.GetComponent<PowerUpTeleport>().TeleportPlayer();
+            case 3: laserTrap.gameObject.SetActive(false);
+                break;
             default:
                 Debug.Log("sin efecto");
                 break;
