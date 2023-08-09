@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    LifeController lifeC;
+    public float speed;
 
     private void Start()
     {
-        Destroy(gameObject, 2 );  
+        lifeC = GetComponent<LifeController>();
+        Destroy(gameObject, 2);
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PlayerTrigger"))
+        {
+            lifeC.Hit(1);
+        }
     }
 
-    public float speed; 
     void Update()
     {
-        transform.position += transform.forward * speed * Time.deltaTime; 
+        transform.position += transform.forward * speed * Time.deltaTime;
     }
 }

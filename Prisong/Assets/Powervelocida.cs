@@ -24,10 +24,6 @@ public class Powervelocida : MonoBehaviour
 
 
     }
-
-    
-   
-  
     public void Efecto()
     {
         switch (aumentavelocidad)
