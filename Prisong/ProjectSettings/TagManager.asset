@@ -28,6 +28,7 @@ TagManager:
   - Button
   - Panel
   - ResetTutorial
+  - PowerUp
   layers:
   - Default
   - TransparentFX
@@ -55,7 +56,7 @@ TagManager:
   - Button
   - Panel
   - Wall
-  - 
+  - PowerUp
   - 
   - 
   - 

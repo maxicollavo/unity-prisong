@@ -10,7 +10,9 @@ public class Powervelocida : MonoBehaviour
     public bool destruirConCursor;
     public bool destruirAutomatico;
     public PlayerInputManager playerInputManager;
-    public NavMeshAgent navMesh;
+    public LifeController lifeController;
+
+
 
     public int aumentavelocidad; 
 
@@ -22,26 +24,23 @@ public class Powervelocida : MonoBehaviour
     }
 
     
-    void Update()
-    {
-        
-    
-    
-    
-    
-    
-    }
-
+   
+  
     public void Efecto()
     {
-       navMesh.speed += 80;
-
-
-
+        switch (aumentavelocidad)
+        {
+            case 1:
+                lifeController.lives += 1;
+                break;
+            case 2: playerInputManager.speed += 100;
+                break;
+            case 3: 
+            default:
+                Debug.Log("sin efecto");
+                break;
+        }
 
     }
-
-
-
 
 }

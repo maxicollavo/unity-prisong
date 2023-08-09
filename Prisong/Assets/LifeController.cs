@@ -5,7 +5,7 @@ using UnityEngine;
 public class LifeController : MonoBehaviour
 {
     public GameSceneManager gameSceneManager;
-    [HideInInspector] public static float lives;
+     public  float lives;
     public GameObject heartHit1;
     public GameObject heartHit2;
     public GameObject heartHit3;

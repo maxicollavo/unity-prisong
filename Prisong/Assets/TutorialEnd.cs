@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialEnd : MonoBehaviour
 {
     public static bool tutorialTerminado = false;
+    public LifeController LifeController;
     public GameObject paredes;
 
     private void OnTriggerEnter(Collider other)
